@@ -15,8 +15,14 @@ type InheritanceSpecifier struct {
 	Src      string `json:"src"`
 }
 
-func (is *InheritanceSpecifier) SourceCode() string {
-	return is.baseName.SourceCode()
+func (is *InheritanceSpecifier) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
+	switch baseNameType := is.baseName.(type) {
+	case *IdentifierPath:
+		return baseNameType.SourceCode(false, false, indent, logger)
+	default:
+		logger.Errorf("Unknown baseName nodeType [%s] for InheritanceSpecifier [src:%s].", baseNameType.Type(), is.Src)
+		return ""
+	}
 }
 
 func (is *InheritanceSpecifier) Type() string {
@@ -30,7 +36,7 @@ func (is *InheritanceSpecifier) Nodes() []ASTNode {
 func GetInheritanceSpecifier(raw jsoniter.Any, logger logging.Logger) (*InheritanceSpecifier, error) {
 	is := new(InheritanceSpecifier)
 	if err := json.Unmarshal([]byte(raw.ToString()), is); err != nil {
-		logger.Error("Failed to unmarshal InheritanceSpecifier: [%v]", err)
+		logger.Error("Failed to unmarshal InheritanceSpecifier: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal InheritanceSpecifier: [%v]", err)
 	}
 	baseName := raw.Get("baseName")

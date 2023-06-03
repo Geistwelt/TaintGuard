@@ -131,6 +131,6 @@ func main() {
 		if err != nil {
 			os.Exit(1)
 		}
-		fmt.Println(node.SourceCode())
+		fmt.Println(node.SourceCode(false, false, "", logger))
 	}
 }

@@ -18,7 +18,7 @@ type SourceUnit struct {
 	nodes           []ASTNode
 }
 
-func (su *SourceUnit) SourceCode() string {
+func (su *SourceUnit) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	var code string = "// SPDX-License-Identifier:"
 	if su.License == "" {
 		code = code + " " + "GPL-3.0" + "\n"
@@ -28,9 +28,9 @@ func (su *SourceUnit) SourceCode() string {
 	for _, node := range su.nodes {
 		switch node.Type() {
 		case "PragmaDirective":
-			code = code + node.SourceCode() + "\n"
+			code = code + node.SourceCode(false, false, indent, logger) + "\n"
 		case "ContractDefinition":
-			code = code + node.SourceCode() + "\n"
+			code = code + node.SourceCode(false, false, indent, logger) + "\n"
 		}
 	}
 
@@ -55,6 +55,7 @@ func (su *SourceUnit) AppendNode(node ASTNode) {
 func GetSourceUnit(raw jsoniter.Any, logger logging.Logger) (*SourceUnit, error) {
 	su := new(SourceUnit)
 	if err := json.Unmarshal([]byte(raw.ToString()), su); err != nil {
+		logger.Errorf("Failed to unmarshal SourceUnit: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal SourceUnit: [%v]", err)
 	}
 	

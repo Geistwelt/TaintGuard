@@ -17,7 +17,7 @@ type PragmaDirective struct {
 	Src      string   `json:"src"`
 }
 
-func (pd *PragmaDirective) SourceCode() string {
+func (pd *PragmaDirective) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	reNum := regexp.MustCompile(`0*\.\d*`)
 	var code string = "pragma"
 	for _, literal := range pd.Literals {
@@ -43,7 +43,7 @@ func (pd *PragmaDirective) Nodes() []ASTNode {
 func GetPragmaDirective(raw jsoniter.Any, logger logging.Logger) (*PragmaDirective, error) {
 	pd := new(PragmaDirective)
 	if err := json.Unmarshal([]byte(raw.ToString()), pd); err != nil {
-		logger.Errorf("Failed to unmarshal PragmaDirective: [%v]", err)
+		logger.Errorf("Failed to unmarshal PragmaDirective: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal PragmaDirective: [%v]", err)
 	}
 	return pd, nil

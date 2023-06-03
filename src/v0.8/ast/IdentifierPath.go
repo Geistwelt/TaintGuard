@@ -16,8 +16,18 @@ type IdentifierPath struct {
 	ReferencedDeclaration int      `json:"referencedDeclaration"`
 }
 
-func (ip *IdentifierPath) SourceCode() string {
-	return ip.Name
+func (ip *IdentifierPath) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
+	var code string
+	if isIndent {
+		code = code + indent
+	}
+
+	code = code + ip.Name
+
+	if isSc {
+		code = code + ";"
+	}
+	return code
 }
 
 func (ip *IdentifierPath) Type() string {
@@ -31,7 +41,7 @@ func (ip *IdentifierPath) Nodes() []ASTNode {
 func GetIdentifierPath(raw jsoniter.Any, logger logging.Logger) (*IdentifierPath, error) {
 	ip := new(IdentifierPath)
 	if err := json.Unmarshal([]byte(raw.ToString()), ip); err != nil {
-		logger.Errorf("Failed to unmarshal IdentifierPath: [%v]", err)
+		logger.Errorf("Failed to unmarshal IdentifierPath: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal IdentifierPath: [%v]", err)
 	}
 	return ip, nil
