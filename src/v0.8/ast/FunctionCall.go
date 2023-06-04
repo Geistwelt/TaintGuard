@@ -48,6 +48,11 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
 				}
 				code = code + expression.SourceCode(false, false, indent, logger)
+			case *ElementaryTypeNameExpression:
+				if len(expression.ArgumentTypes) != len(fc.arguments) {
+					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+				}
+				code = code + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expression.Type(), fc.Src)
@@ -70,6 +75,14 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 				case *Identifier:
 					code = code + arg.SourceCode(false, false, indent, logger)
 				case *Literal:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *BinaryOperation:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *MemberAccess:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *UnaryOperation:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *Conditional:
 					code = code + arg.SourceCode(false, false, indent, logger)
 				default:
 					if arg != nil {
@@ -122,6 +135,8 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 				fcExpression, err = GetIdentifier(expression, logger)
 			case "MemberAccess":
 				fcExpression, err = GetMemberAccess(expression, logger)
+			case "ElementaryTypeNameExpression":
+				fcExpression, err = GetElementaryTypeNameExpression(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expressionNodeType, fc.Src)
 			}
@@ -155,6 +170,14 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 					fcArgument, err = GetIdentifier(argument, logger)
 				case "Literal":
 					fcArgument, err = GetLiteral(argument, logger)
+				case "BinaryOperation":
+					fcArgument, err = GetBinaryOperation(argument, logger)
+				case "MemberAccess":
+					fcArgument, err = GetMemberAccess(argument, logger)
+				case "UnaryOperation":
+					fcArgument, err = GetUnaryOperation(argument, logger)
+				case "Conditional":
+					fcArgument, err = GetConditional(argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", argumentNodeType, fc.Src)
 				}

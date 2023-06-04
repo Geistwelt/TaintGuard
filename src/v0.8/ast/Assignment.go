@@ -37,6 +37,8 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 			switch leftHandSide := a.leftHandSide.(type) {
 			case *Identifier:
 				code = code + leftHandSide.SourceCode(false, false, indent, logger)
+			case *IndexAccess:
+				code = code + leftHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if leftHandSide != nil {
 					logger.Warnf("Unknown leftHandSide nodeType [%s] for Assignment [src:%s].", leftHandSide.Type(), a.Src)
@@ -54,6 +56,10 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 		if a.rightHandSide != nil {
 			switch rightHandSide := a.rightHandSide.(type) {
 			case *Literal:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *Identifier:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if rightHandSide != nil {
@@ -98,6 +104,8 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 			switch leftHandSideNodeType {
 			case "Identifier":
 				aLeftHandSide, err = GetIdentifier(leftHandSide, logger)
+			case "IndexAccess":
+				aLeftHandSide, err = GetIndexAccess(leftHandSide, logger)
 			default:
 				logger.Warnf("Unknown leftHandSide nodeType [%s] for Assignment [src:%s].", leftHandSideNodeType, a.Src)
 			}
@@ -123,6 +131,10 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 			switch rightHandSideNodeType {
 			case "Literal":
 				aRightHandSide, err = GetLiteral(rightHandSide, logger)
+			case "Identifier":
+				aRightHandSide, err = GetIdentifier(rightHandSide, logger)
+			case "FunctionCall":
+				aRightHandSide, err = GetFunctionCall(rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}

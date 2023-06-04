@@ -26,7 +26,11 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 			case *PlaceholderStatement:
 				code = code + stat.SourceCode(true, true, indent+"\t", logger)
 			case *Return:
-				code = code + stat.SourceCode(true, true, indent + "\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+			case *EmitStatement:
+				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+			case *IfStatement:
+				code = code + stat.SourceCode(false, true, indent+"\t", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -77,6 +81,10 @@ func GetBlock(raw jsoniter.Any, logger logging.Logger) (*Block, error) {
 					bStatement, err = GetExpressionStatement(statement, logger)
 				case "Return":
 					bStatement, err = GetReturn(statement, logger)
+				case "EmitStatement":
+					bStatement, err = GetEmitStatement(statement, logger)
+				case "IfStatement":
+					bStatement, err = GetIfStatement(statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}

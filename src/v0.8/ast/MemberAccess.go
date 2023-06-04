@@ -42,6 +42,10 @@ func (ma *MemberAccess) SourceCode(isSc bool, isIndent bool, indent string, logg
 			switch expression := ma.expression.(type) {
 			case *IndexAccess:
 				code = code + expression.SourceCode(false, false, indent, logger)
+			case *Identifier:
+				code = code + expression.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
+				code = code + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for MemberAccess [src:%s].", expression.Type(), ma.Src)
@@ -91,6 +95,10 @@ func GetMemberAccess(raw jsoniter.Any, logger logging.Logger) (*MemberAccess, er
 			switch expressionNodeType {
 			case "IndexAccess":
 				maExpression, err = GetIndexAccess(expression, logger)
+			case "Identifier":
+				maExpression, err = GetIdentifier(expression, logger)
+			case "FunctionCall":
+				maExpression, err = GetFunctionCall(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for MemberAccess [src:%s].", expressionNodeType, ma.Src)
 			}
