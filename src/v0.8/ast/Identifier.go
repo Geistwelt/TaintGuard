@@ -9,6 +9,10 @@ import (
 )
 
 type Identifier struct {
+	ArgumentTypes []struct {
+		TypeIdentifier string `json:"typeIdentifier"`
+		TypeString     string `json:"typeString"`
+	} `json:"argumentTypes"`
 	ID                     int    `json:"id"`
 	Name                   string `json:"name"`
 	NodeType               string `json:"nodeType"`

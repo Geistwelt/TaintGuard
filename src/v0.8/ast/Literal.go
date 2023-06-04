@@ -36,6 +36,8 @@ func (l *Literal) SourceCode(isSc bool, isIndent bool, indent string, logger log
 		code = l.Value
 	case "unicodeString":
 		code = code + "unicode" + fmt.Sprintf("\"%s\"", l.Value)
+	case "string":
+		code = code + fmt.Sprintf("\"%s\"", l.Value)
 	default:
 		logger.Warnf("Unknown kind [%s] for Literal [src:%s].", l.Kind, l.Src)
 	}

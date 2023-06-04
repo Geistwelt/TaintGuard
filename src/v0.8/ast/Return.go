@@ -31,6 +31,8 @@ func (r *Return) SourceCode(isSc bool, isIndent bool, indent string, logger logg
 			switch expression := r.expression.(type) {
 			case *IndexAccess:
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *Literal:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expression.Type(), r.Src)
@@ -74,6 +76,8 @@ func GetReturn(raw jsoniter.Any, logger logging.Logger) (*Return, error) {
 			switch expressionNodeType {
 			case "IndexAccess":
 				rExpression, err = GetIndexAccess(expression, logger)
+			case "Literal":
+				rExpression, err = GetLiteral(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expressionNodeType, r.Src)
 			}

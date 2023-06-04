@@ -36,6 +36,8 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 			switch baseExpression := ia.baseExpression.(type) {
 			case *Identifier:
 				code = code + baseExpression.SourceCode(false, false, indent, logger)
+			case *IndexAccess:
+				code = code + baseExpression.SourceCode(false, false, indent, logger)
 			default:
 				if baseExpression != nil {
 					logger.Warnf("Unknown baseExpression nodeType [%s] for IndexAccess [src:%s].", baseExpression.Type(), ia.Src)
@@ -53,6 +55,8 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 		if ia.indexExpression != nil {
 			switch indexExpression := ia.indexExpression.(type) {
 			case *Identifier:
+				code = code + indexExpression.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			default:
 				if indexExpression != nil {
@@ -99,6 +103,8 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 			switch baseExpressionNodeType {
 			case "Identifier":
 				iaBaseExpression, err = GetIdentifier(baseExpression, logger)
+			case "IndexAccess":
+				iaBaseExpression, err = GetIndexAccess(baseExpression, logger)
 			default:
 				logger.Warnf("Unknown baseExpression [%s] for IndexAccess [src:%s].", baseExpressionNodeType, ia.Src)
 			}
@@ -124,6 +130,8 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 			switch indexExpressionNodeType {
 			case "Identifier":
 				iaIndexExpression, err = GetIdentifier(indexExpression, logger)
+			case "FunctionCall":
+				iaIndexExpression, err = GetFunctionCall(indexExpression, logger)
 			default:
 				logger.Warnf("Unknown indexExpression [%s] for IndexAccess [src:%s].", indexExpressionNodeType, ia.Src)
 			}

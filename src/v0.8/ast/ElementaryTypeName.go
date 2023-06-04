@@ -27,7 +27,7 @@ func (etn *ElementaryTypeName) SourceCode(isSc bool, isIndent bool, indent strin
 	}
 	
 	code = code + etn.Name
-	if etn.StateMutability != "" {
+	if etn.StateMutability != "" && etn.StateMutability != "nonpayable" {
 		code = code + " " + etn.StateMutability
 	}
 

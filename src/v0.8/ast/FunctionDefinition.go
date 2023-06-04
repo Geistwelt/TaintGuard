@@ -62,7 +62,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 	}
 
 	// stateMutability
-	if fd.StateMutability != "" {
+	if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
 		code = code + " " + fd.StateMutability
 	}
 
