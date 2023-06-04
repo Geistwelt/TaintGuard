@@ -45,20 +45,20 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + typeName.SourceCode(false, false, indent, logger)
 		default:
 			if typeName != nil {
-				logger.Errorf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeName.Type(), vd.Src)
+				logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeName.Type(), vd.Src)
 			} else {
-				logger.Errorf("Unknown typeName nodeType for VariableDeclaration [src:%s].", vd.Src)
+				logger.Warnf("Unknown typeName nodeType for VariableDeclaration [src:%s].", vd.Src)
 			}
 		}
 	}
 
-	code = code + " "
-
-	if vd.Visibility != "" {
-		code = code + vd.Visibility + " "
+	if vd.Visibility != "" && vd.Visibility != "internal" {
+		code = code + " " + vd.Visibility
 	}
 
-	code = code + vd.Name
+	if vd.Name != "" {
+		code = code + " " + vd.Name
+	}
 
 	if vd.value != nil {
 		switch value := vd.value.(type) {
@@ -68,9 +68,9 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		default:
 			if value != nil {
-				logger.Errorf("Unknown value nodeType [%s] for VariableDeclaration [src:%s].", value.Type(), vd.Src)
+				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s].", value.Type(), vd.Src)
 			} else {
-				logger.Errorf("Unknown value nodeType for VariableDeclaration [src:%s].", vd.Src)
+				logger.Warnf("Unknown value nodeType for VariableDeclaration [src:%s].", vd.Src)
 			}
 		}
 	}
@@ -113,7 +113,7 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 		case "UserDefinedTypeName":
 			vdTypeName, err = GetUserDefinedTypeName(typeName, logger)
 		default:
-			logger.Errorf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeNameNodeType, vd.Src)
+			logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeNameNodeType, vd.Src)
 		}
 
 		if err != nil {
@@ -137,7 +137,7 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 			case "BinaryOperation":
 				vdValue, err = GetBinaryOperation(value, logger)
 			default:
-				logger.Errorf("Unknown value nodeType [%s] for VariableDeclaration [src:%s]", valueNodeType, vd.Src)
+				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s]", valueNodeType, vd.Src)
 			}
 
 			if err != nil {

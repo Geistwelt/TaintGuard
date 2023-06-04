@@ -29,9 +29,9 @@ func (pl *ParameterList) SourceCode(isSc bool, isIndent bool, indent string, log
 				code = code + p.SourceCode(false, false, indent, logger)
 			default:
 				if p != nil {
-					logger.Errorf("Unknown parameter nodeType [%s] for ParameterList [src:%s].", p.Type(), pl.Src)
+					logger.Warnf("Unknown parameter nodeType [%s] for ParameterList [src:%s].", p.Type(), pl.Src)
 				} else {
-					logger.Errorf("Unknown parameter nodeType for ParameterList [src:%s].", pl.Src)
+					logger.Warnf("Unknown parameter nodeType for ParameterList [src:%s].", pl.Src)
 				}
 			}
 			if index < len(pl.parameters)-1 {
@@ -77,7 +77,7 @@ func GetParameterList(raw jsoniter.Any, logger logging.Logger) (*ParameterList, 
 		case "VariableDeclaration":
 			plParameter, err = GetVariableDeclaration(parameter, logger)
 		default:
-			logger.Errorf("Unknown parameter nodeType [%s] for ParameterList [src:%s].", parameterNodeType, pl.Src)
+			logger.Warnf("Unknown parameter nodeType [%s] for ParameterList [src:%s].", parameterNodeType, pl.Src)
 		}
 
 		if err != nil {

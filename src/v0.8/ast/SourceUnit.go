@@ -31,6 +31,8 @@ func (su *SourceUnit) SourceCode(isSc bool, isIndent bool, indent string, logger
 			code = code + node.SourceCode(false, false, indent, logger) + "\n"
 		case "ContractDefinition":
 			code = code + node.SourceCode(false, false, indent, logger) + "\n"
+		default:
+			logger.Warnf("Unknown node nodeType [%s] for SourceUnit [src:%s].", node.Type(), su.Src)
 		}
 	}
 

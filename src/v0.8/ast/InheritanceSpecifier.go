@@ -50,7 +50,7 @@ func GetInheritanceSpecifier(raw jsoniter.Any, logger logging.Logger) (*Inherita
 				return nil, err
 			}
 		default:
-			logger.Errorf("Unknown baseName nodeType: [%s-%s]", baseNameNodeType, baseName.Get("src").ToString())
+			logger.Warnf("Unknown baseName nodeType: [%s-%s]", baseNameNodeType, baseName.Get("src").ToString())
 		}
 	}
 	return is, nil

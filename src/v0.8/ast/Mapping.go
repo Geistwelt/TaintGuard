@@ -37,9 +37,9 @@ func (m *Mapping) SourceCode(isSc bool, isIndent bool, indent string, logger log
 				code = code + " " + "(" + keyType.SourceCode(false, false, indent, logger)
 			default:
 				if keyType != nil {
-					logger.Errorf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyType.Type(), m.Src)
+					logger.Warnf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyType.Type(), m.Src)
 				} else {
-					logger.Errorf("Unknown keyType nodeType for Mapping [src:%s].", m.Src)
+					logger.Warnf("Unknown keyType nodeType for Mapping [src:%s].", m.Src)
 				}
 			}
 		}
@@ -53,9 +53,9 @@ func (m *Mapping) SourceCode(isSc bool, isIndent bool, indent string, logger log
 				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
 			default:
 				if valueType != nil {
-					logger.Errorf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueType.Type(), m.Src)
+					logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueType.Type(), m.Src)
 				} else {
-					logger.Errorf("Unknown valueType nodeType for Mapping [src:%s].", m.Src)
+					logger.Warnf("Unknown valueType nodeType for Mapping [src:%s].", m.Src)
 				}
 			}
 		}
@@ -95,7 +95,7 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 			}
 			m.keyType = etn
 		default:
-			logger.Errorf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyTypeNodeType, m.Src)
+			logger.Warnf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyTypeNodeType, m.Src)
 		}
 	}
 
@@ -111,7 +111,7 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 			}
 			m.valueType = etn
 		default:
-			logger.Errorf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueTypeNodeType, m.Src)
+			logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueTypeNodeType, m.Src)
 		}
 	}
 

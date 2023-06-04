@@ -32,9 +32,9 @@ func (udtn *UserDefinedTypeName) SourceCode(isSc bool, isIndent bool, indent str
 			code = code + pathNode.SourceCode(false, false, indent, logger)
 		default:
 			if pathNode != nil {
-				logger.Errorf("Unknown pathNode nodeType [%s] for UserDefinedTypeName [src:%s].", pathNode.Type(), udtn.Src)
+				logger.Warnf("Unknown pathNode nodeType [%s] for UserDefinedTypeName [src:%s].", pathNode.Type(), udtn.Src)
 			} else {
-				logger.Errorf("Unknown pathNode nodeType for UserDefinedTypeName [src:%s].", udtn.Src)
+				logger.Warnf("Unknown pathNode nodeType for UserDefinedTypeName [src:%s].", udtn.Src)
 			}
 		}
 	}
@@ -73,7 +73,7 @@ func GetUserDefinedTypeName(raw jsoniter.Any, logger logging.Logger) (*UserDefin
 			case "IdentifierPath":
 				udtnPathNode, err = GetIdentifierPath(pathNode, logger)
 			default:
-				logger.Errorf("Unknown pathNode nodeType [%s] for UserDefinedTypeName [src:%s].", pathNodeNodeType, udtn.Src)
+				logger.Warnf("Unknown pathNode nodeType [%s] for UserDefinedTypeName [src:%s].", pathNodeNodeType, udtn.Src)
 			}
 
 			if err != nil {

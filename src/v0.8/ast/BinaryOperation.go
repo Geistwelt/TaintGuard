@@ -41,9 +41,9 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + leftExpression.SourceCode(false, false, indent, logger)
 		default:
 			if leftExpression != nil {
-				logger.Errorf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpression.Type(), bo.Src)
+				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpression.Type(), bo.Src)
 			} else {
-				logger.Errorf("Unknown leftExpression nodeType for BinaryOperation [src:%s].", bo.Src)
+				logger.Warnf("Unknown leftExpression nodeType for BinaryOperation [src:%s].", bo.Src)
 			}
 		}
 	}
@@ -51,7 +51,7 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 	if bo.Operator != "" {
 		code = code + " " + bo.Operator
 	} else {
-		logger.Error("Missing operator in BinaryOperation.")
+		logger.Warnf("Missing operator in BinaryOperation.")
 	}
 
 	if bo.rightExpression != nil {
@@ -62,9 +62,9 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
 		default:
 			if rightExpression != nil {
-				logger.Errorf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpression.Type(), bo.Src)
+				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpression.Type(), bo.Src)
 			} else {
-				logger.Errorf("Unknown rightExpression nodeType for BinaryOperation [src:%s].", bo.Src)
+				logger.Warnf("Unknown rightExpression nodeType for BinaryOperation [src:%s].", bo.Src)
 			}
 		}
 	}
@@ -102,7 +102,7 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 			case "Literal":
 				boLeftExpression, err = GetLiteral(leftExpression, logger)
 			default:
-				logger.Errorf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpressionNodeType, bo.Src)
+				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpressionNodeType, bo.Src)
 			}
 
 			if err != nil {
@@ -128,7 +128,7 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 			case "BinaryOperation":
 				boRightExpression, err = GetBinaryOperation(rightExpression, logger)
 			default:
-				logger.Errorf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpressionNodeType, bo.Src)
+				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpressionNodeType, bo.Src)
 			}
 
 			if err != nil {

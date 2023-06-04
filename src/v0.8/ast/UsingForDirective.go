@@ -29,7 +29,7 @@ func (ufd *UsingForDirective) SourceCode(isSc bool, isIndent bool, indent string
 		case *IdentifierPath:
 			code = code + " " + libraryNameType.SourceCode(false, false, indent, logger)
 		default:
-			logger.Errorf("Unknown libraryName nodeType [%s] for UsingForDirective [src:%s].", libraryNameType.Type(), ufd.Src)
+			logger.Warnf("Unknown libraryName nodeType [%s] for UsingForDirective [src:%s].", libraryNameType.Type(), ufd.Src)
 		}
 	}
 
@@ -39,7 +39,7 @@ func (ufd *UsingForDirective) SourceCode(isSc bool, isIndent bool, indent string
 	case *ElementaryTypeName:
 		code = code + " " + typeNameType.SourceCode(false, false, indent, logger)
 	default:
-		logger.Errorf("Unknown typeName nodeType [%s] for UsingForDirective [src:%s].", typeNameType.Type(), ufd.Src)
+		logger.Warnf("Unknown typeName nodeType [%s] for UsingForDirective [src:%s].", typeNameType.Type(), ufd.Src)
 	}
 
 	if isSc {
@@ -76,7 +76,7 @@ func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDir
 			}
 			ufd.libraryName = ip
 		default:
-			logger.Errorf("Unknown libraryName nodeType [%s] for UsingForDirective [src:%s].", libraryName.Get("nodeType").ToString(), ufd.Src)
+			logger.Warnf("Unknown libraryName nodeType [%s] for UsingForDirective [src:%s].", libraryName.Get("nodeType").ToString(), ufd.Src)
 		}
 	}
 
@@ -91,7 +91,7 @@ func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDir
 			}
 			ufd.typeName = etn
 		default:
-			logger.Errorf("Unknown typeName nodeType [%s] for UsingForDirective [src:%s].", typeName.Get("nodeType").ToString(), ufd.Src)
+			logger.Warnf("Unknown typeName nodeType [%s] for UsingForDirective [src:%s].", typeName.Get("nodeType").ToString(), ufd.Src)
 		}
 	}
 

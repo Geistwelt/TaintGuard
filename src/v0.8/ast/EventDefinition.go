@@ -33,9 +33,9 @@ func (ed *EventDefinition) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + "(" + parameters.SourceCode(false, false, indent, logger) + ")"
 		default:
 			if parameters != nil {
-				logger.Errorf("Unknown parameters nodeType [%s] for EventDefinition [src:%s].", parameters.Type(), ed.Src)
+				logger.Warnf("Unknown parameters nodeType [%s] for EventDefinition [src:%s].", parameters.Type(), ed.Src)
 			} else {
-				logger.Errorf("Unknown parameters nodeType for EventDefinition [src:%s].", ed.Src)
+				logger.Warnf("Unknown parameters nodeType for EventDefinition [src:%s].", ed.Src)
 			}
 		}
 	}
@@ -72,7 +72,7 @@ func GetEventDefinition(raw jsoniter.Any, logger logging.Logger) (*EventDefiniti
 		case "ParameterList":
 			edParameters, err = GetParameterList(parameters, logger)
 		default:
-			logger.Errorf("Unknown parameters nodeType [%s] for EventDefinition [src:%s].", parametersNodeType, ed.Src)
+			logger.Warnf("Unknown parameters nodeType [%s] for EventDefinition [src:%s].", parametersNodeType, ed.Src)
 		}
 
 		if err != nil {

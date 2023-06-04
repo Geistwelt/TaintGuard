@@ -59,8 +59,12 @@ func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				code = code + node.SourceCode(true, true, indent + "\t", logger) + "\n"
 			case "EventDefinition":
 				code = code + node.SourceCode(true, true, indent + "\t", logger) + "\n"
+			case "ModifierDefinition":
+				code = code + node.SourceCode(false, true, indent + "\t", logger) + "\n"
+			case "FunctionDefinition":
+				code = code + node.SourceCode(false, true, indent + "\t", logger) + "\n"
 			default:
-				logger.Errorf("Unknown nodeType in ContractDefinition: [%s].", node.Type())
+				logger.Warnf("Unknown nodeType in ContractDefinition: [%s].", node.Type())
 			}
 		}
 	}
@@ -105,7 +109,7 @@ func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDe
 					}
 					cd.baseContracts = append(cd.baseContracts, bc)
 				default:
-					logger.Errorf("Unknown baseContract nodeType: [%v-%s]", baseContractNodeType, baseContract.Get("src").ToString())
+					logger.Warnf("Unknown baseContract nodeType: [%v-%s]", baseContractNodeType, baseContract.Get("src").ToString())
 				}
 			}
 		}
@@ -129,8 +133,12 @@ func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDe
 					cdNode, err = GetVariableDeclaration(node, logger)
 				case "EventDefinition":
 					cdNode, err = GetEventDefinition(node, logger)
+				case "ModifierDefinition":
+					cdNode, err = GetModifierDefinition(node, logger)
+				case "FunctionDefinition":
+					cdNode, err = GetFunctionDefinition(node, logger)
 				default:
-					logger.Errorf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
+					logger.Warnf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
 				}
 
 				if err != nil {
