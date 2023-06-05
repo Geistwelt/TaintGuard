@@ -50,6 +50,8 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		case *BinaryOperation:
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
+		case *Literal:
+			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		default:
 			if initialValue != nil {
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s]", initialValue.Type(), vds.Src)
@@ -130,6 +132,8 @@ func GetVariableDeclarationStatement(raw jsoniter.Any, logger logging.Logger) (*
 				vdsInitialValue, err = GetMemberAccess(initialValue, logger)
 			case "BinaryOperation":
 				vdsInitialValue, err = GetBinaryOperation(initialValue, logger)
+			case "Literal":
+				vdsInitialValue, err = GetLiteral(initialValue, logger)
 			default:
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s].", initialValueNodeType, vds.Src)
 			}

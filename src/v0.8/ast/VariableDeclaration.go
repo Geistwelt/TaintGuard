@@ -43,6 +43,8 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + typeName.SourceCode(false, false, indent, logger)
 		case *UserDefinedTypeName:
 			code = code + typeName.SourceCode(false, false, indent, logger)
+		case *ArrayTypeName:
+			code = code + typeName.SourceCode(false, false, indent, logger)
 		default:
 			if typeName != nil {
 				logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeName.Type(), vd.Src)
@@ -112,6 +114,8 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 			vdTypeName, err = GetElementaryTypeName(typeName, logger)
 		case "UserDefinedTypeName":
 			vdTypeName, err = GetUserDefinedTypeName(typeName, logger)
+		case "ArrayTypeName":
+			vdTypeName, err = GetArrayTypeName(typeName, logger)
 		default:
 			logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeNameNodeType, vd.Src)
 		}

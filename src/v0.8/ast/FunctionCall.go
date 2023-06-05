@@ -53,6 +53,16 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
 				}
 				code = code + expression.SourceCode(false, false, indent, logger)
+			case *NewExpression:
+				if len(expression.ArgumentTypes) != len(fc.arguments) {
+					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+				}
+				code = code + expression.SourceCode(false, false, indent, logger)
+			case *FunctionCallOptions:
+				if len(expression.ArgumentTypes) != len(fc.arguments) {
+					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+				}
+				code = code + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expression.Type(), fc.Src)
@@ -139,6 +149,10 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 				fcExpression, err = GetMemberAccess(expression, logger)
 			case "ElementaryTypeNameExpression":
 				fcExpression, err = GetElementaryTypeNameExpression(expression, logger)
+			case "NewExpression":
+				fcExpression, err = GetNewExpression(expression, logger)
+			case "FunctionCallOptions":
+				fcExpression, err = GetFunctionCallOptions(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expressionNodeType, fc.Src)
 			}

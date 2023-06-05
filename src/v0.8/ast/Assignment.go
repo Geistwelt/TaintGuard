@@ -61,6 +61,8 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			case *FunctionCall:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if rightHandSide != nil {
 					logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSide.Type(), a.Src)
@@ -135,6 +137,8 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 				aRightHandSide, err = GetIdentifier(rightHandSide, logger)
 			case "FunctionCall":
 				aRightHandSide, err = GetFunctionCall(rightHandSide, logger)
+			case "MemberAccess":
+				aRightHandSide, err = GetMemberAccess(rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}

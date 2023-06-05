@@ -51,6 +51,8 @@ func (m *Mapping) SourceCode(isSc bool, isIndent bool, indent string, logger log
 			switch valueType := m.valueType.(type) {
 			case *ElementaryTypeName:
 				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
+			case *Mapping:
+				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
 			default:
 				if valueType != nil {
 					logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueType.Type(), m.Src)
@@ -87,15 +89,22 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 	{
 		keyType := raw.Get("keyType")
 		keyTypeNodeType := keyType.Get("nodeType").ToString()
+		var mKeyType ASTNode
+		var err error
+
 		switch keyTypeNodeType {
 		case "ElementaryTypeName":
-			etn, err := GetElementaryTypeName(keyType, logger)
-			if err != nil {
-				return nil, err
-			}
-			m.keyType = etn
+			mKeyType, err = GetElementaryTypeName(keyType, logger)
 		default:
 			logger.Warnf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyTypeNodeType, m.Src)
+		}
+
+		if err != nil {
+			return nil, err
+		}
+
+		if mKeyType != nil {
+			m.keyType = mKeyType
 		}
 	}
 
@@ -103,15 +112,24 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 	{
 		valueType := raw.Get("valueType")
 		valueTypeNodeType := valueType.Get("nodeType").ToString()
+		var mValueType ASTNode
+		var err error
+
 		switch valueTypeNodeType {
 		case "ElementaryTypeName":
-			etn, err := GetElementaryTypeName(valueType, logger)
-			if err != nil {
-				return nil, err
-			}
-			m.valueType = etn
+			mValueType, err = GetElementaryTypeName(valueType, logger)
+		case "Mapping":
+			mValueType, err = GetMapping(valueType, logger)
 		default:
 			logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueTypeNodeType, m.Src)
+		}
+
+		if err != nil {
+			return nil, err
+		}
+
+		if mValueType != nil {
+			m.valueType = mValueType
 		}
 	}
 
