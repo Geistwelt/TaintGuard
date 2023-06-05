@@ -33,6 +33,16 @@ func (r *Return) SourceCode(isSc bool, isIndent bool, indent string, logger logg
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			case *Literal:
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *Conditional:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *BinaryOperation:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *Identifier:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expression.Type(), r.Src)
@@ -78,6 +88,16 @@ func GetReturn(raw jsoniter.Any, logger logging.Logger) (*Return, error) {
 				rExpression, err = GetIndexAccess(expression, logger)
 			case "Literal":
 				rExpression, err = GetLiteral(expression, logger)
+			case "Conditional":
+				rExpression, err = GetConditional(expression, logger)
+			case "BinaryOperation":
+				rExpression, err = GetBinaryOperation(expression, logger)
+			case "MemberAccess":
+				rExpression, err = GetMemberAccess(expression, logger)
+			case "Identifier":
+				rExpression, err = GetIdentifier(expression, logger)
+			case "FunctionCall":
+				rExpression, err = GetFunctionCall(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expressionNodeType, r.Src)
 			}

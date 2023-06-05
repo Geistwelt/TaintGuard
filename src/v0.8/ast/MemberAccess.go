@@ -81,7 +81,7 @@ func GetMemberAccess(raw jsoniter.Any, logger logging.Logger) (*MemberAccess, er
 	ma := new(MemberAccess)
 	if err := json.Unmarshal([]byte(raw.ToString()), ma); err != nil {
 		logger.Errorf("Failed to unmarshal MemberAccess: [%v].", err)
-		return nil, fmt.Errorf("failed to unmarshal MemberAccess: [%v].", err)
+		return nil, fmt.Errorf("failed to unmarshal MemberAccess: [%v]", err)
 	}
 
 	// expression

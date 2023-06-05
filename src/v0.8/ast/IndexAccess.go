@@ -58,6 +58,8 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			case *FunctionCall:
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
+			case *Literal:
+				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			default:
 				if indexExpression != nil {
 					logger.Warnf("Unknown indexExpression nodeType [%s] for IndexAccess [src:%s].", indexExpression.Type(), ia.Src)
@@ -132,6 +134,8 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 				iaIndexExpression, err = GetIdentifier(indexExpression, logger)
 			case "FunctionCall":
 				iaIndexExpression, err = GetFunctionCall(indexExpression, logger)
+			case "Literal":
+				iaIndexExpression, err = GetLiteral(indexExpression, logger)
 			default:
 				logger.Warnf("Unknown indexExpression [%s] for IndexAccess [src:%s].", indexExpressionNodeType, ia.Src)
 			}

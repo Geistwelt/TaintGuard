@@ -29,6 +29,8 @@ func (es *ExpressionStatement) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + expression.SourceCode(false, false, indent, logger)
 		case *FunctionCall:
 			code = code + expression.SourceCode(false, false, indent, logger)
+		case *UnaryOperation:
+			code = code + expression.SourceCode(false, false, indent, logger)
 		default:
 			if expression != nil {
 				logger.Warnf("Unknown expression nodeType [%s] for ExpressionStatement [src:%s].", expression.Type(), es.Src)
@@ -73,6 +75,8 @@ func GetExpressionStatement(raw jsoniter.Any, logger logging.Logger) (*Expressio
 				esExpression, err = GetAssignment(expression, logger)
 			case "FunctionCall":
 				esExpression, err = GetFunctionCall(expression, logger)
+			case "UnaryOperation":
+				esExpression, err = GetUnaryOperation(expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for ExpressionStatement [src:%s].", expressionNodeType, es.Src)
 			}

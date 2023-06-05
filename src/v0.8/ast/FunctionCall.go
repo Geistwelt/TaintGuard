@@ -84,6 +84,8 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					code = code + arg.SourceCode(false, false, indent, logger)
 				case *Conditional:
 					code = code + arg.SourceCode(false, false, indent, logger)
+				case *ElementaryTypeNameExpression:
+					code = code + arg.SourceCode(false, false, indent, logger)
 				default:
 					if arg != nil {
 						logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", arg.Type(), fc.Src)
@@ -178,6 +180,8 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 					fcArgument, err = GetUnaryOperation(argument, logger)
 				case "Conditional":
 					fcArgument, err = GetConditional(argument, logger)
+				case "ElementaryTypeNameExpression":
+					fcArgument, err = GetElementaryTypeNameExpression(argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", argumentNodeType, fc.Src)
 				}

@@ -31,6 +31,10 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 				code = code + stat.SourceCode(true, true, indent+"\t", logger)
 			case *IfStatement:
 				code = code + stat.SourceCode(false, true, indent+"\t", logger)
+			case *VariableDeclarationStatement:
+				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+			case *InlineAssembly:
+				code = code + stat.SourceCode(false, true, indent+"\t", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -85,6 +89,10 @@ func GetBlock(raw jsoniter.Any, logger logging.Logger) (*Block, error) {
 					bStatement, err = GetEmitStatement(statement, logger)
 				case "IfStatement":
 					bStatement, err = GetIfStatement(statement, logger)
+				case "VariableDeclarationStatement":
+					bStatement, err = GetVariableDeclarationStatement(statement, logger)
+				case "InlineAssembly":
+					bStatement, err = GetInlineAssembly(statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}

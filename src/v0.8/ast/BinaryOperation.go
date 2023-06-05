@@ -17,7 +17,7 @@ type BinaryOperation struct {
 	IsConstant       bool `json:"isConstant"`
 	IsValue          bool `json:"isValue"`
 	IsPure           bool `json:"isPure"`
-	lValueRequested  bool `json:"lValueRequested"`
+	LValueRequested  bool `json:"lValueRequested"`
 	leftExpression   ASTNode
 	NodeType         string `json:"nodeType"`
 	Operator         string `json:"operator"`
@@ -45,6 +45,8 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + leftExpression.SourceCode(false, false, indent, logger)
 		case *UnaryOperation:
 			code = code + leftExpression.SourceCode(false, false, indent, logger)
+		case *FunctionCall:
+			code = code + leftExpression.SourceCode(false, false, indent, logger)
 		default:
 			if leftExpression != nil {
 				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpression.Type(), bo.Src)
@@ -71,6 +73,8 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 		case *Literal:
 			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
 		case *UnaryOperation:
+			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
+		case *MemberAccess:
 			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
 		default:
 			if rightExpression != nil {
@@ -119,6 +123,8 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 				boLeftExpression, err = GetBinaryOperation(leftExpression, logger)
 			case "UnaryOperation":
 				boLeftExpression, err = GetUnaryOperation(leftExpression, logger)
+			case "FunctionCall":
+				boLeftExpression, err = GetFunctionCall(leftExpression, logger)
 			default:
 				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpressionNodeType, bo.Src)
 			}
@@ -151,6 +157,8 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 				boRightExpression, err = GetLiteral(rightExpression, logger)
 			case "UnaryOperation":
 				boRightExpression, err = GetUnaryOperation(rightExpression, logger)
+			case "MemberAccess":
+				boRightExpression, err = GetMemberAccess(rightExpression, logger)
 			default:
 				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpressionNodeType, bo.Src)
 			}
