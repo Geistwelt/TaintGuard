@@ -40,11 +40,18 @@ func (pd *PragmaDirective) Nodes() []ASTNode {
 	return nil
 }
 
-func GetPragmaDirective(raw jsoniter.Any, logger logging.Logger) (*PragmaDirective, error) {
+func (pd *PragmaDirective) NodeID() int {
+	return pd.ID
+}
+
+func GetPragmaDirective(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*PragmaDirective, error) {
 	pd := new(PragmaDirective)
 	if err := json.Unmarshal([]byte(raw.ToString()), pd); err != nil {
 		logger.Errorf("Failed to unmarshal PragmaDirective: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal PragmaDirective: [%v]", err)
 	}
+
+	gn.AddASTNode(pd)
+	
 	return pd, nil
 }

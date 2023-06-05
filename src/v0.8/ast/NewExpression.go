@@ -64,7 +64,11 @@ func (ne *NewExpression) Nodes() []ASTNode {
 	return nil
 }
 
-func GetNewExpression(raw jsoniter.Any, logger logging.Logger) (*NewExpression, error) {
+func (ne *NewExpression) NodeID() int {
+	return ne.ID
+}
+
+func GetNewExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*NewExpression, error) {
 	ne := new(NewExpression)
 	if err := json.Unmarshal([]byte(raw.ToString()), ne); err != nil {
 		logger.Errorf("Failed to unmarshal NewExpression: [%v].", err)
@@ -81,7 +85,7 @@ func GetNewExpression(raw jsoniter.Any, logger logging.Logger) (*NewExpression, 
 
 			switch typeNameNodeType {
 			case "ArrayTypeName":
-				neTypeName, err = GetArrayTypeName(typeName, logger)
+				neTypeName, err = GetArrayTypeName(gn, typeName, logger)
 			default:
 				logger.Warnf("Unknown typeName nodeType [%s] for NewExpression [src:%s].", typeNameNodeType, ne.Src)
 			}
@@ -95,6 +99,8 @@ func GetNewExpression(raw jsoniter.Any, logger logging.Logger) (*NewExpression, 
 			}
 		}
 	}
+
+	gn.AddASTNode(ne)
 
 	return ne, nil
 }

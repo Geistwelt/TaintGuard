@@ -85,7 +85,11 @@ func (fco *FunctionCallOptions) Nodes() []ASTNode {
 	return fco.options
 }
 
-func GetFunctionCallOptions(raw jsoniter.Any, logger logging.Logger) (*FunctionCallOptions, error) {
+func (fco *FunctionCallOptions) NodeID() int {
+	return fco.ID
+}
+
+func GetFunctionCallOptions(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*FunctionCallOptions, error) {
 	fco := new(FunctionCallOptions)
 	if err := json.Unmarshal([]byte(raw.ToString()), fco); err != nil {
 		logger.Errorf("Failed to unmarshal FunctionCallOptions: [%v].", err)
@@ -102,7 +106,7 @@ func GetFunctionCallOptions(raw jsoniter.Any, logger logging.Logger) (*FunctionC
 
 			switch expressionNodeType {
 			case "MemberAccess":
-				fcoExpression, err = GetMemberAccess(expression, logger)
+				fcoExpression, err = GetMemberAccess(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCallOptions [src:%s].", expressionNodeType, fco.Src)
 			}
@@ -134,7 +138,7 @@ func GetFunctionCallOptions(raw jsoniter.Any, logger logging.Logger) (*FunctionC
 
 					switch optionNodeType {
 					case "MemberAccess":
-						fcoOption, err = GetMemberAccess(option, logger)
+						fcoOption, err = GetMemberAccess(gn, option, logger)
 					default:
 						logger.Warnf("Unknown option nodeType [%s] for FunctionCallOptions [src:%s].", optionNodeType, fco.Src)
 					}
@@ -151,5 +155,13 @@ func GetFunctionCallOptions(raw jsoniter.Any, logger logging.Logger) (*FunctionC
 		}
 	}
 
+	gn.AddASTNode(fco)
+
 	return fco, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (fco *FunctionCallOptions) TraverseFunctionCall() {
+	
 }

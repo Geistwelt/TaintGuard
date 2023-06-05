@@ -77,7 +77,11 @@ func (ma *MemberAccess) Nodes() []ASTNode {
 	return nil
 }
 
-func GetMemberAccess(raw jsoniter.Any, logger logging.Logger) (*MemberAccess, error) {
+func (ma *MemberAccess) NodeID() int {
+	return ma.ID
+}
+
+func GetMemberAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*MemberAccess, error) {
 	ma := new(MemberAccess)
 	if err := json.Unmarshal([]byte(raw.ToString()), ma); err != nil {
 		logger.Errorf("Failed to unmarshal MemberAccess: [%v].", err)
@@ -94,11 +98,11 @@ func GetMemberAccess(raw jsoniter.Any, logger logging.Logger) (*MemberAccess, er
 
 			switch expressionNodeType {
 			case "IndexAccess":
-				maExpression, err = GetIndexAccess(expression, logger)
+				maExpression, err = GetIndexAccess(gn, expression, logger)
 			case "Identifier":
-				maExpression, err = GetIdentifier(expression, logger)
+				maExpression, err = GetIdentifier(gn, expression, logger)
 			case "FunctionCall":
-				maExpression, err = GetFunctionCall(expression, logger)
+				maExpression, err = GetFunctionCall(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for MemberAccess [src:%s].", expressionNodeType, ma.Src)
 			}
@@ -113,5 +117,23 @@ func GetMemberAccess(raw jsoniter.Any, logger logging.Logger) (*MemberAccess, er
 		}
 	}
 
+	gn.AddASTNode(ma)
+
 	return ma, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (ma *MemberAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// expression
+	{
+		if ma.expression != nil {
+			switch expression := ma.expression.(type) {
+			case *IndexAccess:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *FunctionCall:
+				expression.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

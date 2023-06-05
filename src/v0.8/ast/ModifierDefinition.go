@@ -83,7 +83,11 @@ func (md *ModifierDefinition) Nodes() []ASTNode {
 	return nil
 }
 
-func GetModifierDefinition(raw jsoniter.Any, logger logging.Logger) (*ModifierDefinition, error) {
+func (md *ModifierDefinition) NodeID() int {
+	return md.ID
+}
+
+func GetModifierDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ModifierDefinition, error) {
 	md := new(ModifierDefinition)
 	if err := json.Unmarshal([]byte(raw.ToString()), md); err != nil {
 		logger.Errorf("Failed to unmarshal ModifierDefinition: [%v].", err)
@@ -100,7 +104,7 @@ func GetModifierDefinition(raw jsoniter.Any, logger logging.Logger) (*ModifierDe
 
 			switch parametersNodeType {
 			case "ParameterList":
-				mdParameters, err = GetParameterList(parameters, logger)
+				mdParameters, err = GetParameterList(gn, parameters, logger)
 			default:
 				logger.Warnf("Unknown parameters nodeType [%s] for ModifierDefinition [src:%s].", parametersNodeType, md.Src)
 			}
@@ -125,7 +129,7 @@ func GetModifierDefinition(raw jsoniter.Any, logger logging.Logger) (*ModifierDe
 
 			switch bodyNodeType {
 			case "Block":
-				mdBody, err = GetBlock(body, logger)
+				mdBody, err = GetBlock(gn, body, logger)
 			default:
 				logger.Warnf("Unknown body nodeType [%s] for ModifierDefinition [src:%s].", bodyNodeType, md.Src)
 			}
@@ -139,6 +143,8 @@ func GetModifierDefinition(raw jsoniter.Any, logger logging.Logger) (*ModifierDe
 			}
 		}
 	}
+
+	gn.AddASTNode(md)
 
 	return md, nil
 }

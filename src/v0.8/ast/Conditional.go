@@ -92,7 +92,11 @@ func (c *Conditional) Nodes() []ASTNode {
 	return nil
 }
 
-func GetConditional(raw jsoniter.Any, logger logging.Logger) (*Conditional, error) {
+func (c *Conditional) NodeID() int {
+	return c.ID
+}
+
+func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Conditional, error) {
 	c := new(Conditional)
 	if err := json.Unmarshal([]byte(raw.ToString()), c); err != nil {
 		logger.Errorf("Failed to unmarshal Conditional: [%v].", err)
@@ -109,7 +113,7 @@ func GetConditional(raw jsoniter.Any, logger logging.Logger) (*Conditional, erro
 
 			switch conditionNodeType {
 			case "TupleExpression":
-				cCondition, err = GetTupleExpression(condition, logger)
+				cCondition, err = GetTupleExpression(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for Conditional [src:%s].", conditionNodeType, c.Src)
 			}
@@ -134,7 +138,7 @@ func GetConditional(raw jsoniter.Any, logger logging.Logger) (*Conditional, erro
 
 			switch falseExpressionNodeType {
 			case "Identifier":
-				cFalseExpression, err = GetIdentifier(falseExpression, logger)
+				cFalseExpression, err = GetIdentifier(gn, falseExpression, logger)
 			default:
 				logger.Warnf("Unknown faleExpression nodeType [%s] for Conditional [src:%s].", falseExpressionNodeType, c.Src)
 			}
@@ -159,7 +163,7 @@ func GetConditional(raw jsoniter.Any, logger logging.Logger) (*Conditional, erro
 
 			switch trueExpressionNodeType {
 			case "Identifier":
-				cTrueExpression, err = GetIdentifier(trueExpression, logger)
+				cTrueExpression, err = GetIdentifier(gn, trueExpression, logger)
 			default:
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpressionNodeType, c.Src)
 			}
@@ -174,5 +178,18 @@ func GetConditional(raw jsoniter.Any, logger logging.Logger) (*Conditional, erro
 		}
 	}
 
+	gn.AddASTNode(c)
+
 	return c, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (c *Conditional) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if c.condition != nil {
+		switch condition := c.condition.(type) {
+		case *TupleExpression:
+			condition.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

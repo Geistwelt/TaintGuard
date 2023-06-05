@@ -47,6 +47,10 @@ func (su *SourceUnit) Nodes() []ASTNode {
 	return su.nodes
 }
 
+func (su *SourceUnit) NodeID() int {
+	return su.ID
+}
+
 func (su *SourceUnit) AppendNode(node ASTNode) {
 	if su.nodes == nil {
 		su.nodes = make([]ASTNode, 0)
@@ -54,7 +58,7 @@ func (su *SourceUnit) AppendNode(node ASTNode) {
 	su.nodes = append(su.nodes, node)
 }
 
-func GetSourceUnit(raw jsoniter.Any, logger logging.Logger) (*SourceUnit, error) {
+func GetSourceUnit(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*SourceUnit, error) {
 	su := new(SourceUnit)
 	if err := json.Unmarshal([]byte(raw.ToString()), su); err != nil {
 		logger.Errorf("Failed to unmarshal SourceUnit: [%v].", err)
@@ -67,13 +71,13 @@ func GetSourceUnit(raw jsoniter.Any, logger logging.Logger) (*SourceUnit, error)
 		sourceUnitChildType := sourceUnitChild.Get("nodeType").ToString()
 		switch sourceUnitChildType {
 		case "PragmaDirective":
-			pragmaDirective, err := GetPragmaDirective(sourceUnitChild, logger)
+			pragmaDirective, err := GetPragmaDirective(gn, sourceUnitChild, logger)
 			if err != nil {
 				return nil, err
 			}
 			su.AppendNode(pragmaDirective)
 		case "ContractDefinition":
-			contractDefinition, err := GetContractDefinition(sourceUnitChild, logger)
+			contractDefinition, err := GetContractDefinition(gn, sourceUnitChild, logger)
 			if err != nil {
 				return nil, err
 			}
@@ -81,5 +85,7 @@ func GetSourceUnit(raw jsoniter.Any, logger logging.Logger) (*SourceUnit, error)
 		}
 		
 	}
+
+	gn.AddASTNode(su)
 	return su, nil
 }

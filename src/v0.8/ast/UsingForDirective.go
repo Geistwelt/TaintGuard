@@ -57,7 +57,11 @@ func (ufd *UsingForDirective) Nodes() []ASTNode {
 	return nil
 }
 
-func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDirective, error) {
+func (ufd *UsingForDirective) NodeID() int {
+	return ufd.ID
+}
+
+func GetUsingForDirective(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*UsingForDirective, error) {
 	ufd := new(UsingForDirective)
 
 	if err := json.Unmarshal([]byte(raw.ToString()), ufd); err != nil {
@@ -70,7 +74,7 @@ func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDir
 		libraryName := raw.Get("libraryName")
 		switch libraryName.Get("nodeType").ToString() {
 		case "IdentifierPath":
-			ip, err := GetIdentifierPath(libraryName, logger)
+			ip, err := GetIdentifierPath(gn, libraryName, logger)
 			if err != nil {
 				return nil, err
 			}
@@ -85,7 +89,7 @@ func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDir
 		typeName := raw.Get("typeName")
 		switch typeName.Get("nodeType").ToString() {
 		case "ElementaryTypeName":
-			etn, err := GetElementaryTypeName(typeName, logger)
+			etn, err := GetElementaryTypeName(gn, typeName, logger)
 			if err != nil {
 				return nil, err
 			}
@@ -95,6 +99,7 @@ func GetUsingForDirective(raw jsoniter.Any, logger logging.Logger) (*UsingForDir
 		}
 	}
 
+	gn.AddASTNode(ufd)
 
 	return ufd, nil
 }

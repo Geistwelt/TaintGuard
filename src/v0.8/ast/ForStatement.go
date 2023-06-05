@@ -108,7 +108,11 @@ func (fs *ForStatement) Nodes() []ASTNode {
 	return nil
 }
 
-func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, error) {
+func (fs *ForStatement) NodeID() int {
+	return fs.ID
+}
+
+func GetForStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ForStatement, error) {
 	fs := new(ForStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), fs); err != nil {
 		logger.Errorf("Failed to unmarshal ForStatement: [%v].", err)
@@ -125,7 +129,7 @@ func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, er
 
 			switch initializationExpressionNodeType {
 			case "VariableDeclarationStatement":
-				fsInitializationExpression, err = GetVariableDeclarationStatement(initializationExpression, logger)
+				fsInitializationExpression, err = GetVariableDeclarationStatement(gn, initializationExpression, logger)
 			default:
 				logger.Warnf("Unknown initializationExpression nodeType [%s] for ForStatement [src:%s].", initializationExpressionNodeType, fs.Src)
 			}
@@ -150,7 +154,7 @@ func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, er
 
 			switch conditionNodeType {
 			case "BinaryOperation":
-				fsCondition, err = GetBinaryOperation(condition, logger)
+				fsCondition, err = GetBinaryOperation(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for ForStatement [src:%s].", conditionNodeType, fs.Src)
 			}
@@ -175,7 +179,7 @@ func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, er
 
 			switch loopExpressionNodeType {
 			case "ExpressionStatement":
-				fsLoopExpression, err = GetExpressionStatement(loopExpression, logger)
+				fsLoopExpression, err = GetExpressionStatement(gn, loopExpression, logger)
 			default:
 				logger.Warnf("Unknown loopExpression nodeType [%s] for ForStatement [src:%s].", loopExpressionNodeType, fs.Src)
 			}
@@ -200,7 +204,7 @@ func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, er
 
 			switch bodyNodeType {
 			case "Block":
-				fsBody, err = GetBlock(body, logger)
+				fsBody, err = GetBlock(gn, body, logger)
 			default:
 				logger.Warnf("Unknown body nodeType [%s] for ForStatement [src:%s].", bodyNodeType, fs.Src)
 			}
@@ -215,5 +219,39 @@ func GetForStatement(raw jsoniter.Any, logger logging.Logger) (*ForStatement, er
 		}
 	}
 
+	gn.AddASTNode(fs)
+
 	return fs, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (fs *ForStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if fs.initializationExpression != nil {
+		switch initializationExpression := fs.initializationExpression.(type) {
+		case *VariableDeclarationStatement:
+			initializationExpression.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if fs.condition != nil {
+		switch condition := fs.condition.(type) {
+		case *BinaryOperation:
+			condition.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if fs.loopExpression != nil {
+		switch loopExpression := fs.loopExpression.(type) {
+		case *ExpressionStatement:
+			loopExpression.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if fs.body != nil {
+		switch body := fs.body.(type) {
+		case *Block:
+			body.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

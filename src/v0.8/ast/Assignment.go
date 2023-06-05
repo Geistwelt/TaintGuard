@@ -88,7 +88,11 @@ func (a *Assignment) Nodes() []ASTNode {
 	return nil
 }
 
-func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error) {
+func (a *Assignment) NodeID() int {
+	return a.ID
+}
+
+func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Assignment, error) {
 	a := new(Assignment)
 	if err := json.Unmarshal([]byte(raw.ToString()), a); err != nil {
 		logger.Errorf("Failed to unmarshal Assignment: [%v].", err)
@@ -105,9 +109,9 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 
 			switch leftHandSideNodeType {
 			case "Identifier":
-				aLeftHandSide, err = GetIdentifier(leftHandSide, logger)
+				aLeftHandSide, err = GetIdentifier(gn, leftHandSide, logger)
 			case "IndexAccess":
-				aLeftHandSide, err = GetIndexAccess(leftHandSide, logger)
+				aLeftHandSide, err = GetIndexAccess(gn, leftHandSide, logger)
 			default:
 				logger.Warnf("Unknown leftHandSide nodeType [%s] for Assignment [src:%s].", leftHandSideNodeType, a.Src)
 			}
@@ -132,13 +136,13 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 
 			switch rightHandSideNodeType {
 			case "Literal":
-				aRightHandSide, err = GetLiteral(rightHandSide, logger)
+				aRightHandSide, err = GetLiteral(gn, rightHandSide, logger)
 			case "Identifier":
-				aRightHandSide, err = GetIdentifier(rightHandSide, logger)
+				aRightHandSide, err = GetIdentifier(gn, rightHandSide, logger)
 			case "FunctionCall":
-				aRightHandSide, err = GetFunctionCall(rightHandSide, logger)
+				aRightHandSide, err = GetFunctionCall(gn, rightHandSide, logger)
 			case "MemberAccess":
-				aRightHandSide, err = GetMemberAccess(rightHandSide, logger)
+				aRightHandSide, err = GetMemberAccess(gn, rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}
@@ -153,5 +157,33 @@ func GetAssignment(raw jsoniter.Any, logger logging.Logger) (*Assignment, error)
 		}
 	}
 
+	gn.AddASTNode(a)
+
 	return a, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// leftHandSide
+	{
+		if a.leftHandSide != nil {
+			switch leftHandSide := a.leftHandSide.(type) {
+			case *IndexAccess:
+				leftHandSide.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
+
+	//rightHandSide
+	{
+		if a.rightHandSide != nil {
+			switch rightHandSide := a.rightHandSide.(type) {
+			case *FunctionCall:
+				rightHandSide.TraverseFunctionCall(ncp, gn)
+			case *MemberAccess:
+				rightHandSide.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

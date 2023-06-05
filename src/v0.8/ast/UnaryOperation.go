@@ -71,7 +71,11 @@ func (uo *UnaryOperation) Nodes() []ASTNode {
 	return nil
 }
 
-func GetUnaryOperation(raw jsoniter.Any, logger logging.Logger) (*UnaryOperation, error) {
+func (uo *UnaryOperation) NodeID() int {
+	return uo.ID
+}
+
+func GetUnaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*UnaryOperation, error) {
 	uo := new(UnaryOperation)
 	if err := json.Unmarshal([]byte(raw.ToString()), uo); err != nil {
 		logger.Errorf("Failed to unmarshal UnaryOperation: [%v].", err)
@@ -88,11 +92,11 @@ func GetUnaryOperation(raw jsoniter.Any, logger logging.Logger) (*UnaryOperation
 
 			switch subExpressionNodeType {
 			case "Identifier":
-				uoSubExpression, err = GetIdentifier(subExpression, logger)
+				uoSubExpression, err = GetIdentifier(gn, subExpression, logger)
 			case "FunctionCall":
-				uoSubExpression, err = GetFunctionCall(subExpression, logger)
+				uoSubExpression, err = GetFunctionCall(gn, subExpression, logger)
 			case "IndexAccess":
-				uoSubExpression, err = GetIndexAccess(subExpression, logger)
+				uoSubExpression, err = GetIndexAccess(gn, subExpression, logger)
 			default:
 				logger.Warnf("Unknown subExpression nodeType [%s] for UnaryOperation [src:%s].", subExpressionNodeType, uo.Src)
 			}
@@ -107,5 +111,20 @@ func GetUnaryOperation(raw jsoniter.Any, logger logging.Logger) (*UnaryOperation
 		}
 	}
 
+	gn.AddASTNode(uo)
+
 	return uo, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (uo *UnaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if uo.subExpression != nil {
+		switch subExpression := uo.subExpression.(type) {
+		case *FunctionCall:
+			subExpression.TraverseFunctionCall(ncp, gn)
+		case *IndexAccess:
+			subExpression.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

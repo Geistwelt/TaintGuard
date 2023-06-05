@@ -78,7 +78,11 @@ func (m *Mapping) Nodes() []ASTNode {
 	return nil
 }
 
-func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
+func (m *Mapping) NodeID() int {
+	return m.ID
+}
+
+func GetMapping(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 	m := new(Mapping)
 	if err := json.Unmarshal([]byte(raw.ToString()), m); err != nil {
 		logger.Errorf("Failed to unmarshal Mapping: [%v].", err)
@@ -94,7 +98,7 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 
 		switch keyTypeNodeType {
 		case "ElementaryTypeName":
-			mKeyType, err = GetElementaryTypeName(keyType, logger)
+			mKeyType, err = GetElementaryTypeName(gn, keyType, logger)
 		default:
 			logger.Warnf("Unknown keyType nodeType [%s] for Mapping [src:%s].", keyTypeNodeType, m.Src)
 		}
@@ -117,9 +121,9 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 
 		switch valueTypeNodeType {
 		case "ElementaryTypeName":
-			mValueType, err = GetElementaryTypeName(valueType, logger)
+			mValueType, err = GetElementaryTypeName(gn, valueType, logger)
 		case "Mapping":
-			mValueType, err = GetMapping(valueType, logger)
+			mValueType, err = GetMapping(gn, valueType, logger)
 		default:
 			logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueTypeNodeType, m.Src)
 		}
@@ -133,5 +137,26 @@ func GetMapping(raw jsoniter.Any, logger logging.Logger) (*Mapping, error) {
 		}
 	}
 
+	gn.AddASTNode(m)
+
 	return m, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (m *Mapping) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// keyType
+	{
+		
+	}
+
+	// valueType
+	{
+		if m.valueType != nil {
+			switch valueType := m.valueType.(type) {
+			case *Mapping:
+				valueType.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

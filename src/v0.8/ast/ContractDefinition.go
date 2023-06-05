@@ -54,15 +54,15 @@ func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		for _, node := range cd.nodes {
 			switch node.Type() {
 			case "UsingForDirective":
-				code = code + node.SourceCode(true, true, indent + "\t", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
 			case "VariableDeclaration":
-				code = code + node.SourceCode(true, true, indent + "\t", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
 			case "EventDefinition":
-				code = code + node.SourceCode(true, true, indent + "\t", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
 			case "ModifierDefinition":
-				code = code + node.SourceCode(false, true, indent + "\t", logger) + "\n"
+				code = code + node.SourceCode(false, true, indent + "    ", logger) + "\n"
 			case "FunctionDefinition":
-				code = code + node.SourceCode(false, true, indent + "\t", logger) + "\n"
+				code = code + node.SourceCode(false, true, indent + "    ", logger) + "\n"
 			default:
 				logger.Warnf("Unknown nodeType in ContractDefinition: [%s].", node.Type())
 			}
@@ -86,7 +86,11 @@ func (cd *ContractDefinition) Nodes() []ASTNode {
 	return cd.nodes
 }
 
-func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDefinition, error) {
+func (cd *ContractDefinition) NodeID() int {
+	return cd.ID
+}
+
+func GetContractDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ContractDefinition, error) {
 	cd := new(ContractDefinition)
 	if err := json.Unmarshal([]byte(raw.ToString()), cd); err != nil {
 		logger.Errorf("Failed to unmarshal ContractDefinition: [%v].", err)
@@ -103,7 +107,7 @@ func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDe
 				baseContractNodeType := baseContract.Get("nodeType").ToString()
 				switch baseContractNodeType {
 				case "InheritanceSpecifier":
-					bc, err := GetInheritanceSpecifier(baseContract, logger)
+					bc, err := GetInheritanceSpecifier(gn, baseContract, logger)
 					if err != nil {
 						return nil, err
 					}
@@ -128,15 +132,17 @@ func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDe
 
 				switch nodeNodeType {
 				case "UsingForDirective":
-					cdNode, err = GetUsingForDirective(node, logger)
+					cdNode, err = GetUsingForDirective(gn, node, logger)
 				case "VariableDeclaration":
-					cdNode, err = GetVariableDeclaration(node, logger)
+					cdNode, err = GetVariableDeclaration(gn, node, logger)
 				case "EventDefinition":
-					cdNode, err = GetEventDefinition(node, logger)
+					cdNode, err = GetEventDefinition(gn, node, logger)
 				case "ModifierDefinition":
-					cdNode, err = GetModifierDefinition(node, logger)
+					cdNode, err = GetModifierDefinition(gn, node, logger)
 				case "FunctionDefinition":
-					cdNode, err = GetFunctionDefinition(node, logger)
+					cdNode, err = GetFunctionDefinition(gn, node, logger)
+					fd, _ := cdNode.(*FunctionDefinition)
+					fd.MakeSignature(cd.Name, logger)
 				default:
 					logger.Warnf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
 				}
@@ -150,6 +156,8 @@ func GetContractDefinition(raw jsoniter.Any, logger logging.Logger) (*ContractDe
 			}
 		}
 	}
+
+	gn.AddASTNode(cd)
 
 	return cd, nil
 }

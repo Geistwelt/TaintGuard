@@ -127,10 +127,10 @@ func main() {
 
 	switch version {
 	case 0.8:
-		node, err := v08.Run(jsonBytes, logger)
+		_, err := v08.Run(jsonBytes, logger)
 		if err != nil {
 			os.Exit(1)
 		}
-		fmt.Println(node.SourceCode(false, false, "", logger))
+		// fmt.Println(node.SourceCode(false, false, "", logger))
 	}
 }

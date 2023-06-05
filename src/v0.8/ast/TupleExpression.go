@@ -65,7 +65,11 @@ func (te *TupleExpression) Nodes() []ASTNode {
 	return te.components
 }
 
-func GetTupleExpression(raw jsoniter.Any, logger logging.Logger) (*TupleExpression, error) {
+func (te *TupleExpression) NodeID() int {
+	return te.ID
+}
+
+func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*TupleExpression, error) {
 	te := new(TupleExpression)
 	if err := json.Unmarshal([]byte(raw.ToString()), te); err != nil {
 		logger.Errorf("Failed to unmarshal TupleExpression: [%v].", err)
@@ -85,7 +89,7 @@ func GetTupleExpression(raw jsoniter.Any, logger logging.Logger) (*TupleExpressi
 
 				switch componentNodeType {
 				case "BinaryOperation":
-					teComponent, err = GetBinaryOperation(component, logger)
+					teComponent, err = GetBinaryOperation(gn, component, logger)
 				default:
 					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", componentNodeType, te.Src)
 				}
@@ -101,5 +105,20 @@ func GetTupleExpression(raw jsoniter.Any, logger logging.Logger) (*TupleExpressi
 		}
 	}
 
+	gn.AddASTNode(te)
+
 	return te, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (te *TupleExpression) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if len(te.components) > 0 {
+		for _, component := range te.components {
+			switch c := component.(type) {
+			case *BinaryOperation:
+				c.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

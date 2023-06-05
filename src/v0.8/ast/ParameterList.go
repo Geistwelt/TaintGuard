@@ -55,7 +55,11 @@ func (pl *ParameterList) Nodes() []ASTNode {
 	return pl.parameters
 }
 
-func GetParameterList(raw jsoniter.Any, logger logging.Logger) (*ParameterList, error) {
+func (pl *ParameterList) NodeID() int {
+	return pl.ID
+}
+
+func GetParameterList(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ParameterList, error) {
 	pl := new(ParameterList)
 	if err := json.Unmarshal([]byte(raw.ToString()), pl); err != nil {
 		logger.Errorf("Failed to unmarshal ParameterList: [%v].", err)
@@ -75,7 +79,7 @@ func GetParameterList(raw jsoniter.Any, logger logging.Logger) (*ParameterList, 
 
 		switch parameterNodeType {
 		case "VariableDeclaration":
-			plParameter, err = GetVariableDeclaration(parameter, logger)
+			plParameter, err = GetVariableDeclaration(gn, parameter, logger)
 		default:
 			logger.Warnf("Unknown parameter nodeType [%s] for ParameterList [src:%s].", parameterNodeType, pl.Src)
 		}
@@ -88,5 +92,18 @@ func GetParameterList(raw jsoniter.Any, logger logging.Logger) (*ParameterList, 
 		}
 	}
 
+	gn.AddASTNode(pl)
+
 	return pl, nil
+}
+
+func (pl *ParameterList) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if len(pl.parameters) > 0 {
+		for _, parameter := range pl.parameters {
+			switch p := parameter.(type) {
+			case *VariableDeclaration:
+				p.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

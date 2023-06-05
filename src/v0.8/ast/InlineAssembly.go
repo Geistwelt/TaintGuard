@@ -63,7 +63,11 @@ func (ia *InlineAssembly) Nodes() []ASTNode {
 	return nil
 }
 
-func GetInlineAssembly(raw jsoniter.Any, logger logging.Logger) (*InlineAssembly, error) {
+func (ia *InlineAssembly) NodeID() int {
+	return ia.ID
+}
+
+func GetInlineAssembly(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*InlineAssembly, error) {
 	ia := new(InlineAssembly)
 	if err := json.Unmarshal([]byte(raw.ToString()), ia); err != nil {
 		logger.Errorf("Failed to unmarshal InlineAssembly: [%v].", err)
@@ -80,7 +84,7 @@ func GetInlineAssembly(raw jsoniter.Any, logger logging.Logger) (*InlineAssembly
 
 			switch astNodeType {
 			case "YulBlock":
-				iaAST, err = GetYulBlock(ast, logger)
+				iaAST, err = GetYulBlock(gn, ast, logger)
 			default:
 				logger.Warnf("Unknown ast nodeType [%s] for InlineAssembly [src:%s].", astNodeType, ia.Src)
 			}
@@ -95,5 +99,11 @@ func GetInlineAssembly(raw jsoniter.Any, logger logging.Logger) (*InlineAssembly
 		}
 	}
 
+	gn.AddASTNode(ia)
+
 	return ia, nil
+}
+
+func (ia *InlineAssembly) TraverseFunctionCall() {
+	
 }

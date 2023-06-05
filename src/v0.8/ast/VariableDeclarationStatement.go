@@ -76,7 +76,11 @@ func (vds *VariableDeclarationStatement) Nodes() []ASTNode {
 	return vds.declarations
 }
 
-func GetVariableDeclarationStatement(raw jsoniter.Any, logger logging.Logger) (*VariableDeclarationStatement, error) {
+func (vds *VariableDeclarationStatement) NodeID() int {
+	return vds.ID
+}
+
+func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*VariableDeclarationStatement, error) {
 	vds := new(VariableDeclarationStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), vds); err != nil {
 		logger.Errorf("Failed to unmarshal VariableDeclarationStatement: [%v].", err)
@@ -98,7 +102,7 @@ func GetVariableDeclarationStatement(raw jsoniter.Any, logger logging.Logger) (*
 	
 					switch declarationNodeType {
 					case "VariableDeclaration":
-						vdsDeclaration, err = GetVariableDeclaration(declaration, logger)
+						vdsDeclaration, err = GetVariableDeclaration(gn, declaration, logger)
 					default:
 						logger.Warnf("Unknown declaration nodeType [%s] for VariableDeclarationStatement [src:%s].", declarationNodeType, vds.Src)
 					}
@@ -127,13 +131,13 @@ func GetVariableDeclarationStatement(raw jsoniter.Any, logger logging.Logger) (*
 
 			switch initialValueNodeType {
 			case "FunctionCall":
-				vdsInitialValue, err = GetFunctionCall(initialValue, logger)
+				vdsInitialValue, err = GetFunctionCall(gn, initialValue, logger)
 			case "MemberAccess":
-				vdsInitialValue, err = GetMemberAccess(initialValue, logger)
+				vdsInitialValue, err = GetMemberAccess(gn, initialValue, logger)
 			case "BinaryOperation":
-				vdsInitialValue, err = GetBinaryOperation(initialValue, logger)
+				vdsInitialValue, err = GetBinaryOperation(gn, initialValue, logger)
 			case "Literal":
-				vdsInitialValue, err = GetLiteral(initialValue, logger)
+				vdsInitialValue, err = GetLiteral(gn, initialValue, logger)
 			default:
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s].", initialValueNodeType, vds.Src)
 			}
@@ -148,5 +152,31 @@ func GetVariableDeclarationStatement(raw jsoniter.Any, logger logging.Logger) (*
 		}
 	}
 
+	gn.AddASTNode(vds)
+
 	return vds, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if len(vds.declarations) > 0 {
+		for _, declaration := range vds.declarations {
+			switch d := declaration.(type) {
+			case *VariableDeclaration:
+				d.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
+
+	if vds.initialValue != nil {
+		switch initialValue := vds.initialValue.(type) {
+		case *FunctionCall:
+			initialValue.TraverseFunctionCall(ncp, gn)
+		case *MemberAccess:
+			initialValue.TraverseFunctionCall(ncp, gn)
+		case *BinaryOperation:
+			initialValue.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

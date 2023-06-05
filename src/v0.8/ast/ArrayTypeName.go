@@ -51,7 +51,11 @@ func (atn *ArrayTypeName) Nodes() []ASTNode {
 	return nil
 }
 
-func GetArrayTypeName(raw jsoniter.Any, logger logging.Logger) (*ArrayTypeName, error) {
+func (atn *ArrayTypeName) NodeID() int {
+	return atn.ID
+}
+
+func GetArrayTypeName(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ArrayTypeName, error) {
 	atn := new(ArrayTypeName)
 	if err := json.Unmarshal([]byte(raw.ToString()), atn); err != nil {
 		logger.Errorf("Failed to unmarshal ArrayTypeName: [%v].", err)
@@ -68,7 +72,7 @@ func GetArrayTypeName(raw jsoniter.Any, logger logging.Logger) (*ArrayTypeName, 
 
 			switch baseTypeNodeType {
 			case "ElementaryTypeName":
-				atnBaseType, err = GetElementaryTypeName(baseType, logger)
+				atnBaseType, err = GetElementaryTypeName(gn, baseType, logger)
 			default:
 				logger.Warnf("Unknown baseType nodeType [%s] for ArrayTypeName [src:%s].", baseTypeNodeType, atn.Src)
 			}
@@ -82,6 +86,8 @@ func GetArrayTypeName(raw jsoniter.Any, logger logging.Logger) (*ArrayTypeName, 
 			}
 		}
 	}
+
+	gn.AddASTNode(atn)
 
 	return atn, nil
 }

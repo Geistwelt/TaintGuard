@@ -38,12 +38,18 @@ func (ps *PlaceholderStatement) Nodes() []ASTNode {
 	return nil
 }
 
-func GetPlaceholderStatement(raw jsoniter.Any, logger logging.Logger) (*PlaceholderStatement, error) {
+func (ps *PlaceholderStatement) NodeID() int {
+	return ps.ID
+}
+
+func GetPlaceholderStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*PlaceholderStatement, error) {
 	ps := new(PlaceholderStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), ps); err != nil {
 		logger.Errorf("Failed to unmarshal PlaceholderStatement: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal PlaceholderStatement: [%v]", err)
 	}
+
+	gn.AddASTNode(ps)
 
 	return ps, nil
 }

@@ -51,7 +51,11 @@ func (es *EmitStatement) Nodes() []ASTNode {
 	return nil
 }
 
-func GetEmitStatement(raw jsoniter.Any, logger logging.Logger) (*EmitStatement, error) {
+func (es *EmitStatement) NodeID() int {
+	return es.ID
+}
+
+func GetEmitStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*EmitStatement, error) {
 	es := new(EmitStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), es); err != nil {
 		logger.Errorf("Failed to unmarshal EmitStatement: [%v].", err)
@@ -68,7 +72,7 @@ func GetEmitStatement(raw jsoniter.Any, logger logging.Logger) (*EmitStatement, 
 
 			switch eventCallNodeType {
 			case "FunctionCall":
-				esEventCall, err = GetFunctionCall(eventCall, logger)
+				esEventCall, err = GetFunctionCall(gn, eventCall, logger)
 			default:
 				logger.Warnf("Unknown eventCall nodeType [%s] for EmitStatement [src:%s].", eventCallNodeType, es.Src)
 			}
@@ -83,5 +87,18 @@ func GetEmitStatement(raw jsoniter.Any, logger logging.Logger) (*EmitStatement, 
 		}
 	}
 
+	gn.AddASTNode(es)
+
 	return es, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (es *EmitStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if es.eventCall != nil {
+		switch eventCall := es.eventCall.(type) {
+		case *FunctionCall:
+			eventCall.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

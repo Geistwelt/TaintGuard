@@ -100,7 +100,11 @@ func (bo *BinaryOperation) Nodes() []ASTNode {
 	return nil
 }
 
-func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperation, error) {
+func (bo *BinaryOperation) NodeID() int {
+	return bo.ID
+}
+
+func GetBinaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*BinaryOperation, error) {
 	bo := new(BinaryOperation)
 	if err := json.Unmarshal([]byte(raw.ToString()), bo); err != nil {
 		logger.Errorf("Failed to unmarshal BinaryOperation: [%v].", err)
@@ -116,15 +120,15 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 
 			switch leftExpressionNodeType {
 			case "Literal":
-				boLeftExpression, err = GetLiteral(leftExpression, logger)
+				boLeftExpression, err = GetLiteral(gn, leftExpression, logger)
 			case "Identifier":
-				boLeftExpression, err = GetIdentifier(leftExpression, logger)
+				boLeftExpression, err = GetIdentifier(gn, leftExpression, logger)
 			case "BinaryOperation":
-				boLeftExpression, err = GetBinaryOperation(leftExpression, logger)
+				boLeftExpression, err = GetBinaryOperation(gn, leftExpression, logger)
 			case "UnaryOperation":
-				boLeftExpression, err = GetUnaryOperation(leftExpression, logger)
+				boLeftExpression, err = GetUnaryOperation(gn, leftExpression, logger)
 			case "FunctionCall":
-				boLeftExpression, err = GetFunctionCall(leftExpression, logger)
+				boLeftExpression, err = GetFunctionCall(gn, leftExpression, logger)
 			default:
 				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpressionNodeType, bo.Src)
 			}
@@ -148,17 +152,17 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 
 			switch rightExpressionNodeType {
 			case "Identifier":
-				boRightExpression, err = GetIdentifier(rightExpression, logger)
+				boRightExpression, err = GetIdentifier(gn, rightExpression, logger)
 			case "BinaryOperation":
-				boRightExpression, err = GetBinaryOperation(rightExpression, logger)
+				boRightExpression, err = GetBinaryOperation(gn, rightExpression, logger)
 			case "FunctionCall":
-				boRightExpression, err = GetFunctionCall(rightExpression, logger)
+				boRightExpression, err = GetFunctionCall(gn, rightExpression, logger)
 			case "Literal":
-				boRightExpression, err = GetLiteral(rightExpression, logger)
+				boRightExpression, err = GetLiteral(gn, rightExpression, logger)
 			case "UnaryOperation":
-				boRightExpression, err = GetUnaryOperation(rightExpression, logger)
+				boRightExpression, err = GetUnaryOperation(gn, rightExpression, logger)
 			case "MemberAccess":
-				boRightExpression, err = GetMemberAccess(rightExpression, logger)
+				boRightExpression, err = GetMemberAccess(gn, rightExpression, logger)
 			default:
 				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpressionNodeType, bo.Src)
 			}
@@ -172,5 +176,35 @@ func GetBinaryOperation(raw jsoniter.Any, logger logging.Logger) (*BinaryOperati
 		}
 	}
 
+	gn.AddASTNode(bo)
+
 	return bo, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if bo.leftExpression != nil {
+		switch leftExpression := bo.leftExpression.(type) {
+		case *BinaryOperation:
+			leftExpression.TraverseFunctionCall(ncp, gn)
+		case *UnaryOperation:
+			leftExpression.TraverseFunctionCall(ncp, gn)
+		case *FunctionCall:
+			leftExpression.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if bo.rightExpression != nil {
+		switch rightExpression := bo.rightExpression.(type) {
+		case *BinaryOperation:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		case *FunctionCall:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		case *UnaryOperation:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		case *MemberAccess:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

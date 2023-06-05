@@ -74,7 +74,11 @@ func (ya *YulAssignment) Nodes() []ASTNode {
 	return nil
 }
 
-func GetYulAssignment(raw jsoniter.Any, logger logging.Logger) (*YulAssignment, error) {
+func (ya *YulAssignment) NodeID() int {
+	return -1
+}
+
+func GetYulAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulAssignment, error) {
 	ya := new(YulAssignment)
 	if err := json.Unmarshal([]byte(raw.ToString()), ya); err != nil {
 		logger.Errorf("Failed to unmarshal YulAssignment: [%v].", err)
@@ -94,7 +98,7 @@ func GetYulAssignment(raw jsoniter.Any, logger logging.Logger) (*YulAssignment, 
 
 					switch variableNameNodeType {
 					case "YulIdentifier":
-						yaVariableName, err = GetYulIdentifier(variableName, logger)
+						yaVariableName, err = GetYulIdentifier(gn, variableName, logger)
 					default:
 						logger.Warnf("Unknown variableName [%s] for YulIdentifier [src:%s].", variableNameNodeType, ya.Src)
 					}
@@ -123,7 +127,7 @@ func GetYulAssignment(raw jsoniter.Any, logger logging.Logger) (*YulAssignment, 
 
 			switch valueNodeType {
 			case "YulFunctionCall":
-				yaValue, err = GetYulFunctionCall(value, logger)
+				yaValue, err = GetYulFunctionCall(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for YulAssignment [src:%s].", valueNodeType, ya.Src)
 			}

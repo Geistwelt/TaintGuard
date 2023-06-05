@@ -68,7 +68,11 @@ func (r *Return) Nodes() []ASTNode {
 	return nil
 }
 
-func GetReturn(raw jsoniter.Any, logger logging.Logger) (*Return, error) {
+func (r *Return) NodeID() int {
+	return r.ID
+}
+
+func GetReturn(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Return, error) {
 	r := new(Return)
 	if err := json.Unmarshal([]byte(raw.ToString()), r); err != nil {
 		logger.Errorf("Failed to unmarshal Return: [%v].", err)
@@ -85,19 +89,19 @@ func GetReturn(raw jsoniter.Any, logger logging.Logger) (*Return, error) {
 
 			switch expressionNodeType {
 			case "IndexAccess":
-				rExpression, err = GetIndexAccess(expression, logger)
+				rExpression, err = GetIndexAccess(gn, expression, logger)
 			case "Literal":
-				rExpression, err = GetLiteral(expression, logger)
+				rExpression, err = GetLiteral(gn, expression, logger)
 			case "Conditional":
-				rExpression, err = GetConditional(expression, logger)
+				rExpression, err = GetConditional(gn, expression, logger)
 			case "BinaryOperation":
-				rExpression, err = GetBinaryOperation(expression, logger)
+				rExpression, err = GetBinaryOperation(gn, expression, logger)
 			case "MemberAccess":
-				rExpression, err = GetMemberAccess(expression, logger)
+				rExpression, err = GetMemberAccess(gn, expression, logger)
 			case "Identifier":
-				rExpression, err = GetIdentifier(expression, logger)
+				rExpression, err = GetIdentifier(gn, expression, logger)
 			case "FunctionCall":
-				rExpression, err = GetFunctionCall(expression, logger)
+				rExpression, err = GetFunctionCall(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expressionNodeType, r.Src)
 			}
@@ -112,5 +116,29 @@ func GetReturn(raw jsoniter.Any, logger logging.Logger) (*Return, error) {
 		}
 	}
 
+	gn.AddASTNode(r)
+
 	return r, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// expression
+	{
+		if r.expression != nil {
+			switch expression := r.expression.(type) {
+			case *IndexAccess:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *Conditional:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *BinaryOperation:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *MemberAccess:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *FunctionCall:
+				expression.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

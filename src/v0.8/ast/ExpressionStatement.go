@@ -55,7 +55,11 @@ func (es *ExpressionStatement) Nodes() []ASTNode {
 	return nil
 }
 
-func GetExpressionStatement(raw jsoniter.Any, logger logging.Logger) (*ExpressionStatement, error) {
+func (es *ExpressionStatement) NodeID() int {
+	return es.ID
+}
+
+func GetExpressionStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ExpressionStatement, error) {
 	es := new(ExpressionStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), es); err != nil {
 		logger.Errorf("Failed to unmarshal ExpressionStatement: [%v].", err)
@@ -72,11 +76,11 @@ func GetExpressionStatement(raw jsoniter.Any, logger logging.Logger) (*Expressio
 
 			switch expressionNodeType {
 			case "Assignment":
-				esExpression, err = GetAssignment(expression, logger)
+				esExpression, err = GetAssignment(gn, expression, logger)
 			case "FunctionCall":
-				esExpression, err = GetFunctionCall(expression, logger)
+				esExpression, err = GetFunctionCall(gn, expression, logger)
 			case "UnaryOperation":
-				esExpression, err = GetUnaryOperation(expression, logger)
+				esExpression, err = GetUnaryOperation(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for ExpressionStatement [src:%s].", expressionNodeType, es.Src)
 			}
@@ -91,5 +95,22 @@ func GetExpressionStatement(raw jsoniter.Any, logger logging.Logger) (*Expressio
 		}
 	}
 
+	gn.AddASTNode(es)
+
 	return es, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (es *ExpressionStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if es.expression != nil {
+		switch expression := es.expression.(type) {
+		case *Assignment:
+			expression.TraverseFunctionCall(ncp, gn)
+		case *FunctionCall:
+			expression.TraverseFunctionCall(ncp, gn)
+		case *UnaryOperation:
+			expression.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

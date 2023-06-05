@@ -55,7 +55,11 @@ func (ed *EventDefinition) Nodes() []ASTNode {
 	return nil
 }
 
-func GetEventDefinition(raw jsoniter.Any, logger logging.Logger) (*EventDefinition, error) {
+func (ed *EventDefinition) NodeID() int {
+	return ed.ID
+}
+
+func GetEventDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*EventDefinition, error) {
 	ed := new(EventDefinition)
 	if err := json.Unmarshal([]byte(raw.ToString()), ed); err != nil {
 		logger.Errorf("Failed to unmarshal EventDefinition: [%v].", err)
@@ -70,7 +74,7 @@ func GetEventDefinition(raw jsoniter.Any, logger logging.Logger) (*EventDefiniti
 
 		switch parametersNodeType {
 		case "ParameterList":
-			edParameters, err = GetParameterList(parameters, logger)
+			edParameters, err = GetParameterList(gn, parameters, logger)
 		default:
 			logger.Warnf("Unknown parameters nodeType [%s] for EventDefinition [src:%s].", parametersNodeType, ed.Src)
 		}
@@ -83,5 +87,18 @@ func GetEventDefinition(raw jsoniter.Any, logger logging.Logger) (*EventDefiniti
 		}
 	}
 
+	gn.AddASTNode(ed)
+
 	return ed, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (ed *EventDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if ed.parameters != nil {
+		switch parameters := ed.parameters.(type) {
+		case *ParameterList:
+			parameters.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

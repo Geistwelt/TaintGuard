@@ -89,7 +89,11 @@ func (ia *IndexAccess) Nodes() []ASTNode {
 	return nil
 }
 
-func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, error) {
+func (ia *IndexAccess) NodeID() int {
+	return ia.ID
+}
+
+func GetIndexAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*IndexAccess, error) {
 	ia := new(IndexAccess)
 	if err := json.Unmarshal([]byte(raw.ToString()), ia); err != nil {
 		logger.Errorf("Failed to unmarshal IndexAccess: [%v].", err)
@@ -106,9 +110,9 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 
 			switch baseExpressionNodeType {
 			case "Identifier":
-				iaBaseExpression, err = GetIdentifier(baseExpression, logger)
+				iaBaseExpression, err = GetIdentifier(gn, baseExpression, logger)
 			case "IndexAccess":
-				iaBaseExpression, err = GetIndexAccess(baseExpression, logger)
+				iaBaseExpression, err = GetIndexAccess(gn, baseExpression, logger)
 			default:
 				logger.Warnf("Unknown baseExpression [%s] for IndexAccess [src:%s].", baseExpressionNodeType, ia.Src)
 			}
@@ -133,13 +137,13 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 
 			switch indexExpressionNodeType {
 			case "Identifier":
-				iaIndexExpression, err = GetIdentifier(indexExpression, logger)
+				iaIndexExpression, err = GetIdentifier(gn, indexExpression, logger)
 			case "FunctionCall":
-				iaIndexExpression, err = GetFunctionCall(indexExpression, logger)
+				iaIndexExpression, err = GetFunctionCall(gn, indexExpression, logger)
 			case "Literal":
-				iaIndexExpression, err = GetLiteral(indexExpression, logger)
+				iaIndexExpression, err = GetLiteral(gn, indexExpression, logger)
 			case "IndexAccess":
-				iaIndexExpression, err = GetIndexAccess(indexExpression, logger)
+				iaIndexExpression, err = GetIndexAccess(gn, indexExpression, logger)
 			default:
 				logger.Warnf("Unknown indexExpression [%s] for IndexAccess [src:%s].", indexExpressionNodeType, ia.Src)
 			}
@@ -154,5 +158,33 @@ func GetIndexAccess(raw jsoniter.Any, logger logging.Logger) (*IndexAccess, erro
 		}
 	}
 
+	gn.AddASTNode(ia)
+
 	return ia, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// baseExpression
+	{
+		if ia.baseExpression != nil {
+			switch baseExpression := ia.baseExpression.(type) {
+			case *IndexAccess:
+				baseExpression.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
+
+	// indexExpression
+	{
+		if ia.indexExpression != nil {
+			switch indexExpression := ia.indexExpression.(type) {
+			case *FunctionCall:
+				indexExpression.TraverseFunctionCall(ncp, gn)
+			case *IndexAccess:
+				indexExpression.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

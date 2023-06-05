@@ -46,11 +46,18 @@ func (etn *ElementaryTypeName) Nodes() []ASTNode {
 	return nil
 }
 
-func GetElementaryTypeName(raw jsoniter.Any, logger logging.Logger) (*ElementaryTypeName, error) {
+func (etn *ElementaryTypeName) NodeID() int {
+	return etn.ID
+}
+
+func GetElementaryTypeName(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ElementaryTypeName, error) {
 	etn := new(ElementaryTypeName)
 	if err := json.Unmarshal([]byte(raw.ToString()), etn); err != nil {
 		logger.Errorf("Failed to unmarshal ElementaryTypeName: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal ElementaryTypeName: [%v]", err)
 	}
+
+	gn.AddASTNode(etn)
+	
 	return etn, nil
 }

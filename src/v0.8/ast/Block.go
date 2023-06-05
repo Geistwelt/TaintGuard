@@ -22,21 +22,21 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 		for index, statement := range b.statements {
 			switch stat := statement.(type) {
 			case *ExpressionStatement:
-				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *PlaceholderStatement:
-				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *Return:
-				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *EmitStatement:
-				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *IfStatement:
-				code = code + stat.SourceCode(false, true, indent+"\t", logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *VariableDeclarationStatement:
-				code = code + stat.SourceCode(true, true, indent+"\t", logger)
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *InlineAssembly:
-				code = code + stat.SourceCode(false, true, indent+"\t", logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *ForStatement:
-				code = code + stat.SourceCode(false, true, indent+"\t", logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -61,7 +61,11 @@ func (b *Block) Nodes() []ASTNode {
 	return b.statements
 }
 
-func GetBlock(raw jsoniter.Any, logger logging.Logger) (*Block, error) {
+func (b *Block) NodeID() int {
+	return b.ID
+}
+
+func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block, error) {
 	b := new(Block)
 	if err := json.Unmarshal([]byte(raw.ToString()), b); err != nil {
 		logger.Errorf("Failed to unmarshal Block: [%v].", err)
@@ -82,21 +86,21 @@ func GetBlock(raw jsoniter.Any, logger logging.Logger) (*Block, error) {
 
 				switch statementNodeType {
 				case "PlaceholderStatement":
-					bStatement, err = GetPlaceholderStatement(statement, logger)
+					bStatement, err = GetPlaceholderStatement(gn, statement, logger)
 				case "ExpressionStatement":
-					bStatement, err = GetExpressionStatement(statement, logger)
+					bStatement, err = GetExpressionStatement(gn, statement, logger)
 				case "Return":
-					bStatement, err = GetReturn(statement, logger)
+					bStatement, err = GetReturn(gn, statement, logger)
 				case "EmitStatement":
-					bStatement, err = GetEmitStatement(statement, logger)
+					bStatement, err = GetEmitStatement(gn, statement, logger)
 				case "IfStatement":
-					bStatement, err = GetIfStatement(statement, logger)
+					bStatement, err = GetIfStatement(gn, statement, logger)
 				case "VariableDeclarationStatement":
-					bStatement, err = GetVariableDeclarationStatement(statement, logger)
+					bStatement, err = GetVariableDeclarationStatement(gn, statement, logger)
 				case "InlineAssembly":
-					bStatement, err = GetInlineAssembly(statement, logger)
+					bStatement, err = GetInlineAssembly(gn, statement, logger)
 				case "ForStatement":
-					bStatement, err = GetForStatement(statement, logger)
+					bStatement, err = GetForStatement(gn, statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}
@@ -111,5 +115,30 @@ func GetBlock(raw jsoniter.Any, logger logging.Logger) (*Block, error) {
 		}
 	}
 
+	gn.AddASTNode(b)
+
 	return b, nil
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (b *Block) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if len(b.statements) > 0 {
+		for _, statement := range b.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *Return:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *EmitStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *IfStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *VariableDeclarationStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *ForStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

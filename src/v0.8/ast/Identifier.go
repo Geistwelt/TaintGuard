@@ -45,11 +45,18 @@ func (i *Identifier) Nodes() []ASTNode {
 	return nil
 }
 
-func GetIdentifier(raw jsoniter.Any, logger logging.Logger) (*Identifier, error) {
+func (i *Identifier) NodeID() int {
+	return i.ID
+}
+
+func GetIdentifier(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Identifier, error) {
 	i := new(Identifier)
 	if err := json.Unmarshal([]byte(raw.ToString()), i); err != nil {
 		logger.Errorf("Failed to unmarshal for Identifier: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal for Identifier: [%v]", err)
 	}
+
+	gn.AddASTNode(i)
+	
 	return i, nil
 }

@@ -27,6 +27,8 @@ type FunctionDefinition struct {
 	StateMutability  string `json:"stateMutability"`
 	Virtual          bool   `json:"virtual"`
 	Visibility       string `json:"visibility"`
+
+	signature string
 }
 
 func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
@@ -36,72 +38,128 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		code = code + indent
 	}
 
-	code = code + "function" + " " + fd.Name + "("
+	if fd.Kind == "function" {
+		code = code + "function" + " " + fd.Name + "("
 
-	// parameters
-	{
-		if fd.parameters != nil {
-			switch parameters := fd.parameters.(type) {
-			case *ParameterList:
-				code = code + parameters.SourceCode(false, false, indent, logger)
-			default:
-				if parameters != nil {
-					logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parameters.Type(), fd.Src)
-				} else {
-					logger.Warnf("Unknown parameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+		// parameters
+		{
+			if fd.parameters != nil {
+				switch parameters := fd.parameters.(type) {
+				case *ParameterList:
+					code = code + parameters.SourceCode(false, false, indent, logger)
+				default:
+					if parameters != nil {
+						logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parameters.Type(), fd.Src)
+					} else {
+						logger.Warnf("Unknown parameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+					}
 				}
 			}
 		}
-	}
 
-	code = code + ")"
+		code = code + ")"
 
-	// visibility
-	if fd.Visibility != "" {
-		code = code + " " + fd.Visibility
-	}
+		// visibility
+		if fd.Visibility != "" {
+			code = code + " " + fd.Visibility
+		}
 
-	// stateMutability
-	if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
-		code = code + " " + fd.StateMutability
-	}
+		// stateMutability
+		if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
+			code = code + " " + fd.StateMutability
+		}
 
-	// overrides
-	if fd.overrides != nil {
-		switch overrides := fd.overrides.(type) {
-		case *OverrideSpecifier:
-			code = code + " " + overrides.SourceCode(false, false, indent, logger)
-		default:
-			if overrides != nil {
-				logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overrides.Type(), fd.Src)
-			} else {
-				logger.Warnf("Unknown overrides nodeType for FunctionDefinition [src:%s].", fd.Src)
+		// overrides
+		if fd.overrides != nil {
+			switch overrides := fd.overrides.(type) {
+			case *OverrideSpecifier:
+				code = code + " " + overrides.SourceCode(false, false, indent, logger)
+			default:
+				if overrides != nil {
+					logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overrides.Type(), fd.Src)
+				} else {
+					logger.Warnf("Unknown overrides nodeType for FunctionDefinition [src:%s].", fd.Src)
+				}
 			}
 		}
-	}
 
-	// returnParameters
-	if fd.returnParameters != nil {
-		switch returnParameters := fd.returnParameters.(type) {
-		case *ParameterList:
-			rpl := returnParameters.SourceCode(false, false, indent, logger)
-			if rpl != "" {
-				code = code + " " + "retruns" + " " + "(" + rpl + ")"
-			}
-		default:
-			if returnParameters != nil {
-				logger.Warnf("Unknown returnParameters nodeType [%s] for FunctionDefinition [src:%s].", returnParameters.Type(), fd.Src)
-			} else {
-				logger.Warnf("Unknown returnParameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+		// returnParameters
+		if fd.returnParameters != nil {
+			switch returnParameters := fd.returnParameters.(type) {
+			case *ParameterList:
+				rpl := returnParameters.SourceCode(false, false, indent, logger)
+				if rpl != "" {
+					code = code + " " + "retruns" + " " + "(" + rpl + ")"
+				}
+			default:
+				if returnParameters != nil {
+					logger.Warnf("Unknown returnParameters nodeType [%s] for FunctionDefinition [src:%s].", returnParameters.Type(), fd.Src)
+				} else {
+					logger.Warnf("Unknown returnParameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+				}
 			}
 		}
-	}
+	} else if fd.Kind == "constructor" {
+		code = code + "constructor("
 
-	code = code + " " + "{\n"
+		// parameters
+		{
+			if fd.parameters != nil {
+				switch parameters := fd.parameters.(type) {
+				case *ParameterList:
+					code = code + parameters.SourceCode(false, false, indent, logger)
+				default:
+					if parameters != nil {
+						logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parameters.Type(), fd.Src)
+					} else {
+						logger.Warnf("Unknown parameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+					}
+				}
+			}
+		}
+
+		code = code + ")"
+	} else if fd.Kind == "receive" {
+		code = code + "receive("
+
+		// parameters
+		{
+			if fd.parameters != nil {
+				switch parameters := fd.parameters.(type) {
+				case *ParameterList:
+					code = code + parameters.SourceCode(false, false, indent, logger)
+				default:
+					if parameters != nil {
+						logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parameters.Type(), fd.Src)
+					} else {
+						logger.Warnf("Unknown parameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+					}
+				}
+			}
+		}
+
+		code = code + ")"
+
+		// visibility
+		if fd.Visibility != "" {
+			code = code + " " + fd.Visibility
+		}
+
+		// stateMutability
+		if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
+			code = code + " " + fd.StateMutability
+		}
+
+		code = code + " {}"
+
+		return code
+	}
 
 	// body
 	{
 		if fd.body != nil {
+			code = code + " " + "{\n"
+
 			switch body := fd.body.(type) {
 			case *Block:
 				code = code + body.SourceCode(false, false, indent, logger)
@@ -112,16 +170,22 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 					logger.Warnf("Unknown body nodeType for FunctionDefinition [src:%s].", fd.Src)
 				}
 			}
+
+			code = code + "\n"
+
+			if isIndent {
+				code = code + indent
+			}
+
+			code = code + "}"
 		}
 	}
 
-	code = code + "\n"
-
-	if isIndent {
-		code = code + indent
+	if !fd.Implemented {
+		code = code + ";"
 	}
 
-	code = code + "}"
+	logger.Debug(fd.Signature())
 
 	return code
 }
@@ -134,7 +198,11 @@ func (fd *FunctionDefinition) Nodes() []ASTNode {
 	return fd.modifiers
 }
 
-func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDefinition, error) {
+func (fd *FunctionDefinition) NodeID() int {
+	return fd.ID
+}
+
+func GetFunctionDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*FunctionDefinition, error) {
 	fd := new(FunctionDefinition)
 	if err := json.Unmarshal([]byte(raw.ToString()), fd); err != nil {
 		logger.Errorf("Failed to unmarshal FunctionDefinition: [%v].", err)
@@ -151,7 +219,7 @@ func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDe
 
 			switch bodyNodeType {
 			case "Block":
-				fdBody, err = GetBlock(body, logger)
+				fdBody, err = GetBlock(gn, body, logger)
 			default:
 				logger.Warnf("Unknown body nodeType [%s] for FunctionDefinition [src:%s].", bodyNodeType, fd.Src)
 			}
@@ -176,7 +244,7 @@ func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDe
 
 			switch overridesNodeType {
 			case "OverrideSpecifier":
-				fdOverrides, err = GetOverrideSpecifier(overrides, logger)
+				fdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
 			default:
 				logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overridesNodeType, fd.Src)
 			}
@@ -201,7 +269,7 @@ func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDe
 
 			switch parametersNodeType {
 			case "ParameterList":
-				fdParameters, err = GetParameterList(parameters, logger)
+				fdParameters, err = GetParameterList(gn, parameters, logger)
 			default:
 				logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parametersNodeType, fd.Src)
 			}
@@ -226,7 +294,7 @@ func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDe
 
 			switch returnParametersNodeType {
 			case "ParameterList":
-				fdReturnParameters, err = GetParameterList(returnParameters, logger)
+				fdReturnParameters, err = GetParameterList(gn, returnParameters, logger)
 			default:
 				logger.Warnf("Unknown returnParameters nodeType [%s] for FunctionDefinition [src:%s].", returnParametersNodeType, fd.Src)
 			}
@@ -241,5 +309,55 @@ func GetFunctionDefinition(raw jsoniter.Any, logger logging.Logger) (*FunctionDe
 		}
 	}
 
+	gn.AddASTNode(fd)
+
 	return fd, nil
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (fd *FunctionDefinition) MakeSignature(contractName string, logger logging.Logger) {
+	var signature string = contractName
+	if fd.Kind == "function" {
+		signature = signature + "." + fd.Name
+	} else if fd.Kind == "constructor" {
+		signature = signature + "." + "constructor"
+	} else if fd.Kind == "receive" {
+		signature = signature + "." + "receive"
+	}
+
+	signature = signature + "("
+
+	if fd.parameters != nil {
+		switch parameters := fd.parameters.(type) {
+		case *ParameterList:
+			signature = signature + parameters.SourceCode(false, false, "", logger)
+		default:
+			if parameters != nil {
+				logger.Warnf("Unknown parameters nodeType [%s] for FunctionDefinition [src:%s].", parameters.Type(), fd.Src)
+			} else {
+				logger.Warnf("Unknown parameters nodeType for FunctionDefinition [src:%s].", fd.Src)
+			}
+		}
+	}
+
+	signature = signature + ")"
+
+	fd.signature = signature
+}
+
+func (fd *FunctionDefinition) Signature() string {
+	return fd.signature
+}
+
+func (fd *FunctionDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	ncp.SetCaller(fd.Signature(), fd.NodeID())
+
+	// Function call statements are generally inside functions.
+	if fd.body != nil {
+		switch body := fd.body.(type) {
+		case *Block:
+			body.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

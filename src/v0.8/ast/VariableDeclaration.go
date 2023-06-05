@@ -11,6 +11,7 @@ import (
 type VariableDeclaration struct {
 	Constant         bool   `json:"constant"`
 	ID               int    `json:"id"`
+	Indexed          bool   `json:"indexed"`
 	Mutability       string `json:"mutability"`
 	Name             string `json:"name"`
 	NameLocation     string `json:"nameLocation"`
@@ -58,6 +59,10 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 		code = code + " " + vd.Visibility
 	}
 
+	if vd.Indexed {
+		code = code + " " + "indexed"
+	}
+
 	if vd.Name != "" {
 		code = code + " " + vd.Name
 	}
@@ -92,7 +97,11 @@ func (vd *VariableDeclaration) Nodes() []ASTNode {
 	return nil
 }
 
-func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableDeclaration, error) {
+func (vd *VariableDeclaration) NodeID() int {
+	return vd.ID
+}
+
+func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*VariableDeclaration, error) {
 	vd := new(VariableDeclaration)
 	if err := json.Unmarshal([]byte(raw.ToString()), vd); err != nil {
 		logger.Errorf("Failed to unmarshal VariableDeclaration: [%v].", err)
@@ -109,13 +118,13 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 
 		switch typeNameNodeType {
 		case "Mapping":
-			vdTypeName, err = GetMapping(typeName, logger)
+			vdTypeName, err = GetMapping(gn, typeName, logger)
 		case "ElementaryTypeName":
-			vdTypeName, err = GetElementaryTypeName(typeName, logger)
+			vdTypeName, err = GetElementaryTypeName(gn, typeName, logger)
 		case "UserDefinedTypeName":
-			vdTypeName, err = GetUserDefinedTypeName(typeName, logger)
+			vdTypeName, err = GetUserDefinedTypeName(gn, typeName, logger)
 		case "ArrayTypeName":
-			vdTypeName, err = GetArrayTypeName(typeName, logger)
+			vdTypeName, err = GetArrayTypeName(gn, typeName, logger)
 		default:
 			logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeNameNodeType, vd.Src)
 		}
@@ -137,9 +146,9 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 
 			switch valueNodeType {
 			case "Literal":
-				vdValue, err = GetLiteral(value, logger)
+				vdValue, err = GetLiteral(gn, value, logger)
 			case "BinaryOperation":
-				vdValue, err = GetBinaryOperation(value, logger)
+				vdValue, err = GetBinaryOperation(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s]", valueNodeType, vd.Src)
 			}
@@ -151,8 +160,28 @@ func GetVariableDeclaration(raw jsoniter.Any, logger logging.Logger) (*VariableD
 				vd.value = vdValue
 			}
 		}
-		
+
 	}
 
+	gn.AddASTNode(vd)
+
 	return vd, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (vd *VariableDeclaration) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if vd.typeName != nil {
+		switch typeName := vd.typeName.(type) {
+		case *Mapping:
+			typeName.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if vd.value != nil {
+		switch value := vd.value.(type) {
+		case *BinaryOperation:
+			value.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

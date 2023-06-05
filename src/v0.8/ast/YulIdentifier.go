@@ -34,7 +34,11 @@ func (yi *YulIdentifier) Nodes() []ASTNode {
 	return nil
 }
 
-func GetYulIdentifier(raw jsoniter.Any, logger logging.Logger) (*YulIdentifier, error) {
+func (yi *YulIdentifier) NodeID() int {
+	return -1
+}
+
+func GetYulIdentifier(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulIdentifier, error) {
 	yi := new(YulIdentifier)
 	if err := json.Unmarshal([]byte(raw.ToString()), yi); err != nil {
 		logger.Errorf("Failed to unmarshal YulIdentifier: [%v].", err)

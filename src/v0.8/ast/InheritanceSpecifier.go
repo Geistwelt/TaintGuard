@@ -33,7 +33,11 @@ func (is *InheritanceSpecifier) Nodes() []ASTNode {
 	return nil
 }
 
-func GetInheritanceSpecifier(raw jsoniter.Any, logger logging.Logger) (*InheritanceSpecifier, error) {
+func (is *InheritanceSpecifier) NodeID() int {
+	return is.ID
+}
+
+func GetInheritanceSpecifier(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*InheritanceSpecifier, error) {
 	is := new(InheritanceSpecifier)
 	if err := json.Unmarshal([]byte(raw.ToString()), is); err != nil {
 		logger.Error("Failed to unmarshal InheritanceSpecifier: [%v].", err)
@@ -45,7 +49,7 @@ func GetInheritanceSpecifier(raw jsoniter.Any, logger logging.Logger) (*Inherita
 		baseNameNodeType := baseName.Get("nodeType").ToString()
 		switch baseNameNodeType {
 		case "IdentifierPath":
-			is.baseName, err = GetIdentifierPath(baseName, logger)
+			is.baseName, err = GetIdentifierPath(gn, baseName, logger)
 			if err != nil {
 				return nil, err
 			}
@@ -53,5 +57,8 @@ func GetInheritanceSpecifier(raw jsoniter.Any, logger logging.Logger) (*Inherita
 			logger.Warnf("Unknown baseName nodeType: [%s-%s]", baseNameNodeType, baseName.Get("src").ToString())
 		}
 	}
+
+	gn.AddASTNode(is)
+
 	return is, nil
 }

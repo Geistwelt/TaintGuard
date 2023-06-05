@@ -39,12 +39,18 @@ func (os *OverrideSpecifier) Nodes() []ASTNode {
 	return nil
 }
 
-func GetOverrideSpecifier(raw jsoniter.Any, logger logging.Logger) (*OverrideSpecifier, error) {
+func (os *OverrideSpecifier) NodeID() int {
+	return os.ID
+}
+
+func GetOverrideSpecifier(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*OverrideSpecifier, error) {
 	os := new(OverrideSpecifier)
 	if err := json.Unmarshal([]byte(raw.ToString()), os); err != nil {
 		logger.Errorf("Failed to unmarshal OverrideSpecifier: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal OverrideSpecifier: [%v]", err)
 	}
+
+	gn.AddASTNode(os)
 
 	return os, nil
 }

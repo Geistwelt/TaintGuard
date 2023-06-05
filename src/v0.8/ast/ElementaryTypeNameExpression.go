@@ -50,7 +50,11 @@ func (etne *ElementaryTypeNameExpression) Nodes() []ASTNode {
 	return nil
 }
 
-func GetElementaryTypeNameExpression(raw jsoniter.Any, logger logging.Logger) (*ElementaryTypeNameExpression, error) {
+func (etne *ElementaryTypeNameExpression) NodeID() int {
+	return etne.ID
+}
+
+func GetElementaryTypeNameExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*ElementaryTypeNameExpression, error) {
 	etne := new(ElementaryTypeNameExpression)
 	if err := json.Unmarshal([]byte(raw.ToString()), etne); err != nil {
 		logger.Errorf("Failed to unmarshal ElementaryTypeNameExpression: [%v].", err)
@@ -67,7 +71,7 @@ func GetElementaryTypeNameExpression(raw jsoniter.Any, logger logging.Logger) (*
 
 			switch typeNameNodeType {
 			case "ElementaryTypeName":
-				etneTypeName, err = GetElementaryTypeName(typeName, logger)
+				etneTypeName, err = GetElementaryTypeName(gn, typeName, logger)
 			default:
 				logger.Warnf("Unknown typeName nodeType [%s] for ElementaryTypeNameExpression [src:%s].", typeNameNodeType, etne.Src)
 			}
@@ -81,6 +85,8 @@ func GetElementaryTypeNameExpression(raw jsoniter.Any, logger logging.Logger) (*
 			}
 		}
 	}
+
+	gn.AddASTNode(etne)
 
 	return etne, nil
 }

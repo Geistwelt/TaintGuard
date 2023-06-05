@@ -54,7 +54,11 @@ func (udtn *UserDefinedTypeName) Nodes() []ASTNode {
 	return nil
 }
 
-func GetUserDefinedTypeName(raw jsoniter.Any, logger logging.Logger) (*UserDefinedTypeName, error) {
+func (udtn *UserDefinedTypeName) NodeID() int {
+	return udtn.ID
+}
+
+func GetUserDefinedTypeName(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*UserDefinedTypeName, error) {
 	udtn := new(UserDefinedTypeName)
 	if err := json.Unmarshal([]byte(raw.ToString()), udtn); err != nil {
 		logger.Errorf("Failed to unmarshal UserDefinedTypeName: [%v].", err)
@@ -71,7 +75,7 @@ func GetUserDefinedTypeName(raw jsoniter.Any, logger logging.Logger) (*UserDefin
 
 			switch pathNodeNodeType {
 			case "IdentifierPath":
-				udtnPathNode, err = GetIdentifierPath(pathNode, logger)
+				udtnPathNode, err = GetIdentifierPath(gn, pathNode, logger)
 			default:
 				logger.Warnf("Unknown pathNode nodeType [%s] for UserDefinedTypeName [src:%s].", pathNodeNodeType, udtn.Src)
 			}
@@ -84,6 +88,8 @@ func GetUserDefinedTypeName(raw jsoniter.Any, logger logging.Logger) (*UserDefin
 			}
 		}
 	}
+
+	gn.AddASTNode(udtn)
 
 	return udtn, nil
 }

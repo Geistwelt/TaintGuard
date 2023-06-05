@@ -74,7 +74,11 @@ func (yfc *YulFunctionCall) Nodes() []ASTNode {
 	return yfc.arguments
 }
 
-func GetYulFunctionCall(raw jsoniter.Any, logger logging.Logger) (*YulFunctionCall, error) {
+func (yfc *YulFunctionCall) NodeID() int {
+	return -1
+}
+
+func GetYulFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulFunctionCall, error) {
 	yfc := new(YulFunctionCall)
 	if err := json.Unmarshal([]byte(raw.ToString()), yfc); err != nil {
 		logger.Errorf("Failed to unmarshal YulFunctionCall: [%v].", err)
@@ -95,7 +99,7 @@ func GetYulFunctionCall(raw jsoniter.Any, logger logging.Logger) (*YulFunctionCa
 
 				switch argumentNodeType {
 				case "YulIdentifier":
-					yfcArgument, err = GetYulIdentifier(argument, logger)
+					yfcArgument, err = GetYulIdentifier(gn, argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for YulFunctionCall [src:%s].", argumentNodeType, yfc.Src)
 				}
@@ -121,7 +125,7 @@ func GetYulFunctionCall(raw jsoniter.Any, logger logging.Logger) (*YulFunctionCa
 
 			switch functionNameNodeType {
 			case "YulIdentifier":
-				fn, err = GetYulIdentifier(functionName, logger)
+				fn, err = GetYulIdentifier(gn, functionName, logger)
 			default:
 				logger.Warnf("Unknown functionName nodeType [%s] for YulIdentifier [src:%s].", functionNameNodeType, yfc.Src)
 			}

@@ -26,6 +26,8 @@ type FunctionCall struct {
 		TypeIdentifier string `json:"typeIdentifier"`
 		TypeString     string `json:"typeString"`
 	} `json:"typeDescriptions"`
+
+	referencedFunctionDefinition int
 }
 
 func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
@@ -127,8 +129,13 @@ func (fc *FunctionCall) Nodes() []ASTNode {
 	return fc.arguments
 }
 
-func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, error) {
+func (fc *FunctionCall) NodeID() int {
+	return fc.ID
+}
+
+func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*FunctionCall, error) {
 	fc := new(FunctionCall)
+	fc.referencedFunctionDefinition = -1
 	if err := json.Unmarshal([]byte(raw.ToString()), fc); err != nil {
 		logger.Errorf("Failed to unmarshal FunctionCall: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal FunctionCall: [%v]", err)
@@ -144,15 +151,19 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 
 			switch expressionNodeType {
 			case "Identifier":
-				fcExpression, err = GetIdentifier(expression, logger)
+				fcExpression, err = GetIdentifier(gn, expression, logger)
+				identifier, _ := fcExpression.(*Identifier)
+				fc.referencedFunctionDefinition = identifier.ReferencedDeclaration
 			case "MemberAccess":
-				fcExpression, err = GetMemberAccess(expression, logger)
+				fcExpression, err = GetMemberAccess(gn, expression, logger)
+				memberAccess, _ := fcExpression.(*MemberAccess)
+				fc.referencedFunctionDefinition = memberAccess.ReferencedDeclaration
 			case "ElementaryTypeNameExpression":
-				fcExpression, err = GetElementaryTypeNameExpression(expression, logger)
+				fcExpression, err = GetElementaryTypeNameExpression(gn, expression, logger)
 			case "NewExpression":
-				fcExpression, err = GetNewExpression(expression, logger)
+				fcExpression, err = GetNewExpression(gn, expression, logger)
 			case "FunctionCallOptions":
-				fcExpression, err = GetFunctionCallOptions(expression, logger)
+				fcExpression, err = GetFunctionCallOptions(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expressionNodeType, fc.Src)
 			}
@@ -181,21 +192,21 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 
 				switch argumentNodeType {
 				case "FunctionCall":
-					fcArgument, err = GetFunctionCall(argument, logger)
+					fcArgument, err = GetFunctionCall(gn, argument, logger)
 				case "Identifier":
-					fcArgument, err = GetIdentifier(argument, logger)
+					fcArgument, err = GetIdentifier(gn, argument, logger)
 				case "Literal":
-					fcArgument, err = GetLiteral(argument, logger)
+					fcArgument, err = GetLiteral(gn, argument, logger)
 				case "BinaryOperation":
-					fcArgument, err = GetBinaryOperation(argument, logger)
+					fcArgument, err = GetBinaryOperation(gn, argument, logger)
 				case "MemberAccess":
-					fcArgument, err = GetMemberAccess(argument, logger)
+					fcArgument, err = GetMemberAccess(gn, argument, logger)
 				case "UnaryOperation":
-					fcArgument, err = GetUnaryOperation(argument, logger)
+					fcArgument, err = GetUnaryOperation(gn, argument, logger)
 				case "Conditional":
-					fcArgument, err = GetConditional(argument, logger)
+					fcArgument, err = GetConditional(gn, argument, logger)
 				case "ElementaryTypeNameExpression":
-					fcArgument, err = GetElementaryTypeNameExpression(argument, logger)
+					fcArgument, err = GetElementaryTypeNameExpression(gn, argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", argumentNodeType, fc.Src)
 				}
@@ -211,5 +222,23 @@ func GetFunctionCall(raw jsoniter.Any, logger logging.Logger) (*FunctionCall, er
 		}
 	}
 
+	gn.AddASTNode(fc)
+
 	return fc, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (fc *FunctionCall) ReferencedFunctionDefinition() int {
+	return fc.referencedFunctionDefinition
+}
+
+func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if fc.ReferencedFunctionDefinition() != -1 {
+		fd := gn.Functions()[fc.ReferencedFunctionDefinition()]
+		function, ok := fd.(*FunctionDefinition)
+		if ok {
+			ncp.SetCallee(function.Signature(), fc.ReferencedFunctionDefinition())
+		}
+	}
 }

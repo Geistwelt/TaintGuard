@@ -78,7 +78,11 @@ func (is *IfStatement) Nodes() []ASTNode {
 	return nil
 }
 
-func GetIfStatement(raw jsoniter.Any, logger logging.Logger) (*IfStatement, error) {
+func (is *IfStatement) NodeID() int {
+	return is.ID
+}
+
+func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*IfStatement, error) {
 	is := new(IfStatement)
 	if err := json.Unmarshal([]byte(raw.ToString()), is); err != nil {
 		logger.Errorf("Failed to unmarshal IfStatement: [%v].", err)
@@ -95,7 +99,7 @@ func GetIfStatement(raw jsoniter.Any, logger logging.Logger) (*IfStatement, erro
 
 			switch conditionNodeType {
 			case "BinaryOperation":
-				isCondition, err = GetBinaryOperation(condition, logger)
+				isCondition, err = GetBinaryOperation(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for IfStatement [src:%s].", conditionNodeType, is.Src)
 			}
@@ -120,7 +124,7 @@ func GetIfStatement(raw jsoniter.Any, logger logging.Logger) (*IfStatement, erro
 
 			switch trueBodyNodeType {
 			case "Block":
-				isTrueBody, err = GetBlock(trueBody, logger)
+				isTrueBody, err = GetBlock(gn, trueBody, logger)
 			default:
 				logger.Warnf("Unknown trueBody [%s] for IfStatement [src:%s].", trueBodyNodeType, is.Src)
 			}
@@ -135,5 +139,31 @@ func GetIfStatement(raw jsoniter.Any, logger logging.Logger) (*IfStatement, erro
 		}
 	}
 
+	gn.AddASTNode(is)
+
 	return is, nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	// condition
+	{
+		if is.condition != nil {
+			switch condition := is.condition.(type) {
+			case *BinaryOperation:
+				condition.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
+
+	// trueBody
+	{
+		if is.trueBody != nil {
+			switch trueBody := is.trueBody.(type) {
+			case *Block:
+				trueBody.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
 }

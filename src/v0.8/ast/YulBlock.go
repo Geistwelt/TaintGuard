@@ -51,7 +51,11 @@ func (yb *YulBlock) Nodes() []ASTNode {
 	return yb.statements
 }
 
-func GetYulBlock(raw jsoniter.Any, logger logging.Logger) (*YulBlock, error) {
+func (yb *YulBlock) NodeID() int {
+	return -1
+}
+
+func GetYulBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulBlock, error) {
 	yb := new(YulBlock)
 	if err := json.Unmarshal([]byte(raw.ToString()), yb); err != nil {
 		logger.Errorf("Failed to unmarshal YulBlock: [%v].", err)
@@ -73,7 +77,7 @@ func GetYulBlock(raw jsoniter.Any, logger logging.Logger) (*YulBlock, error) {
 
 					switch statementNodeType {
 					case "YulAssignment":
-						ybStatement, err = GetYulAssignment(statement, logger)
+						ybStatement, err = GetYulAssignment(gn, statement, logger)
 					default:
 						logger.Warnf("Unknown statement nodeType [%s] for YulBlock [src:%s].", statementNodeType, yb.Src)
 					}

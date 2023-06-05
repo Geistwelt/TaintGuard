@@ -57,12 +57,18 @@ func (l *Literal) Nodes() []ASTNode {
 	return nil
 }
 
-func GetLiteral(raw jsoniter.Any, logger logging.Logger) (*Literal, error) {
+func (l *Literal) NodeID() int {
+	return l.ID
+}
+
+func GetLiteral(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Literal, error) {
 	l := new(Literal)
 	if err := json.Unmarshal([]byte(raw.ToString()), l); err != nil {
 		logger.Errorf("Failed to unmarshal for Literal: [%s].", err)
 		return nil, fmt.Errorf("failed to unmarshal for Literal: [%s]", err)
 	}
+
+	gn.AddASTNode(l)
 
 	return l, nil
 }

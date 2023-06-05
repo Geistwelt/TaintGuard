@@ -38,11 +38,19 @@ func (ip *IdentifierPath) Nodes() []ASTNode {
 	return nil
 }
 
-func GetIdentifierPath(raw jsoniter.Any, logger logging.Logger) (*IdentifierPath, error) {
+func (ip *IdentifierPath) NodeID() int {
+	return ip.ID
+}
+
+
+func GetIdentifierPath(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*IdentifierPath, error) {
 	ip := new(IdentifierPath)
 	if err := json.Unmarshal([]byte(raw.ToString()), ip); err != nil {
 		logger.Errorf("Failed to unmarshal IdentifierPath: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal IdentifierPath: [%v]", err)
 	}
+
+	gn.AddASTNode(ip)
+	
 	return ip, nil
 }
