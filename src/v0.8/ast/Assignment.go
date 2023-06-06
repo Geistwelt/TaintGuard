@@ -69,6 +69,8 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			case *BinaryOperation:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *IndexAccess:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if rightHandSide != nil {
 					logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSide.Type(), a.Src)
@@ -155,6 +157,8 @@ func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*A
 				aRightHandSide, err = GetMemberAccess(gn, rightHandSide, logger)
 			case "BinaryOperation":
 				aRightHandSide, err = GetBinaryOperation(gn, rightHandSide, logger)
+			case "IndexAccess":
+				aRightHandSide, err = GetIndexAccess(gn, rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}
@@ -198,6 +202,8 @@ func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) 
 			case *MemberAccess:
 				rightHandSide.TraverseFunctionCall(ncp, gn)
 			case *BinaryOperation:
+				rightHandSide.TraverseFunctionCall(ncp, gn)
+			case *IndexAccess:
 				rightHandSide.TraverseFunctionCall(ncp, gn)
 			}
 		}

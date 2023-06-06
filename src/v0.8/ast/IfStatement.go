@@ -58,9 +58,9 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 			case *Block:
 				code = code + trueBody.SourceCode(false, true, indent, logger)
 			case *ExpressionStatement:
-				code = code + trueBody.SourceCode(false, false, indent, logger)
+				code = code + trueBody.SourceCode(true, true, indent, logger)
 			case *RevertStatement:
-				code = code + trueBody.SourceCode(false, false, indent, logger)
+				code = code + trueBody.SourceCode(true, true, indent, logger)
 			default:
 				if trueBody != nil {
 					logger.Warnf("Unknown trueBody nodeType [%s] for IfStatement [src:%s].", trueBody.Type(), is.Src)

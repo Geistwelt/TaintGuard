@@ -82,6 +82,10 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
 		case *MemberAccess:
 			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
+		case *TupleExpression:
+			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
+		case *IndexAccess:
+			code = code + " " + rightExpression.SourceCode(false, false, indent, logger)
 		default:
 			if rightExpression != nil {
 				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpression.Type(), bo.Src)
@@ -175,6 +179,10 @@ func GetBinaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 				boRightExpression, err = GetUnaryOperation(gn, rightExpression, logger)
 			case "MemberAccess":
 				boRightExpression, err = GetMemberAccess(gn, rightExpression, logger)
+			case "TupleExpression":
+				boRightExpression, err = GetTupleExpression(gn, rightExpression, logger)
+			case "IndexAccess":
+				boRightExpression, err = GetIndexAccess(gn, rightExpression, logger)
 			default:
 				logger.Warnf("Unknown rightExpression nodeType [%s] for BinaryOperation [src:%s].", rightExpressionNodeType, bo.Src)
 			}
@@ -220,6 +228,10 @@ func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalN
 		case *UnaryOperation:
 			rightExpression.TraverseFunctionCall(ncp, gn)
 		case *MemberAccess:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		case *TupleExpression:
+			rightExpression.TraverseFunctionCall(ncp, gn)
+		case *IndexAccess:
 			rightExpression.TraverseFunctionCall(ncp, gn)
 		}
 	}

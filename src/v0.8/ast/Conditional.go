@@ -38,6 +38,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 			code = code + condition.SourceCode(false, false, indent, logger)
 		case *BinaryOperation:
 			code = code + condition.SourceCode(false, false, indent, logger)
+		case *Identifier:
+			code = code + condition.SourceCode(false, false, indent, logger)
 		default:
 			if condition != nil {
 				logger.Warnf("Unknown condition nodeType [%s] for Conditional [src:%s].", condition.Type(), c.Src)
@@ -75,6 +77,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 		case *Identifier:
 			code = code + falseExpression.SourceCode(false, false, indent, logger)
 		case *FunctionCall:
+			code = code + falseExpression.SourceCode(false, false, indent, logger)
+		case *Literal:
 			code = code + falseExpression.SourceCode(false, false, indent, logger)
 		default:
 			if falseExpression != nil {
@@ -122,6 +126,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				cCondition, err = GetTupleExpression(gn, condition, logger)
 			case "BinaryOperation":
 				cCondition, err = GetBinaryOperation(gn, condition, logger)
+			case "Identifier":
+				cCondition, err = GetIdentifier(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for Conditional [src:%s].", conditionNodeType, c.Src)
 			}
@@ -149,6 +155,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				cFalseExpression, err = GetIdentifier(gn, falseExpression, logger)
 			case "FunctionCall":
 				cFalseExpression, err = GetFunctionCall(gn, falseExpression, logger)
+			case "Literal":
+				cFalseExpression, err = GetLiteral(gn, falseExpression, logger)
 			default:
 				logger.Warnf("Unknown faleExpression nodeType [%s] for Conditional [src:%s].", falseExpressionNodeType, c.Src)
 			}

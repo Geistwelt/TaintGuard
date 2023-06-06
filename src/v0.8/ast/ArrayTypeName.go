@@ -29,6 +29,8 @@ func (atn *ArrayTypeName) SourceCode(isSc bool, isIndent bool, indent string, lo
 		switch baseType := atn.baseType.(type) {
 		case *ElementaryTypeName:
 			code = code + baseType.SourceCode(false, false, indent, logger)
+		case *UserDefinedTypeName:
+			code = code + baseType.SourceCode(false, false, indent, logger)
 		default:
 			if baseType != nil {
 				logger.Warnf("Unknown baseType nodeType [%s] for ArrayTypeName [src:%s].", baseType.Type(), atn.Src)
@@ -73,6 +75,8 @@ func GetArrayTypeName(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) 
 			switch baseTypeNodeType {
 			case "ElementaryTypeName":
 				atnBaseType, err = GetElementaryTypeName(gn, baseType, logger)
+			case "UserDefinedTypeName":
+				atnBaseType, err = GetUserDefinedTypeName(gn, baseType, logger)
 			default:
 				logger.Warnf("Unknown baseType nodeType [%s] for ArrayTypeName [src:%s].", baseTypeNodeType, atn.Src)
 			}

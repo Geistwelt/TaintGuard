@@ -40,6 +40,8 @@ func (ne *NewExpression) SourceCode(isSc bool, isIndent bool, indent string, log
 		switch typeName := ne.typeName.(type) {
 		case *ArrayTypeName:
 			code = code + " " + typeName.SourceCode(false, false, indent, logger)
+		case *ElementaryTypeName:
+			code = code + " " + typeName.SourceCode(false, false, indent, logger)
 		default:
 			if typeName != nil {
 				logger.Warnf("Unknown typeName nodeType [%s] for NewExpression [src:%s].", typeName.Type(), ne.Src)
@@ -86,6 +88,8 @@ func GetNewExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) 
 			switch typeNameNodeType {
 			case "ArrayTypeName":
 				neTypeName, err = GetArrayTypeName(gn, typeName, logger)
+			case "ElementaryTypeName":
+				neTypeName, err = GetElementaryTypeName(gn, typeName, logger)
 			default:
 				logger.Warnf("Unknown typeName nodeType [%s] for NewExpression [src:%s].", typeNameNodeType, ne.Src)
 			}

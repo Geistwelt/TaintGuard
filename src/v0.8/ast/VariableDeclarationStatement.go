@@ -63,6 +63,10 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		case *IndexAccess:
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
+		case *TupleExpression:
+			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
+		case *Identifier:
+			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		default:
 			if initialValue != nil {
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s]", initialValue.Type(), vds.Src)
@@ -126,6 +130,7 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 						vds.declarations = append(vds.declarations, vdsDeclaration)
 					}
 				} else {
+					// TODO NULL
 					logger.Warnf("Declaration in VariableDeclarationStatement [src:%s] should not be nil.", vds.Src)
 				}
 			}
@@ -151,6 +156,10 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 				vdsInitialValue, err = GetLiteral(gn, initialValue, logger)
 			case "IndexAccess":
 				vdsInitialValue, err = GetIndexAccess(gn, initialValue, logger)
+			case "TupleExpression":
+				vdsInitialValue, err = GetTupleExpression(gn, initialValue, logger)
+			case "Identifier":
+				vdsInitialValue, err = GetIdentifier(gn, initialValue, logger)
 			default:
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s].", initialValueNodeType, vds.Src)
 			}
@@ -191,6 +200,8 @@ func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPat
 		case *BinaryOperation:
 			initialValue.TraverseFunctionCall(ncp, gn)
 		case *IndexAccess:
+			initialValue.TraverseFunctionCall(ncp, gn)
+		case *TupleExpression:
 			initialValue.TraverseFunctionCall(ncp, gn)
 		}
 	}

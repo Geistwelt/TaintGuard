@@ -41,6 +41,8 @@ func (te *TupleExpression) SourceCode(isSc bool, isIndent bool, indent string, l
 				code = code + c.SourceCode(false, false, indent, logger)
 			case *Identifier:
 				code = code + c.SourceCode(false, false, indent, logger)
+			case *Literal:
+				code = code + c.SourceCode(false, false, indent, logger)
 			default:
 				if c != nil {
 					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", c.Type(), te.Src)
@@ -98,6 +100,8 @@ func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 					teComponent, err = GetElementaryTypeNameExpression(gn, component, logger)
 				case "Identifier":
 					teComponent, err = GetIdentifier(gn, component, logger)
+				case "Literal":
+					teComponent, err = GetLiteral(gn, component, logger)
 				default:
 					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", componentNodeType, te.Src)
 				}
