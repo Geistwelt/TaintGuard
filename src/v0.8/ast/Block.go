@@ -37,6 +37,14 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *ForStatement:
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *RevertStatement:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
+			case *Block:
+				code = code + indent + "    " + "{" + "\n" + stat.SourceCode(false, true, indent+"    ", logger) + "\n" + indent + "    " + "}"
+			case *UncheckedBlock:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *WhileStatement:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -101,6 +109,14 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 					bStatement, err = GetInlineAssembly(gn, statement, logger)
 				case "ForStatement":
 					bStatement, err = GetForStatement(gn, statement, logger)
+				case "RevertStatement":
+					bStatement, err = GetRevertStatement(gn, statement, logger)
+				case "Block":
+					bStatement, err = GetBlock(gn, statement, logger)
+				case "UncheckedBlock":
+					bStatement, err = GetUncheckedBlock(gn, statement, logger)
+				case "WhileStatement":
+					bStatement, err = GetWhileStatement(gn, statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}
@@ -137,6 +153,14 @@ func (b *Block) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
 			case *VariableDeclarationStatement:
 				stat.TraverseFunctionCall(ncp, gn)
 			case *ForStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *RevertStatement:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *Block:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *UncheckedBlock:
+				stat.TraverseFunctionCall(ncp, gn)
+			case *WhileStatement:
 				stat.TraverseFunctionCall(ncp, gn)
 			}
 		}

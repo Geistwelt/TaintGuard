@@ -39,6 +39,10 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 				code = code + leftHandSide.SourceCode(false, false, indent, logger)
 			case *IndexAccess:
 				code = code + leftHandSide.SourceCode(false, false, indent, logger)
+			case *TupleExpression:
+				code = code + leftHandSide.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + leftHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if leftHandSide != nil {
 					logger.Warnf("Unknown leftHandSide nodeType [%s] for Assignment [src:%s].", leftHandSide.Type(), a.Src)
@@ -62,6 +66,8 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 			case *FunctionCall:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			case *MemberAccess:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *BinaryOperation:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if rightHandSide != nil {
@@ -112,6 +118,10 @@ func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*A
 				aLeftHandSide, err = GetIdentifier(gn, leftHandSide, logger)
 			case "IndexAccess":
 				aLeftHandSide, err = GetIndexAccess(gn, leftHandSide, logger)
+			case "TupleExpression":
+				aLeftHandSide, err = GetTupleExpression(gn, leftHandSide, logger)
+			case "MemberAccess":
+				aLeftHandSide, err = GetMemberAccess(gn, leftHandSide, logger)
 			default:
 				logger.Warnf("Unknown leftHandSide nodeType [%s] for Assignment [src:%s].", leftHandSideNodeType, a.Src)
 			}
@@ -143,6 +153,8 @@ func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*A
 				aRightHandSide, err = GetFunctionCall(gn, rightHandSide, logger)
 			case "MemberAccess":
 				aRightHandSide, err = GetMemberAccess(gn, rightHandSide, logger)
+			case "BinaryOperation":
+				aRightHandSide, err = GetBinaryOperation(gn, rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}
@@ -171,6 +183,8 @@ func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) 
 			switch leftHandSide := a.leftHandSide.(type) {
 			case *IndexAccess:
 				leftHandSide.TraverseFunctionCall(ncp, gn)
+			case *MemberAccess:
+				leftHandSide.TraverseFunctionCall(ncp, gn)
 			}
 		}
 	}
@@ -182,6 +196,8 @@ func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) 
 			case *FunctionCall:
 				rightHandSide.TraverseFunctionCall(ncp, gn)
 			case *MemberAccess:
+				rightHandSide.TraverseFunctionCall(ncp, gn)
+			case *BinaryOperation:
 				rightHandSide.TraverseFunctionCall(ncp, gn)
 			}
 		}

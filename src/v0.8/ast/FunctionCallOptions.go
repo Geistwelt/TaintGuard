@@ -60,6 +60,10 @@ func (fco *FunctionCallOptions) SourceCode(isSc bool, isIndent bool, indent stri
 		switch opt := option.(type) {
 		case *MemberAccess:
 			code = code + name + ": " + opt.SourceCode(false, false, indent, logger)
+		case *Identifier:
+			code = code + name + ": " + opt.SourceCode(false, false, indent, logger)
+		case *BinaryOperation:
+			code = code + name + ": " + opt.SourceCode(false, false, indent, logger)
 		default:
 			if opt != nil {
 				logger.Warnf("Unknown option nodeType [%s] for FunctionCallOptions [src:%s].", opt.Type(), fco.Src)
@@ -139,6 +143,10 @@ func GetFunctionCallOptions(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 					switch optionNodeType {
 					case "MemberAccess":
 						fcoOption, err = GetMemberAccess(gn, option, logger)
+					case "Identifier":
+						fcoOption, err = GetIdentifier(gn, option, logger)
+					case "BinaryOperation":
+						fcoOption, err = GetBinaryOperation(gn, option, logger)
 					default:
 						logger.Warnf("Unknown option nodeType [%s] for FunctionCallOptions [src:%s].", optionNodeType, fco.Src)
 					}
@@ -162,6 +170,20 @@ func GetFunctionCallOptions(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (fco *FunctionCallOptions) TraverseFunctionCall() {
-	
+func (fco *FunctionCallOptions) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+	if fco.expression != nil {
+		switch expression := fco.expression.(type) {
+		case *MemberAccess:
+			expression.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	for _, option := range fco.options {
+		switch opt := option.(type) {
+		case *MemberAccess:
+			opt.TraverseFunctionCall(ncp, gn)
+		case *BinaryOperation:
+			opt.TraverseFunctionCall(ncp, gn)
+		}
+	}
 }

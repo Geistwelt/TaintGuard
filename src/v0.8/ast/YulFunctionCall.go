@@ -46,6 +46,10 @@ func (yfc *YulFunctionCall) SourceCode(isSc bool, isIndent bool, indent string, 
 				switch arg := argument.(type) {
 				case *YulIdentifier:
 					code = code + arg.SourceCode(false, false, indent, logger)
+				case *YulLiteral:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *YulFunctionCall:
+					code = code + arg.SourceCode(false, false, indent, logger)
 				default:
 					if arg != nil {
 						logger.Warnf("Unknown argument nodeType [%s] for YulFunctionCall [src:%s].", arg.Type(), yfc.Src)
@@ -100,6 +104,10 @@ func GetYulFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 				switch argumentNodeType {
 				case "YulIdentifier":
 					yfcArgument, err = GetYulIdentifier(gn, argument, logger)
+				case "YulLiteral":
+					yfcArgument, err = GetYulLiteral(gn, argument, logger)
+				case "YulFunctionCall":
+					yfcArgument, err = GetYulFunctionCall(gn, argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for YulFunctionCall [src:%s].", argumentNodeType, yfc.Src)
 				}

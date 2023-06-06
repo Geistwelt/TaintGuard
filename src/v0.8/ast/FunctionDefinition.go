@@ -185,7 +185,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		code = code + ";"
 	}
 
-	logger.Debug(fd.Signature())
+	// logger.Debug(fd.Signature())
 
 	return code
 }

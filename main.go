@@ -140,7 +140,7 @@ func main() {
 			os.Exit(1)
 		}
 		code := node.SourceCode(false, false, "", logger)
-		f, err := os.OpenFile("test/0.sol", os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
+		f, err := os.OpenFile("test/0.sol", os.O_CREATE | os.O_TRUNC | os.O_RDWR, 0666)
 		if err != nil {
 			fmt.Println("Failed to open file test/0.sol.")
 			os.Exit(1)

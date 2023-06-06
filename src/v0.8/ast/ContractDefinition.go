@@ -54,15 +54,17 @@ func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		for _, node := range cd.nodes {
 			switch node.Type() {
 			case "UsingForDirective":
-				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent+"    ", logger) + "\n"
 			case "VariableDeclaration":
-				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent+"    ", logger) + "\n"
 			case "EventDefinition":
-				code = code + node.SourceCode(true, true, indent + "    ", logger) + "\n"
+				code = code + node.SourceCode(true, true, indent+"    ", logger) + "\n"
 			case "ModifierDefinition":
-				code = code + node.SourceCode(false, true, indent + "    ", logger) + "\n"
+				code = code + node.SourceCode(false, true, indent+"    ", logger) + "\n"
 			case "FunctionDefinition":
-				code = code + node.SourceCode(false, true, indent + "    ", logger) + "\n"
+				code = code + node.SourceCode(false, true, indent+"    ", logger) + "\n"
+			case "StructDefinition":
+				code = code + node.SourceCode(false, true, indent+"    ", logger) + "\n"
 			default:
 				logger.Warnf("Unknown nodeType in ContractDefinition: [%s].", node.Type())
 			}
@@ -143,6 +145,8 @@ func GetContractDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 					cdNode, err = GetFunctionDefinition(gn, node, logger)
 					fd, _ := cdNode.(*FunctionDefinition)
 					fd.MakeSignature(cd.Name, logger)
+				case "StructDefinition":
+					cdNode, err = GetStructDefinition(gn, node, logger)
 				default:
 					logger.Warnf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
 				}

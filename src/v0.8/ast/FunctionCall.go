@@ -98,6 +98,10 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					code = code + arg.SourceCode(false, false, indent, logger)
 				case *ElementaryTypeNameExpression:
 					code = code + arg.SourceCode(false, false, indent, logger)
+				case *TupleExpression:
+					code = code + arg.SourceCode(false, false, indent, logger)
+				case *IndexAccess:
+					code = code + arg.SourceCode(false, false, indent, logger)
 				default:
 					if arg != nil {
 						logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", arg.Type(), fc.Src)
@@ -207,6 +211,10 @@ func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 					fcArgument, err = GetConditional(gn, argument, logger)
 				case "ElementaryTypeNameExpression":
 					fcArgument, err = GetElementaryTypeNameExpression(gn, argument, logger)
+				case "TupleExpression":
+					fcArgument, err = GetTupleExpression(gn, argument, logger)
+				case "IndexAccess":
+					fcArgument, err = GetIndexAccess(gn, argument, logger)
 				default:
 					logger.Warnf("Unknown argument nodeType [%s] for FunctionCall [src:%s].", argumentNodeType, fc.Src)
 				}

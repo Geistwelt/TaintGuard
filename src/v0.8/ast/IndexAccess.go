@@ -38,6 +38,8 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 				code = code + baseExpression.SourceCode(false, false, indent, logger)
 			case *IndexAccess:
 				code = code + baseExpression.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + baseExpression.SourceCode(false, false, indent, logger)
 			default:
 				if baseExpression != nil {
 					logger.Warnf("Unknown baseExpression nodeType [%s] for IndexAccess [src:%s].", baseExpression.Type(), ia.Src)
@@ -61,6 +63,8 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 			case *Literal:
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			case *IndexAccess:
+				code = code + indexExpression.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			default:
 				if indexExpression != nil {
@@ -113,6 +117,8 @@ func GetIndexAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				iaBaseExpression, err = GetIdentifier(gn, baseExpression, logger)
 			case "IndexAccess":
 				iaBaseExpression, err = GetIndexAccess(gn, baseExpression, logger)
+			case "MemberAccess":
+				iaBaseExpression, err = GetMemberAccess(gn, baseExpression, logger)
 			default:
 				logger.Warnf("Unknown baseExpression [%s] for IndexAccess [src:%s].", baseExpressionNodeType, ia.Src)
 			}
@@ -144,6 +150,8 @@ func GetIndexAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				iaIndexExpression, err = GetLiteral(gn, indexExpression, logger)
 			case "IndexAccess":
 				iaIndexExpression, err = GetIndexAccess(gn, indexExpression, logger)
+			case "MemberAccess":
+				iaIndexExpression, err = GetMemberAccess(gn, indexExpression, logger)
 			default:
 				logger.Warnf("Unknown indexExpression [%s] for IndexAccess [src:%s].", indexExpressionNodeType, ia.Src)
 			}
@@ -183,6 +191,8 @@ func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 			case *FunctionCall:
 				indexExpression.TraverseFunctionCall(ncp, gn)
 			case *IndexAccess:
+				indexExpression.TraverseFunctionCall(ncp, gn)
+			case *MemberAccess:
 				indexExpression.TraverseFunctionCall(ncp, gn)
 			}
 		}

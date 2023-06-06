@@ -43,6 +43,8 @@ func (r *Return) SourceCode(isSc bool, isIndent bool, indent string, logger logg
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			case *FunctionCall:
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *TupleExpression:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expression.Type(), r.Src)
@@ -102,6 +104,8 @@ func GetReturn(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Retur
 				rExpression, err = GetIdentifier(gn, expression, logger)
 			case "FunctionCall":
 				rExpression, err = GetFunctionCall(gn, expression, logger)
+			case "TupleExpression":
+				rExpression, err = GetTupleExpression(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for Return [src:%s].", expressionNodeType, r.Src)
 			}
@@ -137,6 +141,8 @@ func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
 			case *MemberAccess:
 				expression.TraverseFunctionCall(ncp, gn)
 			case *FunctionCall:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *TupleExpression:
 				expression.TraverseFunctionCall(ncp, gn)
 			}
 		}

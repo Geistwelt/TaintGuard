@@ -19,8 +19,13 @@ type VariableDeclarationStatement struct {
 
 func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	var code string
+	
 	if isIndent {
 		code = code + indent
+	}
+
+	if len(vds.Assignments) > 1 {
+		code = code +"("
 	}
 
 	if len(vds.declarations) > 0 {
@@ -37,9 +42,13 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 			}
 
 			if index < len(vds.declarations)-1 {
-				code = code + ","
+				code = code + ", "
 			}
 		}
+	}
+
+	if len(vds.Assignments) > 1 {
+		code = code + ")"
 	}
 
 	if vds.initialValue != nil {
@@ -51,6 +60,8 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 		case *BinaryOperation:
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		case *Literal:
+			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
+		case *IndexAccess:
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		default:
 			if initialValue != nil {
@@ -138,6 +149,8 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 				vdsInitialValue, err = GetBinaryOperation(gn, initialValue, logger)
 			case "Literal":
 				vdsInitialValue, err = GetLiteral(gn, initialValue, logger)
+			case "IndexAccess":
+				vdsInitialValue, err = GetIndexAccess(gn, initialValue, logger)
 			default:
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s].", initialValueNodeType, vds.Src)
 			}
@@ -176,6 +189,8 @@ func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPat
 		case *MemberAccess:
 			initialValue.TraverseFunctionCall(ncp, gn)
 		case *BinaryOperation:
+			initialValue.TraverseFunctionCall(ncp, gn)
+		case *IndexAccess:
 			initialValue.TraverseFunctionCall(ncp, gn)
 		}
 	}

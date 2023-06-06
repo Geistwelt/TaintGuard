@@ -3,6 +3,7 @@ package ast
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/geistwelt/logging"
 	jsoniter "github.com/json-iterator/go"
@@ -10,6 +11,7 @@ import (
 
 type IfStatement struct {
 	condition ASTNode
+	falseBody ASTNode
 	ID        int    `json:"id"`
 	NodeType  string `json:"nodeType"`
 	Src       string `json:"src"`
@@ -31,6 +33,12 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 			switch condition := is.condition.(type) {
 			case *BinaryOperation:
 				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
+			case *UnaryOperation:
+				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
+			case *Literal:
+				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
+			case *IndexAccess:
+				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
 			default:
 				if condition != nil {
 					logger.Warnf("Unknown condition nodeType [%s] for IfStatement [src:%s].", condition.Type(), is.Src)
@@ -49,6 +57,10 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 			switch trueBody := is.trueBody.(type) {
 			case *Block:
 				code = code + trueBody.SourceCode(false, true, indent, logger)
+			case *ExpressionStatement:
+				code = code + trueBody.SourceCode(false, false, indent, logger)
+			case *RevertStatement:
+				code = code + trueBody.SourceCode(false, false, indent, logger)
 			default:
 				if trueBody != nil {
 					logger.Warnf("Unknown trueBody nodeType [%s] for IfStatement [src:%s].", trueBody.Type(), is.Src)
@@ -57,15 +69,40 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 				}
 			}
 		}
+
+		code = code + "\n"
+
+		if isIndent {
+			code = code + indent
+		}
+
+		code = code + "}"
 	}
 
-	code = code + "\n"
-
-	if isIndent {
-		code = code + indent
+	// falseBody
+	{
+		if is.falseBody != nil {
+			switch falseBody := is.falseBody.(type) {
+			case *Block:
+				code = code + " " + "else {\n"
+				code = code + falseBody.SourceCode(false, true, indent, logger)
+				code = code + "\n"
+				if isIndent {
+					code = code + indent
+				}
+				code = code + "}"
+			case *IfStatement:
+				code = code + " " + "else "
+				code = code + strings.TrimLeft(falseBody.SourceCode(false, true, indent, logger), " ")
+			default:
+				if falseBody != nil {
+					logger.Warnf("Unknown falseBody nodeType [%s] for IfStatement [src:%s].", falseBody.Type(), is.Src)
+				} else {
+					logger.Warnf("Unknown falseBody nodeType for IfStatement [src:%s].", is.Src)
+				}
+			}
+		}
 	}
-
-	code = code + "}"
 
 	return code
 }
@@ -100,6 +137,12 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 			switch conditionNodeType {
 			case "BinaryOperation":
 				isCondition, err = GetBinaryOperation(gn, condition, logger)
+			case "UnaryOperation":
+				isCondition, err = GetUnaryOperation(gn, condition, logger)
+			case "Literal":
+				isCondition, err = GetLiteral(gn, condition, logger)
+			case "IndexAccess":
+				isCondition, err = GetIndexAccess(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for IfStatement [src:%s].", conditionNodeType, is.Src)
 			}
@@ -110,6 +153,33 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 
 			if isCondition != nil {
 				is.condition = isCondition
+			}
+		}
+	}
+
+	// falseBody
+	{
+		falseBody := raw.Get("falseBody")
+		if falseBody.Size() > 0 {
+			falseBodyNodeType := falseBody.Get("nodeType").ToString()
+			var isFalseBody ASTNode
+			var err error
+
+			switch falseBodyNodeType {
+			case "Block":
+				isFalseBody, err = GetBlock(gn, falseBody, logger)
+			case "IfStatement":
+				isFalseBody, err = GetIfStatement(gn, falseBody, logger)
+			default:
+				logger.Warnf("Unknown falseBody nodeType [%s] for IfStatement [src:%s].", falseBodyNodeType, is.Src)
+			}
+
+			if err != nil {
+				return nil, err
+			}
+
+			if isFalseBody != nil {
+				is.falseBody = isFalseBody
 			}
 		}
 	}
@@ -125,6 +195,10 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 			switch trueBodyNodeType {
 			case "Block":
 				isTrueBody, err = GetBlock(gn, trueBody, logger)
+			case "ExpressionStatement":
+				isTrueBody, err = GetExpressionStatement(gn, trueBody, logger)
+			case "RevertStatement":
+				isTrueBody, err = GetRevertStatement(gn, trueBody, logger)
 			default:
 				logger.Warnf("Unknown trueBody [%s] for IfStatement [src:%s].", trueBodyNodeType, is.Src)
 			}
@@ -153,6 +227,24 @@ func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 			switch condition := is.condition.(type) {
 			case *BinaryOperation:
 				condition.TraverseFunctionCall(ncp, gn)
+			case *UnaryOperation:
+				condition.TraverseFunctionCall(ncp, gn)
+			case *IndexAccess:
+				condition.TraverseFunctionCall(ncp, gn)
+			}
+		}
+	}
+
+	//falseBody
+	{
+		if is.falseBody != nil {
+			switch falseBody := is.falseBody.(type) {
+			case *Block:
+				falseBody.TraverseFunctionCall(ncp, gn)
+			case *ExpressionStatement:
+				falseBody.TraverseFunctionCall(ncp, gn)
+			case *IfStatement:
+				falseBody.TraverseFunctionCall(ncp, gn)
 			}
 		}
 	}
@@ -162,6 +254,8 @@ func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 		if is.trueBody != nil {
 			switch trueBody := is.trueBody.(type) {
 			case *Block:
+				trueBody.TraverseFunctionCall(ncp, gn)
+			case *ExpressionStatement:
 				trueBody.TraverseFunctionCall(ncp, gn)
 			}
 		}

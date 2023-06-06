@@ -36,6 +36,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 		switch condition := c.condition.(type) {
 		case *TupleExpression:
 			code = code + condition.SourceCode(false, false, indent, logger)
+		case *BinaryOperation:
+			code = code + condition.SourceCode(false, false, indent, logger)
 		default:
 			if condition != nil {
 				logger.Warnf("Unknown condition nodeType [%s] for Conditional [src:%s].", condition.Type(), c.Src)
@@ -53,6 +55,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 		switch trueExpression := c.trueExpression.(type) {
 		case *Identifier:
 			code = code + trueExpression.SourceCode(false, false, indent, logger)
+		case *MemberAccess:
+			code = code + trueExpression.SourceCode(false, false, indent, logger)
 		default:
 			if trueExpression != nil {
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpression.Type(), c.Src)
@@ -69,6 +73,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 	if c.falseExpression != nil {
 		switch falseExpression := c.falseExpression.(type) {
 		case *Identifier:
+			code = code + falseExpression.SourceCode(false, false, indent, logger)
+		case *FunctionCall:
 			code = code + falseExpression.SourceCode(false, false, indent, logger)
 		default:
 			if falseExpression != nil {
@@ -114,6 +120,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 			switch conditionNodeType {
 			case "TupleExpression":
 				cCondition, err = GetTupleExpression(gn, condition, logger)
+			case "BinaryOperation":
+				cCondition, err = GetBinaryOperation(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for Conditional [src:%s].", conditionNodeType, c.Src)
 			}
@@ -139,6 +147,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 			switch falseExpressionNodeType {
 			case "Identifier":
 				cFalseExpression, err = GetIdentifier(gn, falseExpression, logger)
+			case "FunctionCall":
+				cFalseExpression, err = GetFunctionCall(gn, falseExpression, logger)
 			default:
 				logger.Warnf("Unknown faleExpression nodeType [%s] for Conditional [src:%s].", falseExpressionNodeType, c.Src)
 			}
@@ -164,6 +174,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 			switch trueExpressionNodeType {
 			case "Identifier":
 				cTrueExpression, err = GetIdentifier(gn, trueExpression, logger)
+			case "MemberAccess":
+				cTrueExpression, err = GetMemberAccess(gn, trueExpression, logger)
 			default:
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpressionNodeType, c.Src)
 			}
@@ -190,6 +202,15 @@ func (c *Conditional) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes)
 		switch condition := c.condition.(type) {
 		case *TupleExpression:
 			condition.TraverseFunctionCall(ncp, gn)
+		case *BinaryOperation:
+			condition.TraverseFunctionCall(ncp, gn)
+		}
+	}
+
+	if c.falseExpression != nil {
+		switch falseExpression := c.falseExpression.(type) {
+		case *FunctionCall:
+			falseExpression.TraverseFunctionCall(ncp, gn)
 		}
 	}
 }

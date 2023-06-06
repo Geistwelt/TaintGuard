@@ -39,6 +39,9 @@ var _ traverseFunctionCall = (*TupleExpression)(nil)
 var _ traverseFunctionCall = (*UnaryOperation)(nil)
 var _ traverseFunctionCall = (*VariableDeclaration)(nil)
 var _ traverseFunctionCall = (*VariableDeclarationStatement)(nil)
+var _ traverseFunctionCall = (*UncheckedBlock)(nil)
+var _ traverseFunctionCall = (*WhileStatement)(nil)
+var _ traverseFunctionCall = (*FunctionCallOptions)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,7 +87,6 @@ func (gn *GlobalNodes) Functions() map[int]ASTNode {
 func (gn *GlobalNodes) Contracts() map[int]ASTNode {
 	return gn.contracts
 }
-
 
 type NormalCallPath struct {
 	caller  *NormalCallPath   // caller function

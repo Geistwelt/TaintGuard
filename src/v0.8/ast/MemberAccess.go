@@ -46,6 +46,8 @@ func (ma *MemberAccess) SourceCode(isSc bool, isIndent bool, indent string, logg
 				code = code + expression.SourceCode(false, false, indent, logger)
 			case *FunctionCall:
 				code = code + expression.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for MemberAccess [src:%s].", expression.Type(), ma.Src)
@@ -103,6 +105,8 @@ func GetMemberAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 				maExpression, err = GetIdentifier(gn, expression, logger)
 			case "FunctionCall":
 				maExpression, err = GetFunctionCall(gn, expression, logger)
+			case "MemberAccess":
+				maExpression, err = GetMemberAccess(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for MemberAccess [src:%s].", expressionNodeType, ma.Src)
 			}
@@ -132,6 +136,8 @@ func (ma *MemberAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 			case *IndexAccess:
 				expression.TraverseFunctionCall(ncp, gn)
 			case *FunctionCall:
+				expression.TraverseFunctionCall(ncp, gn)
+			case *MemberAccess:
 				expression.TraverseFunctionCall(ncp, gn)
 			}
 		}
