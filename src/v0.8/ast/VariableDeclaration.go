@@ -73,6 +73,8 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		case *BinaryOperation:
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
+		case *FunctionCall:
+			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		default:
 			if value != nil {
 				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s].", value.Type(), vd.Src)
@@ -149,6 +151,8 @@ func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 				vdValue, err = GetLiteral(gn, value, logger)
 			case "BinaryOperation":
 				vdValue, err = GetBinaryOperation(gn, value, logger)
+			case "FunctionCall":
+				vdValue, err = GetFunctionCall(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s]", valueNodeType, vd.Src)
 			}
@@ -181,6 +185,8 @@ func (vd *VariableDeclaration) TraverseFunctionCall(ncp *NormalCallPath, gn *Glo
 	if vd.value != nil {
 		switch value := vd.value.(type) {
 		case *BinaryOperation:
+			value.TraverseFunctionCall(ncp, gn)
+		case *FunctionCall:
 			value.TraverseFunctionCall(ncp, gn)
 		}
 	}

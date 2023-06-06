@@ -13,7 +13,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/x.sol_json.ast"
+var contract_ast_json string = "contracts/v0.8/1.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,
@@ -59,6 +59,7 @@ func main() {
 						fmt.Printf("Failed parse solidity version: [%v].\n", err)
 						os.Exit(1)
 					}
+					upper = lower
 				}
 			}
 		}
@@ -73,6 +74,7 @@ func main() {
 						os.Exit(1)
 					}
 					lower += 0.1
+					upper = lower
 				}
 			}
 		}
@@ -85,6 +87,9 @@ func main() {
 					if err != nil {
 						fmt.Printf("Failed parse solidity version: [%v].\n", err)
 						os.Exit(1)
+					}
+					if lower == 0.0 {
+						lower = upper
 					}
 				}
 			}
@@ -100,6 +105,9 @@ func main() {
 						os.Exit(1)
 					}
 					upper -= 0.1
+					if lower == 0.0 {
+						lower = upper
+					}
 				}
 			}
 		}
@@ -127,10 +135,19 @@ func main() {
 
 	switch version {
 	case 0.8:
-		_, err := v08.Run(jsonBytes, logger)
+		node, err := v08.Run(jsonBytes, logger)
 		if err != nil {
 			os.Exit(1)
 		}
-		// fmt.Println(node.SourceCode(false, false, "", logger))
+		code := node.SourceCode(false, false, "", logger)
+		f, err := os.OpenFile("test/0.sol", os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
+		if err != nil {
+			fmt.Println("Failed to open file test/0.sol.")
+			os.Exit(1)
+		}
+
+		f.Write([]byte(code))
+
+		f.Close()
 	}
 }

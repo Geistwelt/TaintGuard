@@ -47,6 +47,8 @@ func (bo *BinaryOperation) SourceCode(isSc bool, isIndent bool, indent string, l
 			code = code + leftExpression.SourceCode(false, false, indent, logger)
 		case *FunctionCall:
 			code = code + leftExpression.SourceCode(false, false, indent, logger)
+		case *MemberAccess:
+			code = code + leftExpression.SourceCode(false, false, indent, logger)
 		default:
 			if leftExpression != nil {
 				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpression.Type(), bo.Src)
@@ -129,6 +131,8 @@ func GetBinaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 				boLeftExpression, err = GetUnaryOperation(gn, leftExpression, logger)
 			case "FunctionCall":
 				boLeftExpression, err = GetFunctionCall(gn, leftExpression, logger)
+			case "MemberAccess":
+				boLeftExpression, err = GetMemberAccess(gn, leftExpression, logger)
 			default:
 				logger.Warnf("Unknown leftExpression nodeType [%s] for BinaryOperation [src:%s].", leftExpressionNodeType, bo.Src)
 			}
@@ -191,6 +195,8 @@ func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalN
 		case *UnaryOperation:
 			leftExpression.TraverseFunctionCall(ncp, gn)
 		case *FunctionCall:
+			leftExpression.TraverseFunctionCall(ncp, gn)
+		case *MemberAccess:
 			leftExpression.TraverseFunctionCall(ncp, gn)
 		}
 	}
