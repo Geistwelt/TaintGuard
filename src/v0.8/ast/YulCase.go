@@ -107,31 +107,30 @@ func GetYulCase(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulC
 	// value
 	{
 		value := raw.Get("value")
-		if value.Size() > 0 {
-			valueNodeType := value.Get("nodeType")
-			var typ string
-			if valueNodeType.Size() > 0 {
-				typ = valueNodeType.ToString()
-			} else {
-				typ = "default"
-			}
-			var ycValue ASTNode
-			var err error
+		var ycValue ASTNode
+		var err error
 
-			switch typ {
+		if value.Size() > 0 {
+			valueNodeType := value.Get("nodeType").ToString()
+
+			switch valueNodeType {
 			case "YulLiteral":
 				ycValue, err = GetYulLiteral(gn, value, logger)
-			case "default":
+			default:
+				logger.Warnf("Unknown value nodeType [%s] for YulCase [src:%s].", valueNodeType, yc.Src)
+			}
+		} else {
+			if yc.body != nil {
 				ycValue = &YulLiteral{Kind: "number", NodeType: "YulLiteral", Src: "xxx", Value: "default"}
 			}
+		}
 
-			if err != nil {
-				return nil, err
-			}
+		if err != nil {
+			return nil, err
+		}
 
-			if ycValue != nil {
-				yc.value = ycValue
-			}
+		if ycValue != nil {
+			yc.value = ycValue
 		}
 	}
 

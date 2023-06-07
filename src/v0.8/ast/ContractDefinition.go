@@ -33,6 +33,10 @@ func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		code = code + indent
 	}
 
+	if cd.Abstract {
+		code = code + "abstract" + " "
+	}
+
 	code = code + cd.ContractKind + " "
 	code = code + cd.Name + " "
 

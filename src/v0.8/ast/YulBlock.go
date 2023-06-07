@@ -9,8 +9,8 @@ import (
 )
 
 type YulBlock struct {
-	NodeType string `json:"nodeType"`
-	Src string `json:"src"`
+	NodeType   string `json:"nodeType"`
+	Src        string `json:"src"`
 	statements []ASTNode
 }
 
@@ -25,15 +25,15 @@ func (yb *YulBlock) SourceCode(isSc bool, isIndent bool, indent string, logger l
 		for index, statement := range yb.statements {
 			switch stat := statement.(type) {
 			case *YulAssignment:
-				code = code + stat.SourceCode(false, true, indent, logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *YulExpressionStatement:
-				code = code + stat.SourceCode(false, true, indent, logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *YulVariableDeclaration:
-				code = code + stat.SourceCode(false, true, indent, logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *YulForLoop:
-				code = code + stat.SourceCode(false, true, indent, logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *YulSwitch:
-				code = code + stat.SourceCode(false, true, indent, logger)
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for YulBlock [src:%s].", stat.Type(), yb.Src)

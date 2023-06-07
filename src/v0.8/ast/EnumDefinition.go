@@ -24,7 +24,7 @@ func (ed *EnumDefinition) SourceCode(isSc bool, isIndent bool, indent string, lo
 		code = code + indent
 	}
 
-	code = code + ed.Name + " {\n"
+	code = code + "enum " + ed.Name + " {\n"
 
 	if len(ed.members) > 0 {
 		for index, member := range ed.members {
@@ -70,7 +70,7 @@ func GetEnumDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 	ed := new(EnumDefinition)
 	if err := json.Unmarshal([]byte(raw.ToString()), ed); err != nil {
 		logger.Errorf("Failed to unmarshal EnumDefinition: [%v].", err)
-		return nil, fmt.Errorf("Failed to unmarshal EnumDefinition: [%v].", err)
+		return nil, fmt.Errorf("failed to unmarshal EnumDefinition: [%v]", err)
 	}
 
 	// members

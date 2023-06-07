@@ -34,7 +34,7 @@ func (ia *InlineAssembly) SourceCode(isSc bool, isIndent bool, indent string, lo
 	if ia.ast != nil {
 		switch ast := ia.ast.(type) {
 		case *YulBlock:
-			code = code + ast.SourceCode(false, true, indent, logger)
+			code = code + ast.SourceCode(false, false, indent, logger)
 		default:
 			if ast != nil {
 				logger.Warnf("Unknown ast nodeType [%s] for InlineAssembly [src:%s]", ast.Type(), ia.Src)

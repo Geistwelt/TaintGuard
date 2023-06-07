@@ -33,6 +33,8 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 			switch d := declaration.(type) {
 			case *VariableDeclaration:
 				code = code + d.SourceCode(false, false, indent, logger)
+			case *Literal:
+				code = code + d.SourceCode(false, false, indent, logger)
 			default:
 				if d != nil {
 					logger.Warnf("Unknown declaration nodeType [%s] for VariableDeclarationStatement [src:%s]", d.Type(), vds.Src)
@@ -131,7 +133,14 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 					}
 				} else {
 					// TODO NULL
-					logger.Warnf("Declaration in VariableDeclarationStatement [src:%s] should not be nil.", vds.Src)
+					declaration := &Literal{
+						ID:               0,
+						Kind:             "number",
+						NodeType:         "Literal",
+						Src:              "xxx",
+						Value:            "",
+					}
+					vds.declarations = append(vds.declarations, declaration)
 				}
 			}
 		}

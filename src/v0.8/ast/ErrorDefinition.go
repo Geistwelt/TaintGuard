@@ -29,7 +29,7 @@ func (ed *ErrorDefinition) SourceCode(isSc bool, isIndent bool, indent string, l
 	if ed.parameters != nil {
 		switch parameters := ed.parameters.(type) {
 		case *ParameterList:
-			code = code + "(" + parameters.SourceCode(false, false, indent, logger)
+			code = code + "(" + parameters.SourceCode(false, false, indent, logger) + ")"
 		default:
 			if parameters != nil {
 				logger.Warnf("Unknown parameters nodeType [%s] for ErrorDefinition [src:%s].", parameters.Type(), ed.Src)

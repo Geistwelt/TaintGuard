@@ -48,7 +48,11 @@ func (uo *UnaryOperation) SourceCode(isSc bool, isIndent bool, indent string, lo
 			}
 		}
 		if uo.Prefix {
-			code = code + uo.Operator + expression
+			if uo.Operator == "delete" {
+				code = code + uo.Operator + " " + expression
+			} else {
+				code = code + uo.Operator + expression
+			}
 		} else {
 			code = code + expression + uo.Operator
 		}

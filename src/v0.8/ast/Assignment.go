@@ -53,7 +53,7 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 		}
 	}
 
-	code = code + " " + "="
+	code = code + " " + a.Operator
 
 	//rightHandSide
 	{

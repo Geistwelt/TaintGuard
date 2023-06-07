@@ -122,6 +122,10 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 		code = code + ";"
 	}
 
+	if fc.Kind == "typeConversion" && len(code) >= 15 && code[0:15] == "address payable" {
+		code = code[8:]
+	}
+
 	return code
 }
 

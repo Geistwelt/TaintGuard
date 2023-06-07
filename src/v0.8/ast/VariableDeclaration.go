@@ -55,8 +55,16 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 		}
 	}
 
+	if vd.StorageLocation != "default" {
+		code = code + " " + vd.StorageLocation
+	}
+
 	if vd.Visibility != "" && vd.Visibility != "internal" {
 		code = code + " " + vd.Visibility
+	}
+
+	if vd.Mutability != "" && vd.Mutability != "mutable" {
+		code = code + " " + vd.Mutability
 	}
 
 	if vd.Indexed {

@@ -17,9 +17,6 @@ type YulVariableDeclaration struct {
 
 func (yvd *YulVariableDeclaration) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	var code string
-	if isIndent {
-		code = code + indent
-	}
 
 	if len(yvd.variables) > 0 {
 		for index, variable := range yvd.variables {
@@ -47,7 +44,7 @@ func (yvd *YulVariableDeclaration) SourceCode(isSc bool, isIndent bool, indent s
 	code = "let" + " " + code
 
 	if isIndent {
-		code = code + indent
+		code = indent + code
 	}
 
 	if yvd.value != nil {

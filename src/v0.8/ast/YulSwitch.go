@@ -42,7 +42,7 @@ func (ys *YulSwitch) SourceCode(isSc bool, isIndent bool, indent string, logger 
 		for _, c := range ys.cases {
 			switch ce := c.(type) {
 			case *YulCase:
-				code = code + ce.SourceCode(false, false, indent, logger) + "\n"
+				code = code + ce.SourceCode(false, true, indent, logger) + "\n"
 			default:
 				if ce != nil {
 					logger.Warnf("Unknown case nodeType [%s] for YulSwitch [src:%s].", ce.Type(), ys.Src)
@@ -65,7 +65,7 @@ func (ys *YulSwitch) Nodes() []ASTNode {
 }
 
 func (ys *YulSwitch) NodeID() int {
-	return ys.NodeID()
+	return -1
 }
 
 func GetYulSwitch(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*YulSwitch, error) {

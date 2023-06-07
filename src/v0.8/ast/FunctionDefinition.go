@@ -64,6 +64,26 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 			code = code + " " + fd.Visibility
 		}
 
+		// modifiers
+		if len(fd.modifiers) > 0 {
+			for index, modifier := range fd.modifiers {
+				switch m := modifier.(type) {
+				case *ModifierInvocation:
+					code = code + " " + m.SourceCode(false, false, indent, logger)
+				default:
+					if m != nil {
+						logger.Warnf("Unknown modifier nodeType [%s] for FunctionDefinition [src:%s].", m.Type(), fd.Src)
+					} else {
+						logger.Warnf("Unknown modifier nodeType for FunctionDefinition [src:%s].", fd.Src)
+					}
+				}
+
+				if index < len(fd.modifiers)-1 {
+					code = code + ","
+				}
+			}
+		}
+
 		// stateMutability
 		if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
 			code = code + " " + fd.StateMutability
@@ -83,13 +103,17 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 			}
 		}
 
+		if fd.Virtual {
+			code = code + " " + "virtual"
+		}
+
 		// returnParameters
 		if fd.returnParameters != nil {
 			switch returnParameters := fd.returnParameters.(type) {
 			case *ParameterList:
 				rpl := returnParameters.SourceCode(false, false, indent, logger)
 				if rpl != "" {
-					code = code + " " + "retruns" + " " + "(" + rpl + ")"
+					code = code + " " + "returns" + " " + "(" + rpl + ")"
 				}
 			default:
 				if returnParameters != nil {
@@ -119,6 +143,26 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		}
 
 		code = code + ")"
+
+		// modifiers
+		if len(fd.modifiers) > 0 {
+			for index, modifier := range fd.modifiers {
+				switch m := modifier.(type) {
+				case *ModifierInvocation:
+					code = code + " " + m.SourceCode(false, false, indent, logger)
+				default:
+					if m != nil {
+						logger.Warnf("Unknown modifier nodeType [%s] for FunctionDefinition [src:%s].", m.Type(), fd.Src)
+					} else {
+						logger.Warnf("Unknown modifier nodeType for FunctionDefinition [src:%s].", fd.Src)
+					}
+				}
+
+				if index < len(fd.modifiers)-1 {
+					code = code + ","
+				}
+			}
+		}
 	} else if fd.Kind == "receive" {
 		code = code + "receive("
 
@@ -153,6 +197,18 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		code = code + " {}"
 
 		return code
+	} else if fd.Kind == "fallback" {
+		code = code + "fallback()"
+
+		// visibility
+		if fd.Visibility != "" {
+			code = code + " " + fd.Visibility
+		}
+
+		// stateMutability
+		if fd.StateMutability != "" && fd.StateMutability != "nonpayable" {
+			code = code + " " + fd.StateMutability
+		}
 	}
 
 	// body
@@ -207,6 +263,40 @@ func GetFunctionDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 	if err := json.Unmarshal([]byte(raw.ToString()), fd); err != nil {
 		logger.Errorf("Failed to unmarshal FunctionDefinition: [%v].", err)
 		return nil, fmt.Errorf("failed to unmarshal FunctionDefinition: [%v]", err)
+	}
+
+	// modifiers
+	{
+		modifiers := raw.Get("modifiers")
+		if modifiers.Size() > 0 {
+			fd.modifiers = make([]ASTNode, 0)
+
+			for i := 0; i < modifiers.Size(); i++ {
+				modifier := modifiers.Get(i)
+				if modifier.Size() > 0 {
+					modifierNodeType := modifier.Get("nodeType").ToString()
+					var fdModifier ASTNode
+					var err error
+
+					switch modifierNodeType {
+					case "ModifierInvocation":
+						fdModifier, err = GetModifierInvocation(gn, modifier, logger)
+					default:
+						logger.Warnf("Unknown modifier nodeType [%s] for FunctionDefinition [src:%s].", modifierNodeType, fd.Src)
+					}
+
+					if err != nil {
+						return nil, err
+					}
+
+					if fdModifier != nil {
+						fd.modifiers = append(fd.modifiers, fdModifier)
+					}
+				} else {
+					logger.Warnf("Modifier in FunctionDefinition [src:%s] should not be empty.", fd.Src)
+				}
+			}
+		}
 	}
 
 	// body
