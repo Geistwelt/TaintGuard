@@ -30,6 +30,10 @@ func (yb *YulBlock) SourceCode(isSc bool, isIndent bool, indent string, logger l
 				code = code + stat.SourceCode(false, true, indent, logger)
 			case *YulVariableDeclaration:
 				code = code + stat.SourceCode(false, true, indent, logger)
+			case *YulForLoop:
+				code = code + stat.SourceCode(false, true, indent, logger)
+			case *YulSwitch:
+				code = code + stat.SourceCode(false, true, indent, logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for YulBlock [src:%s].", stat.Type(), yb.Src)
@@ -86,6 +90,10 @@ func GetYulBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Yul
 						ybStatement, err = GetYulExpressionStatement(gn, statement, logger)
 					case "YulVariableDeclaration":
 						ybStatement, err = GetYulVariableDeclaration(gn, statement, logger)
+					case "YulForLoop":
+						ybStatement, err = GetYulForLoop(gn, statement, logger)
+					case "YulSwitch":
+						ybStatement, err = GetYulSwitch(gn, statement, logger)
 					default:
 						logger.Warnf("Unknown statement nodeType [%s] for YulBlock [src:%s].", statementNodeType, yb.Src)
 					}

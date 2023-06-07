@@ -67,6 +67,8 @@ func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				code = code + node.SourceCode(false, true, indent+"    ", logger) + "\n"
 			case "ErrorDefinition":
 				code = code + node.SourceCode(true, true, indent+"    ", logger) + "\n"
+			case "EnumDefinition":
+				code = code + node.SourceCode(false, true, indent+"    ", logger) + "\n"
 			default:
 				logger.Warnf("Unknown nodeType in ContractDefinition: [%s].", node.Type())
 			}
@@ -151,6 +153,8 @@ func GetContractDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 					cdNode, err = GetStructDefinition(gn, node, logger)
 				case "ErrorDefinition":
 					cdNode, err = GetErrorDefinition(gn, node, logger)
+				case "EnumDefinition":
+					cdNode, err = GetEnumDefinition(gn, node, logger)
 				default:
 					logger.Warnf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
 				}

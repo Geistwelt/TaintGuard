@@ -53,6 +53,8 @@ func (ya *YulAssignment) SourceCode(isSc bool, isIndent bool, indent string, log
 			switch value := ya.value.(type) {
 			case *YulFunctionCall:
 				code = code + value.SourceCode(false, false, indent, logger)
+			case *YulIdentifier:
+				code = code + value.SourceCode(false, false, indent, logger)
 			default:
 				if value != nil {
 					logger.Warnf("Unknown value nodeType [%s] for YulAssignment [src:%s].", value.Type(), ya.Src)
@@ -128,6 +130,8 @@ func GetYulAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) 
 			switch valueNodeType {
 			case "YulFunctionCall":
 				yaValue, err = GetYulFunctionCall(gn, value, logger)
+			case "YulIdentifier":
+				yaValue, err = GetYulIdentifier(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for YulAssignment [src:%s].", valueNodeType, ya.Src)
 			}
