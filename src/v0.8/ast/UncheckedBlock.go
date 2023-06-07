@@ -30,6 +30,16 @@ func (ub *UncheckedBlock) SourceCode(isSc bool, isIndent bool, indent string, lo
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *VariableDeclarationStatement:
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
+			case *InlineAssembly:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *IfStatement:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *Return:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
+			case *WhileStatement:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *EmitStatement:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for UncheckedBlock [src:%s].", stat.Type(), ub.Src)
@@ -86,6 +96,16 @@ func GetUncheckedBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 						ubStatement, err = GetExpressionStatement(gn, statement, logger)
 					case "VariableDeclarationStatement":
 						ubStatement, err = GetVariableDeclarationStatement(gn, statement, logger)
+					case "InlineAssembly":
+						ubStatement, err = GetInlineAssembly(gn, statement, logger)
+					case "IfStatement":
+						ubStatement, err = GetIfStatement(gn, statement, logger)
+					case "Return":
+						ubStatement, err = GetReturn(gn, statement, logger)
+					case "WhileStatement":
+						ubStatement, err = GetWhileStatement(gn, statement, logger)
+					case "EmitStatement":
+						ubStatement, err = GetEmitStatement(gn, statement, logger)
 					default:
 						logger.Warnf("Unknown statement nodeType [%s] for UncheckedBlock [src:%s].", statementNodeType, ub.Src)
 					}

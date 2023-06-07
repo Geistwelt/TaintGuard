@@ -87,6 +87,10 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		case *MemberAccess:
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
+		case *UnaryOperation:
+			code = code + " = " + value.SourceCode(false, false, indent, logger)
+		case *TupleExpression:
+			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		default:
 			if value != nil {
 				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s].", value.Type(), vd.Src)
@@ -169,6 +173,10 @@ func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 				vdValue, err = GetIdentifier(gn, value, logger)
 			case "MemberAccess":
 				vdValue, err = GetMemberAccess(gn, value, logger)
+			case "UnaryOperation":
+				vdValue, err = GetUnaryOperation(gn, value, logger)
+			case "TupleExpression":
+				vdValue, err = GetTupleExpression(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for VariableDeclaration [src:%s]", valueNodeType, vd.Src)
 			}

@@ -45,6 +45,10 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *WhileStatement:
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *TryStatement:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *DoWhileStatement:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -117,6 +121,10 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 					bStatement, err = GetUncheckedBlock(gn, statement, logger)
 				case "WhileStatement":
 					bStatement, err = GetWhileStatement(gn, statement, logger)
+				case "TryStatement":
+					bStatement, err = GetTryStatement(gn, statement, logger)
+				case "DoWhileStatement":
+					bStatement, err = GetDoWhileStatement(gn, statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}

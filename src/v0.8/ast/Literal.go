@@ -19,6 +19,7 @@ type Literal struct {
 	LValueRequested  bool   `json:"lValueRequested"`
 	NodeType         string `json:"nodeType"`
 	Src              string `json:"src"`
+	Subdenomination  string `json:"subdenomination"`
 	TypeDescriptions struct {
 		TypeIdentifier string `json:"typeIdentifier"`
 		TypeString     string `json:"typeString"`
@@ -40,7 +41,7 @@ func (l *Literal) SourceCode(isSc bool, isIndent bool, indent string, logger log
 	case "string":
 		if strings.Contains(l.TypeDescriptions.TypeString, "literal_string hex") {
 			var c string
-			for i := 0; i <= len(l.HexValue)-2; i+=2 {
+			for i := 0; i <= len(l.HexValue)-2; i += 2 {
 				c = c + `\x` + l.HexValue[i:i+2]
 			}
 			code = code + fmt.Sprintf("\"%s\"", c)
@@ -51,6 +52,10 @@ func (l *Literal) SourceCode(isSc bool, isIndent bool, indent string, logger log
 		code = code + "hex" + fmt.Sprintf("\"%s\"", l.Value)
 	default:
 		logger.Warnf("Unknown kind [%s] for Literal [src:%s].", l.Kind, l.Src)
+	}
+
+	if l.Subdenomination != "" {
+		code = code + " " + l.Subdenomination
 	}
 
 	if isSc {

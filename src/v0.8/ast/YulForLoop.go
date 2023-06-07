@@ -53,6 +53,8 @@ func (yfl *YulForLoop) SourceCode(isSc bool, isIndent bool, indent string, logge
 			switch condition := yfl.condition.(type) {
 			case *YulFunctionCall:
 				code = code + " " + condition.SourceCode(false, false, indent, logger)
+			case *YulLiteral:
+				code = code + " " + condition.SourceCode(false, false, indent, logger)
 			default:
 				if condition != nil {
 					logger.Warnf("Unknown condition nodeType [%s] for YulForLoop [src:%s].", condition.Type(), yfl.Src)
@@ -167,6 +169,8 @@ func GetYulForLoop(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Y
 			switch conditionNodeType {
 			case "YulFunctionCall":
 				yflCondition, err = GetYulFunctionCall(gn, condition, logger)
+			case "YulLiteral":
+				yflCondition, err = GetYulLiteral(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for YulForLoop [src:%s].", conditionNodeType, yfl.Src)
 			}

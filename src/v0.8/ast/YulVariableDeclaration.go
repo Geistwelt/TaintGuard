@@ -51,6 +51,8 @@ func (yvd *YulVariableDeclaration) SourceCode(isSc bool, isIndent bool, indent s
 		switch value := yvd.value.(type) {
 		case *YulFunctionCall:
 			code = code + " := " + value.SourceCode(false, false, indent, logger)
+		case *YulIdentifier:
+			code = code + " := " + value.SourceCode(false, false, indent, logger)
 		default:
 			if value != nil {
 				logger.Warnf("Unknown value nodeType [%s] for YulVariableDeclaration [src:%s].", value.Type(), yvd.Src)
@@ -93,6 +95,8 @@ func GetYulVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging
 			switch valueNodeType {
 			case "YulFunctionCall":
 				yvdValue, err = GetYulFunctionCall(gn, value, logger)
+			case "YulIdentifier":
+				yvdValue, err = GetYulIdentifier(gn, value, logger)
 			default:
 				logger.Warnf("Unknown value nodeType [%s] for YulVariableDeclaration [src:%s].", valueNodeType, yvd.Src)
 			}

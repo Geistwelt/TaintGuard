@@ -13,7 +13,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/v0.8/1.sol_json.ast"
+var contract_ast_json string = "contracts/v0.8/4.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,

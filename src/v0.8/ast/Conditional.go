@@ -59,6 +59,10 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 			code = code + trueExpression.SourceCode(false, false, indent, logger)
 		case *MemberAccess:
 			code = code + trueExpression.SourceCode(false, false, indent, logger)
+		case *Literal:
+			code = code + trueExpression.SourceCode(false, false, indent, logger)
+		case *FunctionCall:
+			code = code + trueExpression.SourceCode(false, false, indent, logger)
 		default:
 			if trueExpression != nil {
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpression.Type(), c.Src)
@@ -79,6 +83,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 		case *FunctionCall:
 			code = code + falseExpression.SourceCode(false, false, indent, logger)
 		case *Literal:
+			code = code + falseExpression.SourceCode(false, false, indent, logger)
+		case *BinaryOperation:
 			code = code + falseExpression.SourceCode(false, false, indent, logger)
 		default:
 			if falseExpression != nil {
@@ -157,6 +163,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				cFalseExpression, err = GetFunctionCall(gn, falseExpression, logger)
 			case "Literal":
 				cFalseExpression, err = GetLiteral(gn, falseExpression, logger)
+			case "BinaryOperation":
+				cFalseExpression, err = GetBinaryOperation(gn, falseExpression, logger)
 			default:
 				logger.Warnf("Unknown faleExpression nodeType [%s] for Conditional [src:%s].", falseExpressionNodeType, c.Src)
 			}
@@ -184,6 +192,10 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				cTrueExpression, err = GetIdentifier(gn, trueExpression, logger)
 			case "MemberAccess":
 				cTrueExpression, err = GetMemberAccess(gn, trueExpression, logger)
+			case "Literal":
+				cTrueExpression, err = GetLiteral(gn, trueExpression, logger)
+			case "FunctionCall":
+				cTrueExpression, err = GetFunctionCall(gn, trueExpression, logger)
 			default:
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpressionNodeType, c.Src)
 			}

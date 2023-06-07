@@ -19,13 +19,22 @@ type PragmaDirective struct {
 
 func (pd *PragmaDirective) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	reNum := regexp.MustCompile(`0*\.\d*`)
-	var code string = "pragma"
-	for _, literal := range pd.Literals {
+	var code string = "pragma solidity"
+	var first bool = true
+	for index, literal := range pd.Literals {
+		if index == 0 {
+			continue
+		}
 		literal = strings.Trim(literal, "\"")
 		if !reNum.Match([]byte(literal)) {
 			code = code + " " + literal
 		} else {
-			code = code + literal
+			if first {
+				code = code + " " + literal
+				first = false
+			} else {
+				code = code + literal
+			}
 		}
 	}
 	code = code + ";"

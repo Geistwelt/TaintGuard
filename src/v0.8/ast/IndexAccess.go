@@ -66,6 +66,10 @@ func (ia *IndexAccess) SourceCode(isSc bool, isIndent bool, indent string, logge
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			case *MemberAccess:
 				code = code + indexExpression.SourceCode(false, false, indent, logger)
+			case *BinaryOperation:
+				code = code + indexExpression.SourceCode(false, false, indent, logger)
+			case *UnaryOperation:
+				code = code + indexExpression.SourceCode(false, false, indent, logger)
 			default:
 				if indexExpression != nil {
 					logger.Warnf("Unknown indexExpression nodeType [%s] for IndexAccess [src:%s].", indexExpression.Type(), ia.Src)
@@ -152,6 +156,10 @@ func GetIndexAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				iaIndexExpression, err = GetIndexAccess(gn, indexExpression, logger)
 			case "MemberAccess":
 				iaIndexExpression, err = GetMemberAccess(gn, indexExpression, logger)
+			case "BinaryOperation":
+				iaIndexExpression, err = GetBinaryOperation(gn, indexExpression, logger)
+			case "UnaryOperation":
+				iaIndexExpression, err = GetUnaryOperation(gn, indexExpression, logger)
 			default:
 				logger.Warnf("Unknown indexExpression [%s] for IndexAccess [src:%s].", indexExpressionNodeType, ia.Src)
 			}

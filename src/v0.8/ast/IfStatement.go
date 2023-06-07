@@ -39,6 +39,8 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
 			case *IndexAccess:
 				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
+			case *Identifier:
+				code = code + "(" + condition.SourceCode(false, false, indent, logger) + ")"
 			default:
 				if condition != nil {
 					logger.Warnf("Unknown condition nodeType [%s] for IfStatement [src:%s].", condition.Type(), is.Src)
@@ -61,6 +63,12 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 				code = code + trueBody.SourceCode(true, true, indent+"    ", logger)
 			case *RevertStatement:
 				code = code + trueBody.SourceCode(true, true, indent, logger)
+			case *Return:
+				code = code + trueBody.SourceCode(true, true, indent, logger)
+			case *IfStatement:
+				code = code + trueBody.SourceCode(false, true, indent, logger)
+			case *Break:
+				code = code + trueBody.SourceCode(true, true, indent+"    ", logger)
 			default:
 				if trueBody != nil {
 					logger.Warnf("Unknown trueBody nodeType [%s] for IfStatement [src:%s].", trueBody.Type(), is.Src)
@@ -143,6 +151,8 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				isCondition, err = GetLiteral(gn, condition, logger)
 			case "IndexAccess":
 				isCondition, err = GetIndexAccess(gn, condition, logger)
+			case "Identifier":
+				isCondition, err = GetIdentifier(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for IfStatement [src:%s].", conditionNodeType, is.Src)
 			}
@@ -199,6 +209,12 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				isTrueBody, err = GetExpressionStatement(gn, trueBody, logger)
 			case "RevertStatement":
 				isTrueBody, err = GetRevertStatement(gn, trueBody, logger)
+			case "Return":
+				isTrueBody, err = GetReturn(gn, trueBody, logger)
+			case "IfStatement":
+				isTrueBody, err = GetIfStatement(gn, trueBody, logger)
+			case "Break":
+				isTrueBody, err = GetBreak(gn, trueBody, logger)
 			default:
 				logger.Warnf("Unknown trueBody [%s] for IfStatement [src:%s].", trueBodyNodeType, is.Src)
 			}

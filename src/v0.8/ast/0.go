@@ -42,6 +42,9 @@ var _ traverseFunctionCall = (*VariableDeclarationStatement)(nil)
 var _ traverseFunctionCall = (*UncheckedBlock)(nil)
 var _ traverseFunctionCall = (*WhileStatement)(nil)
 var _ traverseFunctionCall = (*FunctionCallOptions)(nil)
+var _ traverseFunctionCall = (*TryCatchClause)(nil)
+var _ traverseFunctionCall = (*TryStatement)(nil)
+var _ traverseFunctionCall = (*DoWhileStatement)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

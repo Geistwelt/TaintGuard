@@ -28,6 +28,10 @@ func (ws *WhileStatement) SourceCode(isSc bool, isIndent bool, indent string, lo
 		switch condition := ws.condition.(type) {
 		case *FunctionCall:
 			code = code + " (" + condition.SourceCode(false, false, indent, logger) + ") "
+		case *BinaryOperation:
+			code = code + " (" + condition.SourceCode(false, false, indent, logger) + ") "
+		case *Literal:
+			code = code + " (" + condition.SourceCode(false, false, indent, logger) + ") "
 		default:
 			if condition != nil {
 				logger.Warnf("Unknown condition nodeType [%s] for WhileStatement [src:%s].", condition.Type(), ws.Src)
@@ -118,6 +122,10 @@ func GetWhileStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 			switch conditionNodeType {
 			case "FunctionCall":
 				wsCondition, err = GetFunctionCall(gn, condition, logger)
+			case "BinaryOperation":
+				wsCondition, err = GetBinaryOperation(gn, condition, logger)
+			case "Literal":
+				wsCondition, err = GetLiteral(gn, condition, logger)
 			default:
 				logger.Warnf("Unknown condition nodeType [%s] for WhileStatement [src:%s].", conditionNodeType, ws.Src)
 			}

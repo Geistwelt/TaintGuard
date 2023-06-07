@@ -53,6 +53,8 @@ func (m *Mapping) SourceCode(isSc bool, isIndent bool, indent string, logger log
 				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
 			case *Mapping:
 				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
+			case *UserDefinedTypeName:
+				code = code + " " + "=>" + " " + valueType.SourceCode(false, false, indent, logger) + ")"
 			default:
 				if valueType != nil {
 					logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueType.Type(), m.Src)
@@ -124,6 +126,8 @@ func GetMapping(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Mapp
 			mValueType, err = GetElementaryTypeName(gn, valueType, logger)
 		case "Mapping":
 			mValueType, err = GetMapping(gn, valueType, logger)
+		case "UserDefinedTypeName":
+			mValueType, err = GetUserDefinedTypeName(gn, valueType, logger)
 		default:
 			logger.Warnf("Unknown valueType nodeType [%s] for Mapping [src:%s].", valueTypeNodeType, m.Src)
 		}
