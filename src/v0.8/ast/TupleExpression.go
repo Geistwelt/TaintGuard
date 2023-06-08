@@ -45,6 +45,8 @@ func (te *TupleExpression) SourceCode(isSc bool, isIndent bool, indent string, l
 				code = code + c.SourceCode(false, false, indent, logger)
 			case *Conditional:
 				code = code + c.SourceCode(false, false, indent, logger)
+			case *IndexAccess:
+				code = code + c.SourceCode(false, false, indent, logger)
 			default:
 				if c != nil {
 					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", c.Type(), te.Src)
@@ -91,23 +93,36 @@ func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 			te.components = make([]ASTNode, 0)
 			for i := 0; i < components.Size(); i++ {
 				component := components.Get(i)
-				componentNodeType := component.Get("nodeType").ToString()
 				var teComponent ASTNode
 				var err error
 
-				switch componentNodeType {
-				case "BinaryOperation":
-					teComponent, err = GetBinaryOperation(gn, component, logger)
-				case "ElementaryTypeNameExpression":
-					teComponent, err = GetElementaryTypeNameExpression(gn, component, logger)
-				case "Identifier":
-					teComponent, err = GetIdentifier(gn, component, logger)
-				case "Literal":
-					teComponent, err = GetLiteral(gn, component, logger)
-				case "Conditional":
-					teComponent, err = GetConditional(gn, component, logger)
-				default:
-					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", componentNodeType, te.Src)
+				if component.Size() > 0 {
+					componentNodeType := component.Get("nodeType").ToString()
+
+					switch componentNodeType {
+					case "BinaryOperation":
+						teComponent, err = GetBinaryOperation(gn, component, logger)
+					case "ElementaryTypeNameExpression":
+						teComponent, err = GetElementaryTypeNameExpression(gn, component, logger)
+					case "Identifier":
+						teComponent, err = GetIdentifier(gn, component, logger)
+					case "Literal":
+						teComponent, err = GetLiteral(gn, component, logger)
+					case "Conditional":
+						teComponent, err = GetConditional(gn, component, logger)
+					case "IndexAccess":
+						teComponent, err = GetIndexAccess(gn, component, logger)
+					default:
+						logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", componentNodeType, te.Src)
+					}
+				} else {
+					teComponent = &Literal{
+						ID:               0,
+						Kind:             "number",
+						NodeType:         "Literal",
+						Src:              "xxx",
+						Value:            "",
+					}
 				}
 
 				if err != nil {

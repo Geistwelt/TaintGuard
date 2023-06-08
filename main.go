@@ -13,7 +13,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/v0.8/4.sol_json.ast"
+var contract_ast_json string = "contracts/v0.8/10.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,
@@ -38,10 +38,21 @@ func main() {
 		fmt.Println("Invalid source file, there should be more than zero ast node in SourceUnit.")
 		os.Exit(1)
 	}
-	pragmaDirective := sourceUnitNodes.Get(0)
-	if pragmaDirective.Get("nodeType").ToString() != "PragmaDirective" {
-		fmt.Printf("Expected PragmaDirective, but got [%s].\n", pragmaDirective.ToString())
-		os.Exit(1)
+	// pragmaDirective := sourceUnitNodes.Get(0)
+	var pragmaDirective jsoniter.Any
+	// if pragmaDirective.Get("nodeType").ToString() != "PragmaDirective" {
+	// 	fmt.Printf("Expected PragmaDirective, but got [%s].\n", pragmaDirective.ToString())
+	// 	os.Exit(1)
+	// }
+
+	for i := 0; i < sourceUnitNodes.Size(); i++ {
+		sourceUnitNode := sourceUnitNodes.Get(i)
+		if sourceUnitNode.Size() > 0 {
+			sourceUnitNodeNodeType := sourceUnitNode.Get("nodeType").ToString()
+			if sourceUnitNodeNodeType == "PragmaDirective" {
+				pragmaDirective = sourceUnitNode
+			}
+		}
 	}
 	// var pragma string = "pragma"
 	literals := pragmaDirective.Get("literals").ToString()

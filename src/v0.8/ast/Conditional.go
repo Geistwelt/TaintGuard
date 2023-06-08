@@ -63,6 +63,8 @@ func (c *Conditional) SourceCode(isSc bool, isIndent bool, indent string, logger
 			code = code + trueExpression.SourceCode(false, false, indent, logger)
 		case *FunctionCall:
 			code = code + trueExpression.SourceCode(false, false, indent, logger)
+		case *BinaryOperation:
+			code = code + trueExpression.SourceCode(false, false, indent, logger)
 		default:
 			if trueExpression != nil {
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpression.Type(), c.Src)
@@ -196,6 +198,8 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 				cTrueExpression, err = GetLiteral(gn, trueExpression, logger)
 			case "FunctionCall":
 				cTrueExpression, err = GetFunctionCall(gn, trueExpression, logger)
+			case "BinaryOperation":
+				cTrueExpression, err = GetBinaryOperation(gn, trueExpression, logger)
 			default:
 				logger.Warnf("Unknown trueExpression nodeType [%s] for Conditional [src:%s].", trueExpressionNodeType, c.Src)
 			}

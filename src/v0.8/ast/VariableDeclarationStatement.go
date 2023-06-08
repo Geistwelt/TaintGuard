@@ -69,6 +69,8 @@ func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, in
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		case *Identifier:
 			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
+		case *Conditional:
+			code = code + " = " + initialValue.SourceCode(false, false, indent, logger)
 		default:
 			if initialValue != nil {
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s]", initialValue.Type(), vds.Src)
@@ -169,6 +171,8 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 				vdsInitialValue, err = GetTupleExpression(gn, initialValue, logger)
 			case "Identifier":
 				vdsInitialValue, err = GetIdentifier(gn, initialValue, logger)
+			case "Conditional":
+				vdsInitialValue, err = GetConditional(gn, initialValue, logger)
 			default:
 				logger.Warnf("Unknown initialValue nodeType [%s] for VariableDeclarationStatement [src:%s].", initialValueNodeType, vds.Src)
 			}
