@@ -440,14 +440,24 @@ func (fd *FunctionDefinition) Signature() string {
 	return fd.signature
 }
 
-func (fd *FunctionDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (fd *FunctionDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	ncp.SetCaller(fd.Signature(), fd.NodeID())
 
 	// Function call statements are generally inside functions.
 	if fd.body != nil {
 		switch body := fd.body.(type) {
 		case *Block:
-			body.TraverseFunctionCall(ncp, gn)
+			body.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (fd *FunctionDefinition) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	opt.TrackFunctionDefinitionName = fd.Signature()
+	if fd.body != nil {
+		switch body := fd.body.(type) {
+		case *Block:
+			body.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

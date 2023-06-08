@@ -226,32 +226,48 @@ func GetForStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (fs *ForStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (fs *ForStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if fs.initializationExpression != nil {
 		switch initializationExpression := fs.initializationExpression.(type) {
 		case *VariableDeclarationStatement:
-			initializationExpression.TraverseFunctionCall(ncp, gn)
+			initializationExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if fs.condition != nil {
 		switch condition := fs.condition.(type) {
 		case *BinaryOperation:
-			condition.TraverseFunctionCall(ncp, gn)
+			condition.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if fs.loopExpression != nil {
 		switch loopExpression := fs.loopExpression.(type) {
 		case *ExpressionStatement:
-			loopExpression.TraverseFunctionCall(ncp, gn)
+			loopExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if fs.body != nil {
 		switch body := fs.body.(type) {
 		case *Block:
-			body.TraverseFunctionCall(ncp, gn)
+			body.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (fs *ForStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if fs.loopExpression != nil {
+		switch loopExpression := fs.loopExpression.(type) {
+		case *ExpressionStatement:
+			loopExpression.TraverseTaintOwner(opt, logger)
+		}
+	}
+
+	if fs.body != nil {
+		switch body := fs.body.(type) {
+		case *Block:
+			body.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

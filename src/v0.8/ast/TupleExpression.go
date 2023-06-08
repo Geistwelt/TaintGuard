@@ -117,11 +117,11 @@ func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 					}
 				} else {
 					teComponent = &Literal{
-						ID:               0,
-						Kind:             "number",
-						NodeType:         "Literal",
-						Src:              "xxx",
-						Value:            "",
+						ID:       0,
+						Kind:     "number",
+						NodeType: "Literal",
+						Src:      "xxx",
+						Value:    "",
 					}
 				}
 
@@ -143,12 +143,12 @@ func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (te *TupleExpression) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (te *TupleExpression) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if len(te.components) > 0 {
 		for _, component := range te.components {
 			switch c := component.(type) {
 			case *BinaryOperation:
-				c.TraverseFunctionCall(ncp, gn)
+				c.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}

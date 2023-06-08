@@ -129,14 +129,25 @@ func GetUncheckedBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (ub *UncheckedBlock) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ub *UncheckedBlock) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if len(ub.statements) > 0 {
 		for _, statement := range ub.statements {
 			switch stat := statement.(type) {
 			case *ExpressionStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *VariableDeclarationStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
+			}
+		}
+	}
+}
+
+func (ub *UncheckedBlock) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if len(ub.statements) > 0 {
+		for _, statement := range ub.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				stat.TraverseTaintOwner(opt, logger)
 			}
 		}
 	}

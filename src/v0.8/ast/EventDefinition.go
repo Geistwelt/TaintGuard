@@ -94,11 +94,11 @@ func GetEventDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (ed *EventDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ed *EventDefinition) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if ed.parameters != nil {
 		switch parameters := ed.parameters.(type) {
 		case *ParameterList:
-			parameters.TraverseFunctionCall(ncp, gn)
+			parameters.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

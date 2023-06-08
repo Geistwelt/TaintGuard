@@ -203,36 +203,36 @@ func GetBinaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if bo.leftExpression != nil {
 		switch leftExpression := bo.leftExpression.(type) {
 		case *BinaryOperation:
-			leftExpression.TraverseFunctionCall(ncp, gn)
+			leftExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *UnaryOperation:
-			leftExpression.TraverseFunctionCall(ncp, gn)
+			leftExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *FunctionCall:
-			leftExpression.TraverseFunctionCall(ncp, gn)
+			leftExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *MemberAccess:
-			leftExpression.TraverseFunctionCall(ncp, gn)
+			leftExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *IndexAccess:
-			leftExpression.TraverseFunctionCall(ncp, gn)
+			leftExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if bo.rightExpression != nil {
 		switch rightExpression := bo.rightExpression.(type) {
 		case *BinaryOperation:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *FunctionCall:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *UnaryOperation:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *MemberAccess:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *TupleExpression:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *IndexAccess:
-			rightExpression.TraverseFunctionCall(ncp, gn)
+			rightExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

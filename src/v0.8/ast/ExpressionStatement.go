@@ -106,15 +106,24 @@ func GetExpressionStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (es *ExpressionStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (es *ExpressionStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if es.expression != nil {
 		switch expression := es.expression.(type) {
 		case *Assignment:
-			expression.TraverseFunctionCall(ncp, gn)
+			expression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *FunctionCall:
-			expression.TraverseFunctionCall(ncp, gn)
+			expression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *UnaryOperation:
-			expression.TraverseFunctionCall(ncp, gn)
+			expression.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (es *ExpressionStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if es.expression != nil {
+		switch expression := es.expression.(type) {
+		case *Assignment:
+			expression.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

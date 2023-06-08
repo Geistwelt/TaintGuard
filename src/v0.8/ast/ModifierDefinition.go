@@ -144,7 +144,5 @@ func GetModifierDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 		}
 	}
 
-	gn.AddASTNode(md)
-
 	return md, nil
 }

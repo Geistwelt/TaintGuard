@@ -127,23 +127,23 @@ func GetReturn(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Retur
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// expression
 	{
 		if r.expression != nil {
 			switch expression := r.expression.(type) {
 			case *IndexAccess:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *Conditional:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *BinaryOperation:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *FunctionCall:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *TupleExpression:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}

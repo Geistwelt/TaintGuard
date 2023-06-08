@@ -142,11 +142,11 @@ func GetTryStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 	return ts, nil
 }
 
-func (ts *TryStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ts *TryStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if ts.externalCall != nil {
 		switch externalCall := ts.externalCall.(type) {
 		case *FunctionCall:
-			externalCall.TraverseFunctionCall(ncp, gn)
+			externalCall.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
@@ -154,7 +154,18 @@ func (ts *TryStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 		for _, clause := range ts.clauses {
 			switch c := clause.(type) {
 			case *TryCatchClause:
-				c.TraverseFunctionCall(ncp, gn)
+				c.TraverseFunctionCall(ncp, gn, opt, logger)
+			}
+		}
+	}
+}
+
+func (ts *TryStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if len(ts.clauses) > 0 {
+		for _, clause := range ts.clauses {
+			switch c := clause.(type) {
+			case *TryCatchClause:
+				c.TraverseTaintOwner(opt, logger)
 			}
 		}
 	}

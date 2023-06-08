@@ -122,13 +122,13 @@ func GetUnaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (uo *UnaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (uo *UnaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if uo.subExpression != nil {
 		switch subExpression := uo.subExpression.(type) {
 		case *FunctionCall:
-			subExpression.TraverseFunctionCall(ncp, gn)
+			subExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *IndexAccess:
-			subExpression.TraverseFunctionCall(ncp, gn)
+			subExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

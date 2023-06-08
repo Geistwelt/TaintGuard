@@ -236,17 +236,17 @@ func GetIfStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// condition
 	{
 		if is.condition != nil {
 			switch condition := is.condition.(type) {
 			case *BinaryOperation:
-				condition.TraverseFunctionCall(ncp, gn)
+				condition.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *UnaryOperation:
-				condition.TraverseFunctionCall(ncp, gn)
+				condition.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *IndexAccess:
-				condition.TraverseFunctionCall(ncp, gn)
+				condition.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
@@ -256,11 +256,11 @@ func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 		if is.falseBody != nil {
 			switch falseBody := is.falseBody.(type) {
 			case *Block:
-				falseBody.TraverseFunctionCall(ncp, gn)
+				falseBody.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *ExpressionStatement:
-				falseBody.TraverseFunctionCall(ncp, gn)
+				falseBody.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *IfStatement:
-				falseBody.TraverseFunctionCall(ncp, gn)
+				falseBody.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
@@ -270,9 +270,37 @@ func (is *IfStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 		if is.trueBody != nil {
 			switch trueBody := is.trueBody.(type) {
 			case *Block:
-				trueBody.TraverseFunctionCall(ncp, gn)
+				trueBody.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *ExpressionStatement:
-				trueBody.TraverseFunctionCall(ncp, gn)
+				trueBody.TraverseFunctionCall(ncp, gn, opt, logger)
+			}
+		}
+	}
+}
+
+func (is *IfStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	//falseBody
+	{
+		if is.falseBody != nil {
+			switch falseBody := is.falseBody.(type) {
+			case *Block:
+				falseBody.TraverseTaintOwner(opt, logger)
+			case *ExpressionStatement:
+				falseBody.TraverseTaintOwner(opt, logger)
+			case *IfStatement:
+				falseBody.TraverseTaintOwner(opt, logger)
+			}
+		}
+	}
+
+	// trueBody
+	{
+		if is.trueBody != nil {
+			switch trueBody := is.trueBody.(type) {
+			case *Block:
+				trueBody.TraverseTaintOwner(opt, logger)
+			case *ExpressionStatement:
+				trueBody.TraverseTaintOwner(opt, logger)
 			}
 		}
 	}

@@ -245,12 +245,43 @@ func (fc *FunctionCall) ReferencedFunctionDefinition() int {
 	return fc.referencedFunctionDefinition
 }
 
-func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if fc.ReferencedFunctionDefinition() != -1 {
 		fd := gn.Functions()[fc.ReferencedFunctionDefinition()]
 		function, ok := fd.(*FunctionDefinition)
 		if ok {
 			ncp.SetCallee(function.Signature(), fc.ReferencedFunctionDefinition())
+		}
+	}
+
+	if fc.expression != nil {
+		switch fcExpression := fc.expression.(type) {
+		case *MemberAccess:
+			if fcExpression.MemberName == "delegatecall" {
+				if fcExpression.expression != nil {
+					switch maExpression := fcExpression.expression.(type) {
+					case *FunctionCall:
+						if maExpression.Kind == "typeConversion" && maExpression.TypeDescriptions.TypeString == "address" {
+							if maExpression.expression != nil {
+								switch fcExpression2 := maExpression.expression.(type) {
+								case *ElementaryTypeNameExpression:
+									if fcExpression2.ArgumentTypes[0].TypeString[0:8] == "contract" {
+										logger.Debugf("An explicit contract [%s] is being called using delegatecall.", fcExpression2.ArgumentTypes[0].TypeString[9:])
+									}
+								}
+							}
+						}
+					default:
+						// logger.Warnf("A contract with an unknown address is being called using delegatecall.")
+						if opt != nil {
+							select {
+							case opt.delegatecallUnknownContractCh <- struct{}{}:
+							default:
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

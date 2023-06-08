@@ -148,10 +148,10 @@ func GetMapping(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Mapp
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (m *Mapping) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (m *Mapping) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// keyType
 	{
-		
+
 	}
 
 	// valueType
@@ -159,8 +159,16 @@ func (m *Mapping) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
 		if m.valueType != nil {
 			switch valueType := m.valueType.(type) {
 			case *Mapping:
-				valueType.TraverseFunctionCall(ncp, gn)
+				valueType.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
+}
+
+func (m *Mapping) SetKeyType(kt ASTNode) {
+	m.keyType = kt
+}
+
+func (m *Mapping) SetValueType(vt ASTNode) {
+	m.valueType = vt
 }

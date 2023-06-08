@@ -15,8 +15,24 @@ type ASTNode interface {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+type Option struct {
+	delegatecallUnknownContractCh chan struct{}
+	TrackFunctionDefinitionName   string
+	TrackOwnerVariableName        string
+	TrackOwnerMappingName         string
+	SimilarOwnerVariableName      string
+}
+
+func (opt *Option) MakeDelegatecallUnknownContractCh(size int) {
+	opt.delegatecallUnknownContractCh = make(chan struct{}, size)
+}
+
+func (opt *Option) DelegatecallUnknownContractCh() <-chan struct{} {
+	return opt.delegatecallUnknownContractCh
+}
+
 type traverseFunctionCall interface {
-	TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes)
+	TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger)
 }
 
 var _ traverseFunctionCall = (*Assignment)(nil)
@@ -47,6 +63,23 @@ var _ traverseFunctionCall = (*TryStatement)(nil)
 var _ traverseFunctionCall = (*DoWhileStatement)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+type traverseTaintOwner interface {
+	TraverseTaintOwner(opt *Option, logger logging.Logger)
+}
+
+var _ traverseTaintOwner = (*ContractDefinition)(nil)
+var _ traverseTaintOwner = (*FunctionDefinition)(nil)
+var _ traverseTaintOwner = (*Block)(nil)
+var _ traverseTaintOwner = (*ExpressionStatement)(nil)
+var _ traverseTaintOwner = (*IfStatement)(nil)
+var _ traverseTaintOwner = (*ForStatement)(nil)
+var _ traverseTaintOwner = (*UncheckedBlock)(nil)
+var _ traverseTaintOwner = (*WhileStatement)(nil)
+var _ traverseTaintOwner = (*TryStatement)(nil)
+var _ traverseTaintOwner = (*DoWhileStatement)(nil)
+var _ traverseTaintOwner = (*Assignment)(nil)
+var _ traverseTaintOwner = (*TryCatchClause)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -146,30 +146,59 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (b *Block) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (b *Block) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if len(b.statements) > 0 {
 		for _, statement := range b.statements {
 			switch stat := statement.(type) {
 			case *ExpressionStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *Return:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *EmitStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *IfStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *VariableDeclarationStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *ForStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *RevertStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *Block:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *UncheckedBlock:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *WhileStatement:
-				stat.TraverseFunctionCall(ncp, gn)
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
+			case *TryStatement:
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
+			case *DoWhileStatement:
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
+			}
+		}
+	}
+}
+
+func (b *Block) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if len(b.statements) > 0 {
+		for _, statement := range b.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				stat.TraverseTaintOwner(opt, logger)
+			case *IfStatement:
+				stat.TraverseTaintOwner(opt, logger)
+			case *ForStatement:
+				stat.TraverseTaintOwner(opt, logger)
+			case *Block:
+				stat.TraverseTaintOwner(opt, logger)
+			case *UncheckedBlock:
+				stat.TraverseTaintOwner(opt, logger)
+			case *WhileStatement:
+				stat.TraverseTaintOwner(opt, logger)
+			case *TryStatement:
+				stat.TraverseTaintOwner(opt, logger)
+			case *DoWhileStatement:
+				stat.TraverseTaintOwner(opt, logger)
 			}
 		}
 	}

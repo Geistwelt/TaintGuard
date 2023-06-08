@@ -19,13 +19,13 @@ type VariableDeclarationStatement struct {
 
 func (vds *VariableDeclarationStatement) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	var code string
-	
+
 	if isIndent {
 		code = code + indent
 	}
 
 	if len(vds.Assignments) > 1 {
-		code = code +"("
+		code = code + "("
 	}
 
 	if len(vds.declarations) > 0 {
@@ -118,29 +118,29 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 					var declarationNodeType = declaration.Get("nodeType").ToString()
 					var err error
 					var vdsDeclaration ASTNode
-	
+
 					switch declarationNodeType {
 					case "VariableDeclaration":
 						vdsDeclaration, err = GetVariableDeclaration(gn, declaration, logger)
 					default:
 						logger.Warnf("Unknown declaration nodeType [%s] for VariableDeclarationStatement [src:%s].", declarationNodeType, vds.Src)
 					}
-	
+
 					if err != nil {
 						return nil, err
 					}
-	
+
 					if vdsDeclaration != nil {
 						vds.declarations = append(vds.declarations, vdsDeclaration)
 					}
 				} else {
 					// TODO NULL
 					declaration := &Literal{
-						ID:               0,
-						Kind:             "number",
-						NodeType:         "Literal",
-						Src:              "xxx",
-						Value:            "",
+						ID:       0,
+						Kind:     "number",
+						NodeType: "Literal",
+						Src:      "xxx",
+						Value:    "",
 					}
 					vds.declarations = append(vds.declarations, declaration)
 				}
@@ -194,12 +194,12 @@ func GetVariableDeclarationStatement(gn *GlobalNodes, raw jsoniter.Any, logger l
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if len(vds.declarations) > 0 {
 		for _, declaration := range vds.declarations {
 			switch d := declaration.(type) {
 			case *VariableDeclaration:
-				d.TraverseFunctionCall(ncp, gn)
+				d.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
@@ -207,15 +207,15 @@ func (vds *VariableDeclarationStatement) TraverseFunctionCall(ncp *NormalCallPat
 	if vds.initialValue != nil {
 		switch initialValue := vds.initialValue.(type) {
 		case *FunctionCall:
-			initialValue.TraverseFunctionCall(ncp, gn)
+			initialValue.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *MemberAccess:
-			initialValue.TraverseFunctionCall(ncp, gn)
+			initialValue.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *BinaryOperation:
-			initialValue.TraverseFunctionCall(ncp, gn)
+			initialValue.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *IndexAccess:
-			initialValue.TraverseFunctionCall(ncp, gn)
+			initialValue.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *TupleExpression:
-			initialValue.TraverseFunctionCall(ncp, gn)
+			initialValue.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

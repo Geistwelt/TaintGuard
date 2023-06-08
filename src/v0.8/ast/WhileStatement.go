@@ -145,18 +145,27 @@ func GetWhileStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 	return ws, nil
 }
 
-func (ws *WhileStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ws *WhileStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if ws.body != nil {
 		switch body := ws.body.(type) {
 		case *Block:
-			body.TraverseFunctionCall(ncp, gn)
+			body.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if ws.condition != nil {
 		switch condition := ws.condition.(type) {
 		case *FunctionCall:
-			condition.TraverseFunctionCall(ncp, gn)
+			condition.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (ws *WhileStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if ws.body != nil {
+		switch body := ws.body.(type) {
+		case *Block:
+			body.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

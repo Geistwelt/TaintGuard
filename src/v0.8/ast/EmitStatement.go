@@ -94,11 +94,11 @@ func GetEmitStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (es *EmitStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (es *EmitStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if es.eventCall != nil {
 		switch eventCall := es.eventCall.(type) {
 		case *FunctionCall:
-			eventCall.TraverseFunctionCall(ncp, gn)
+			eventCall.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

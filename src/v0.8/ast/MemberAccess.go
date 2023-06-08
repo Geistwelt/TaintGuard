@@ -128,17 +128,17 @@ func GetMemberAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (ma *MemberAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ma *MemberAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// expression
 	{
 		if ma.expression != nil {
 			switch expression := ma.expression.(type) {
 			case *IndexAccess:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *FunctionCall:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:
-				expression.TraverseFunctionCall(ncp, gn)
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}

@@ -185,13 +185,13 @@ func GetIndexAccess(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// baseExpression
 	{
 		if ia.baseExpression != nil {
 			switch baseExpression := ia.baseExpression.(type) {
 			case *IndexAccess:
-				baseExpression.TraverseFunctionCall(ncp, gn)
+				baseExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
@@ -201,11 +201,11 @@ func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 		if ia.indexExpression != nil {
 			switch indexExpression := ia.indexExpression.(type) {
 			case *FunctionCall:
-				indexExpression.TraverseFunctionCall(ncp, gn)
+				indexExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *IndexAccess:
-				indexExpression.TraverseFunctionCall(ncp, gn)
+				indexExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:
-				indexExpression.TraverseFunctionCall(ncp, gn)
+				indexExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}

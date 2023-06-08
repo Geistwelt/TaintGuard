@@ -94,11 +94,11 @@ func GetRevertStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (rs *RevertStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (rs *RevertStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if rs.errorCall != nil {
 		switch errorCall := rs.errorCall.(type) {
 		case *FunctionCall:
-			errorCall.TraverseFunctionCall(ncp, gn)
+			errorCall.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }

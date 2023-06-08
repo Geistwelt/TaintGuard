@@ -177,3 +177,18 @@ func GetContractDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 
 	return cd, nil
 }
+
+func (cd *ContractDefinition) AppendNode(node ASTNode) {
+	cd.nodes = append(cd.nodes, node)
+}
+
+func (cd *ContractDefinition) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if len(cd.nodes) > 0 {
+		for _, node := range cd.nodes {
+			switch n := node.(type) {
+			case *FunctionDefinition:
+				n.TraverseTaintOwner(opt, logger)
+			}
+		}
+	}
+}

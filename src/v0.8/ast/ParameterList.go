@@ -97,12 +97,12 @@ func GetParameterList(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) 
 	return pl, nil
 }
 
-func (pl *ParameterList) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (pl *ParameterList) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if len(pl.parameters) > 0 {
 		for _, parameter := range pl.parameters {
 			switch p := parameter.(type) {
 			case *VariableDeclaration:
-				p.TraverseFunctionCall(ncp, gn)
+				p.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}

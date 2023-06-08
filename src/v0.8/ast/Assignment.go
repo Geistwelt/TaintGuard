@@ -184,15 +184,15 @@ func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*A
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	// leftHandSide
 	{
 		if a.leftHandSide != nil {
 			switch leftHandSide := a.leftHandSide.(type) {
 			case *IndexAccess:
-				leftHandSide.TraverseFunctionCall(ncp, gn)
+				leftHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:
-				leftHandSide.TraverseFunctionCall(ncp, gn)
+				leftHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
@@ -202,14 +202,44 @@ func (a *Assignment) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) 
 		if a.rightHandSide != nil {
 			switch rightHandSide := a.rightHandSide.(type) {
 			case *FunctionCall:
-				rightHandSide.TraverseFunctionCall(ncp, gn)
+				rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:
-				rightHandSide.TraverseFunctionCall(ncp, gn)
+				rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *BinaryOperation:
-				rightHandSide.TraverseFunctionCall(ncp, gn)
+				rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *IndexAccess:
-				rightHandSide.TraverseFunctionCall(ncp, gn)
+				rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
 			}
 		}
 	}
+}
+
+func (a *Assignment) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	// leftHandSide
+	{
+		if a.leftHandSide != nil {
+			switch leftHandSide := a.leftHandSide.(type) {
+			case *Identifier:
+				if leftHandSide.Name == opt.SimilarOwnerVariableName {
+					logger.Error("危险！！！")
+				}
+			}
+		}
+	}
+
+	// //rightHandSide
+	// {
+	// 	if a.rightHandSide != nil {
+	// 		switch rightHandSide := a.rightHandSide.(type) {
+	// 		case *FunctionCall:
+	// 			rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
+	// 		case *MemberAccess:
+	// 			rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
+	// 		case *BinaryOperation:
+	// 			rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
+	// 		case *IndexAccess:
+	// 			rightHandSide.TraverseFunctionCall(ncp, gn, opt, logger)
+	// 		}
+	// 	}
+	// }
 }

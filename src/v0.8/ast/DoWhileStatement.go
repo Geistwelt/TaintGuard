@@ -145,18 +145,27 @@ func GetDoWhileStatement(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logge
 	return dws, nil
 }
 
-func (dws *DoWhileStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (dws *DoWhileStatement) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if dws.body != nil {
 		switch body := dws.body.(type) {
 		case *Block:
-			body.TraverseFunctionCall(ncp, gn)
+			body.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if dws.condition != nil {
 		switch condition := dws.condition.(type) {
 		case *FunctionCall:
-			condition.TraverseFunctionCall(ncp, gn)
+			condition.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (dws *DoWhileStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if dws.body != nil {
+		switch body := dws.body.(type) {
+		case *Block:
+			body.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

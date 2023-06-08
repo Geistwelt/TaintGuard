@@ -170,20 +170,20 @@ func GetFunctionCallOptions(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (fco *FunctionCallOptions) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (fco *FunctionCallOptions) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt_ *Option, logger logging.Logger) {
 	if fco.expression != nil {
 		switch expression := fco.expression.(type) {
 		case *MemberAccess:
-			expression.TraverseFunctionCall(ncp, gn)
+			expression.TraverseFunctionCall(ncp, gn, opt_, logger)
 		}
 	}
 
 	for _, option := range fco.options {
 		switch opt := option.(type) {
 		case *MemberAccess:
-			opt.TraverseFunctionCall(ncp, gn)
+			opt.TraverseFunctionCall(ncp, gn, opt_, logger)
 		case *BinaryOperation:
-			opt.TraverseFunctionCall(ncp, gn)
+			opt.TraverseFunctionCall(ncp, gn, opt_, logger)
 		}
 	}
 }

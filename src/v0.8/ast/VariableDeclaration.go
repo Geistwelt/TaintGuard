@@ -198,20 +198,24 @@ func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (vd *VariableDeclaration) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (vd *VariableDeclaration) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if vd.typeName != nil {
 		switch typeName := vd.typeName.(type) {
 		case *Mapping:
-			typeName.TraverseFunctionCall(ncp, gn)
+			typeName.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if vd.value != nil {
 		switch value := vd.value.(type) {
 		case *BinaryOperation:
-			value.TraverseFunctionCall(ncp, gn)
+			value.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *FunctionCall:
-			value.TraverseFunctionCall(ncp, gn)
+			value.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
+}
+
+func (vd *VariableDeclaration) SetTypeName(typeName ASTNode) {
+	vd.typeName = typeName
 }

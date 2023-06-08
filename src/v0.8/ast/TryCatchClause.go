@@ -129,11 +129,20 @@ func GetTryCatchClause(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 	return tcc, nil
 }
 
-func (tcc *TryCatchClause) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (tcc *TryCatchClause) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if tcc.block != nil {
 		switch block := tcc.block.(type) {
 		case *Block:
-			block.TraverseFunctionCall(ncp, gn)
+			block.TraverseFunctionCall(ncp, gn, opt, logger)
+		}
+	}
+}
+
+func (tcc *TryCatchClause) TraverseTaintOwner(opt *Option, logger logging.Logger) {
+	if tcc.block != nil {
+		switch block := tcc.block.(type) {
+		case *Block:
+			block.TraverseTaintOwner(opt, logger)
 		}
 	}
 }

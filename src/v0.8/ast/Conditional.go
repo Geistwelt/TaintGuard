@@ -221,20 +221,20 @@ func GetConditional(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func (c *Conditional) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes) {
+func (c *Conditional) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *Option, logger logging.Logger) {
 	if c.condition != nil {
 		switch condition := c.condition.(type) {
 		case *TupleExpression:
-			condition.TraverseFunctionCall(ncp, gn)
+			condition.TraverseFunctionCall(ncp, gn, opt, logger)
 		case *BinaryOperation:
-			condition.TraverseFunctionCall(ncp, gn)
+			condition.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 
 	if c.falseExpression != nil {
 		switch falseExpression := c.falseExpression.(type) {
 		case *FunctionCall:
-			falseExpression.TraverseFunctionCall(ncp, gn)
+			falseExpression.TraverseFunctionCall(ncp, gn, opt, logger)
 		}
 	}
 }
