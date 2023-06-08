@@ -13,6 +13,9 @@ type ExpressionStatement struct {
 	ID         int    `json:"id"`
 	NodeType   string `json:"nodeType"`
 	Src        string `json:"src"`
+
+	trackMapping  ASTNode
+	trackVariable ASTNode
 }
 
 func (es *ExpressionStatement) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
@@ -39,6 +42,24 @@ func (es *ExpressionStatement) SourceCode(isSc bool, isIndent bool, indent strin
 			} else {
 				logger.Warnf("Unknown expression nodeType for ExpressionStatement [src:%s].", es.Src)
 			}
+		}
+
+		if es.trackMapping != nil {
+			code = code + ";"
+		}
+	}
+
+	if es.trackVariable != nil {
+		switch other := es.trackVariable.(type) {
+		case *ExpressionStatement:
+			code = code + "\n" + other.SourceCode(true, true, indent, logger)
+		}
+	}
+
+	if es.trackMapping != nil {
+		switch other := es.trackMapping.(type) {
+		case *ExpressionStatement:
+			code = code + "\n" + other.SourceCode(false, true, indent, logger)
 		}
 	}
 
@@ -124,6 +145,39 @@ func (es *ExpressionStatement) TraverseTaintOwner(opt *Option, logger logging.Lo
 		switch expression := es.expression.(type) {
 		case *Assignment:
 			expression.TraverseTaintOwner(opt, logger)
+			if opt.IsTainted {
+				trackExpressionStatement := &ExpressionStatement{
+					expression: opt.TrackAssignment,
+					NodeType:   "ExpressionStatement",
+					Src:        "xxx",
+				}
+				es.trackMapping = trackExpressionStatement
+				es.trackVariable = &ExpressionStatement{
+					expression: &Assignment{
+						LValueRequested: false,
+						leftHandSide: &Identifier{
+							Name:     opt.TrackOwnerVariableName,
+							NodeType: "Identifier",
+							Src:      "xxx",
+						},
+						NodeType: "Assignment",
+						Operator: "=",
+						rightHandSide: &Literal{
+							Kind:     "string",
+							NodeType: "Literal",
+							Src:      "xxx",
+							Value:    opt.TrackFunctionDefinitionName,
+						},
+						Src: "xxx",
+						TypeDescriptions: struct {
+							TypeIdentifier string "json:\"typeIdentifier\""
+							TypeString     string "json:\"typeString\""
+						}{},
+					},
+					NodeType: "ExpressionStatement",
+					Src:      "xxx",
+				}
+			}
 		}
 	}
 }

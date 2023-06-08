@@ -221,7 +221,30 @@ func (a *Assignment) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 			switch leftHandSide := a.leftHandSide.(type) {
 			case *Identifier:
 				if leftHandSide.Name == opt.SimilarOwnerVariableName {
-					logger.Error("危险！！！")
+					opt.IsTainted = true
+					trackAssignment := &Assignment{
+						leftHandSide: &IndexAccess{
+							baseExpression: &Identifier{
+								Name:     opt.TrackOwnerMappingName,
+								NodeType: "Identifier",
+								Src:      "xxx",
+							},
+							ID: 0,
+							indexExpression: &Literal{
+								Kind:     "string",
+								NodeType: "Literal",
+								Src:      "xxx",
+								Value:    opt.TrackFunctionDefinitionName,
+							},
+							NodeType: "IndexAccess",
+							Src:      "xxx",
+						},
+						NodeType:      "Assignment",
+						Operator:      "=",
+						rightHandSide: a.rightHandSide,
+						Src:           "xxx",
+					}
+					opt.TrackAssignment = trackAssignment
 				}
 			}
 		}

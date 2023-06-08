@@ -21,6 +21,8 @@ type Option struct {
 	TrackOwnerVariableName        string
 	TrackOwnerMappingName         string
 	SimilarOwnerVariableName      string
+	IsTainted                     bool
+	TrackAssignment               ASTNode
 }
 
 func (opt *Option) MakeDelegatecallUnknownContractCh(size int) {
