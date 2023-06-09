@@ -148,3 +148,7 @@ func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt 
 		}
 	}
 }
+
+func (r *Return) SetExpression(expression ASTNode) {
+	r.expression = expression
+}

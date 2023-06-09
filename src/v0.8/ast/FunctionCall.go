@@ -267,6 +267,10 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 								case *ElementaryTypeNameExpression:
 									if fcExpression2.ArgumentTypes[0].TypeString[0:8] == "contract" {
 										logger.Debugf("An explicit contract [%s] is being called using delegatecall.", fcExpression2.ArgumentTypes[0].TypeString[9:])
+										select {
+										case opt.delegatecallKnownContractCh <- fcExpression2.ArgumentTypes[0].TypeString[9:]:
+										default:
+										}
 									}
 								}
 							}
@@ -284,4 +288,16 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 			}
 		}
 	}
+}
+
+func (fc *FunctionCall) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+
+}
+
+func (fc *FunctionCall) SetExpression(expression ASTNode) {
+	fc.expression = expression
+}
+
+func (fc *FunctionCall) AppendArgument(argument ASTNode) {
+	fc.arguments = append(fc.arguments, argument)
 }

@@ -305,3 +305,31 @@ func (is *IfStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 		}
 	}
 }
+
+func (is *IfStatement) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	//falseBody
+	{
+		if is.falseBody != nil {
+			switch falseBody := is.falseBody.(type) {
+			case *Block:
+				falseBody.TraverseDelegatecall(opt, logger)
+			case *ExpressionStatement:
+				falseBody.TraverseDelegatecall(opt, logger)
+			case *IfStatement:
+				falseBody.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+
+	// trueBody
+	{
+		if is.trueBody != nil {
+			switch trueBody := is.trueBody.(type) {
+			case *Block:
+				trueBody.TraverseDelegatecall(opt, logger)
+			case *ExpressionStatement:
+				trueBody.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+}

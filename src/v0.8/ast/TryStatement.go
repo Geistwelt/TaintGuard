@@ -170,3 +170,21 @@ func (ts *TryStatement) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 		}
 	}
 }
+
+func (ts *TryStatement) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if ts.externalCall != nil {
+		switch externalCall := ts.externalCall.(type) {
+		case *FunctionCall:
+			externalCall.TraverseDelegatecall(opt, logger)
+		}
+	}
+
+	if len(ts.clauses) > 0 {
+		for _, clause := range ts.clauses {
+			switch c := clause.(type) {
+			case *TryCatchClause:
+				c.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+}

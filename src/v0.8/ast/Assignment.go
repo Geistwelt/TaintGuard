@@ -266,3 +266,29 @@ func (a *Assignment) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 	// 	}
 	// }
 }
+
+func (a *Assignment) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	// leftHandSide
+	{
+		if a.leftHandSide != nil {
+			switch leftHandSide := a.leftHandSide.(type) {
+			case *MemberAccess:
+				leftHandSide.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+
+	//rightHandSide
+	{
+		if a.rightHandSide != nil {
+			switch rightHandSide := a.rightHandSide.(type) {
+			case *FunctionCall:
+				rightHandSide.TraverseDelegatecall(opt, logger)
+			case *MemberAccess:
+				rightHandSide.TraverseDelegatecall(opt, logger)
+			case *BinaryOperation:
+				rightHandSide.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+}

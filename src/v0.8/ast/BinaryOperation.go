@@ -236,3 +236,35 @@ func (bo *BinaryOperation) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalN
 		}
 	}
 }
+
+func (bo *BinaryOperation) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if bo.leftExpression != nil {
+		switch leftExpression := bo.leftExpression.(type) {
+		case *BinaryOperation:
+			leftExpression.TraverseDelegatecall(opt, logger)
+		case *FunctionCall:
+			leftExpression.TraverseDelegatecall(opt, logger)
+		case *MemberAccess:
+			leftExpression.TraverseDelegatecall(opt, logger)
+		}
+	}
+
+	if bo.rightExpression != nil {
+		switch rightExpression := bo.rightExpression.(type) {
+		case *BinaryOperation:
+			rightExpression.TraverseDelegatecall(opt, logger)
+		case *FunctionCall:
+			rightExpression.TraverseDelegatecall(opt, logger)
+		case *MemberAccess:
+			rightExpression.TraverseDelegatecall(opt, logger)
+		}
+	}
+}
+
+func (bo *BinaryOperation) SetLeftExpression(leftExpression ASTNode) {
+	bo.leftExpression = leftExpression
+}
+
+func (bo *BinaryOperation) SetRightExpression(rightExpression ASTNode) {
+	bo.rightExpression = rightExpression
+}

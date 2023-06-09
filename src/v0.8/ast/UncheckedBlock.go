@@ -152,3 +152,16 @@ func (ub *UncheckedBlock) TraverseTaintOwner(opt *Option, logger logging.Logger)
 		}
 	}
 }
+
+func (ub *UncheckedBlock) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if len(ub.statements) > 0 {
+		for _, statement := range ub.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *VariableDeclarationStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+}

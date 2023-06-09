@@ -107,3 +107,11 @@ func (pl *ParameterList) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNod
 		}
 	}
 }
+
+func (pl *ParameterList) AppendParameter(parameter ASTNode) {
+	if pl.parameters == nil {
+		pl.parameters = make([]ASTNode, 0)
+	}
+
+	pl.parameters = append(pl.parameters, parameter)
+}

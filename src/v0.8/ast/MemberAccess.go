@@ -143,3 +143,17 @@ func (ma *MemberAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 		}
 	}
 }
+
+func (ma *MemberAccess) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	// expression
+	{
+		if ma.expression != nil {
+			switch expression := ma.expression.(type) {
+			case *FunctionCall:
+				expression.TraverseDelegatecall(opt, logger)
+			case *MemberAccess:
+				expression.TraverseDelegatecall(opt, logger)
+			}
+		}
+	}
+}

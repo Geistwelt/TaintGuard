@@ -187,3 +187,21 @@ func (fco *FunctionCallOptions) TraverseFunctionCall(ncp *NormalCallPath, gn *Gl
 		}
 	}
 }
+
+func (fco *FunctionCallOptions) TraverseDelegatecall(opt_ *Option, logger logging.Logger) {
+	if fco.expression != nil {
+		switch expression := fco.expression.(type) {
+		case *MemberAccess:
+			expression.TraverseDelegatecall(opt_, logger)
+		}
+	}
+
+	for _, option := range fco.options {
+		switch opt := option.(type) {
+		case *MemberAccess:
+			opt.TraverseDelegatecall(opt_, logger)
+		case *BinaryOperation:
+			opt.TraverseDelegatecall(opt_, logger)
+		}
+	}
+}

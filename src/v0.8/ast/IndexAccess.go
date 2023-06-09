@@ -210,3 +210,11 @@ func (ia *IndexAccess) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes
 		}
 	}
 }
+
+func (ia *IndexAccess) SetBaseExpression(baseExpression ASTNode) {
+	ia.baseExpression = baseExpression
+}
+
+func (ia *IndexAccess) SetIndexExpression(indexExpression ASTNode) {
+	ia.indexExpression = indexExpression
+}

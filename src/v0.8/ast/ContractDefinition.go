@@ -182,12 +182,40 @@ func (cd *ContractDefinition) AppendNode(node ASTNode) {
 	cd.nodes = append(cd.nodes, node)
 }
 
+func (cd *ContractDefinition) InsertReturnOwnerFunction(fd *FunctionDefinition) {
+	var isExisted bool = false
+	if len(cd.nodes) > 0 {
+		for _, node := range cd.nodes {
+			switch node.Type() {
+			case "FunctionDefinition":
+				if node.SourceCode(false, false, "", nil) == fd.SourceCode(false, false, "", nil) {
+					isExisted = true
+				}
+			}
+		}
+	}
+	if !isExisted {
+		cd.nodes = append(cd.nodes, fd)
+	}
+}
+
 func (cd *ContractDefinition) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 	if len(cd.nodes) > 0 {
 		for _, node := range cd.nodes {
 			switch n := node.(type) {
 			case *FunctionDefinition:
 				n.TraverseTaintOwner(opt, logger)
+			}
+		}
+	}
+}
+
+func (cd *ContractDefinition) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if len(cd.nodes) > 0 {
+		for _, node := range cd.nodes {
+			switch n := node.(type) {
+			case *FunctionDefinition:
+				n.TraverseDelegatecall(opt, logger)
 			}
 		}
 	}

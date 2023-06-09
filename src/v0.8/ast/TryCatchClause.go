@@ -146,3 +146,12 @@ func (tcc *TryCatchClause) TraverseTaintOwner(opt *Option, logger logging.Logger
 		}
 	}
 }
+
+func (tcc *TryCatchClause) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if tcc.block != nil {
+		switch block := tcc.block.(type) {
+		case *Block:
+			block.TraverseDelegatecall(opt, logger)
+		}
+	}
+}

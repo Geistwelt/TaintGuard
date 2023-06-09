@@ -3,6 +3,7 @@ package ast
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/geistwelt/logging"
 	jsoniter "github.com/json-iterator/go"
@@ -199,6 +200,62 @@ func (b *Block) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 				stat.TraverseTaintOwner(opt, logger)
 			case *DoWhileStatement:
 				stat.TraverseTaintOwner(opt, logger)
+			}
+		}
+	}
+}
+
+func (b *Block) AppendStatement(stat ASTNode) {
+	if b.statements == nil {
+		b.statements = make([]ASTNode, 0)
+	}
+
+	b.statements = append(b.statements, stat)
+}
+
+func (b *Block) InsertStatement(stat ASTNode, index int) {
+	if index < len(b.statements) {
+		if b.statements[index].SourceCode(false, false, "", nil) == stat.SourceCode(false, false, "", nil) {
+			return
+		}
+	}
+	statements := make([]ASTNode, len(b.statements)+1)
+	copy(statements[:index], b.statements)
+	statements[index] = stat
+	copy(statements[index+1:], b.statements[index:])
+	b.statements = statements
+}
+
+func (b *Block) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if len(b.statements) > 0 {
+		for index, statement := range b.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				if strings.Contains(stat.SourceCode(false, false, "", logger), ".delegatecall(") {
+					if opt.ExpressionStatement != nil {
+						b.InsertStatement(opt.ExpressionStatement, index+1)
+					}
+				}
+			case *IfStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *ForStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *Block:
+				stat.TraverseDelegatecall(opt, logger)
+			case *UncheckedBlock:
+				stat.TraverseDelegatecall(opt, logger)
+			case *WhileStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *TryStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *DoWhileStatement:
+				stat.TraverseDelegatecall(opt, logger)
+			case *VariableDeclarationStatement:
+				if strings.Contains(stat.SourceCode(false, false, "", logger), ".delegatecall(") {
+					if opt.ExpressionStatement != nil {
+						b.InsertStatement(opt.ExpressionStatement, index+1)
+					}
+				}
 			}
 		}
 	}

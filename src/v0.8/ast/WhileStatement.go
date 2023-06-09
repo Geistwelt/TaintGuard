@@ -169,3 +169,19 @@ func (ws *WhileStatement) TraverseTaintOwner(opt *Option, logger logging.Logger)
 		}
 	}
 }
+
+func (ws *WhileStatement) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if ws.body != nil {
+		switch body := ws.body.(type) {
+		case *Block:
+			body.TraverseDelegatecall(opt, logger)
+		}
+	}
+
+	if ws.condition != nil {
+		switch condition := ws.condition.(type) {
+		case *FunctionCall:
+			condition.TraverseDelegatecall(opt, logger)
+		}
+	}
+}

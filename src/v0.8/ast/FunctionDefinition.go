@@ -461,3 +461,21 @@ func (fd *FunctionDefinition) TraverseTaintOwner(opt *Option, logger logging.Log
 		}
 	}
 }
+
+func (fd *FunctionDefinition) SetBody(body ASTNode) {
+	fd.body = body
+}
+
+func (fd *FunctionDefinition) SetReturnParameters(returnParameters ASTNode) {
+	fd.returnParameters = returnParameters
+}
+
+func (fd *FunctionDefinition) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	opt.TrackFunctionDefinitionName = fd.Signature()
+	if fd.body != nil {
+		switch body := fd.body.(type) {
+		case *Block:
+			body.TraverseDelegatecall(opt, logger)
+		}
+	}
+}

@@ -13,7 +13,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/v0.8/9.sol_json.ast"
+var contract_ast_json string = "contracts/v0.8/13.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,
@@ -146,7 +146,7 @@ func main() {
 
 	switch version {
 	case 0.8:
-		node, err := v08.Run(jsonBytes, logger)
+		node, err := v08.Run(jsonBytes, false, logger)
 		if err != nil {
 			os.Exit(1)
 		}

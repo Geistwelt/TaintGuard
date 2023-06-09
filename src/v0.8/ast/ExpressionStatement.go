@@ -8,6 +8,8 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
+var instrumentedTrack map[string]bool = make(map[string]bool)
+
 type ExpressionStatement struct {
 	expression ASTNode
 	ID         int    `json:"id"`
@@ -44,7 +46,7 @@ func (es *ExpressionStatement) SourceCode(isSc bool, isIndent bool, indent strin
 			}
 		}
 
-		if es.trackMapping != nil {
+		if es.trackMapping != nil && !instrumentedTrack[es.trackMapping.SourceCode(false, true, indent, logger)] {
 			code = code + ";"
 		}
 	}
@@ -52,14 +54,20 @@ func (es *ExpressionStatement) SourceCode(isSc bool, isIndent bool, indent strin
 	if es.trackVariable != nil {
 		switch other := es.trackVariable.(type) {
 		case *ExpressionStatement:
-			code = code + "\n" + other.SourceCode(true, true, indent, logger)
+			if !instrumentedTrack[other.SourceCode(true, true, indent, logger)] {
+				code = code + "\n" + other.SourceCode(true, true, indent, logger)
+				instrumentedTrack[other.SourceCode(true, true, indent, logger)] = true
+			}
 		}
 	}
 
 	if es.trackMapping != nil {
 		switch other := es.trackMapping.(type) {
 		case *ExpressionStatement:
-			code = code + "\n" + other.SourceCode(false, true, indent, logger)
+			if !instrumentedTrack[other.SourceCode(false, true, indent, logger)] {
+				code = code + "\n" + other.SourceCode(false, true, indent, logger)
+				instrumentedTrack[other.SourceCode(false, true, indent, logger)] = true
+			}
 		}
 	}
 
@@ -180,4 +188,17 @@ func (es *ExpressionStatement) TraverseTaintOwner(opt *Option, logger logging.Lo
 			}
 		}
 	}
+}
+
+func (es *ExpressionStatement) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+	if es.expression != nil {
+		switch expression := es.expression.(type) {
+		case *Assignment:
+			expression.TraverseDelegatecall(opt, logger)
+		}
+	}
+}
+
+func (es *ExpressionStatement) SetExpression(expression ASTNode) {
+	es.expression = expression
 }
