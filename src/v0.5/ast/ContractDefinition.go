@@ -9,32 +9,23 @@ import (
 )
 
 type ContractDefinition struct {
-	Abstract                bool `json:"abstract"`
 	baseContracts           []ASTNode
-	CanonicalName           string `json:"canonicalName"`
 	ContractDependencies    []int  `json:"contractDependencies"`
 	ContractKind            string `json:"contractKind"`
 	FullyImplemented        bool   `json:"fullyImplemented"`
 	ID                      int    `json:"id"`
 	LinearizedBaseContracts []int  `json:"linearizedBaseContracts"`
 	Name                    string `json:"name"`
-	NameLocation            string `json:"nameLocation"`
 	NodeType                string `json:"nodeType"`
 	nodes                   []ASTNode
 	Scope                   int    `json:"scope"`
 	Src                     string `json:"src"`
-	UsedErrors              []int  `json:"usedErrors"`
-	UsedEvents              []int  `json:"usedEvents"`
 }
 
 func (cd *ContractDefinition) SourceCode(isSc bool, isIndent bool, indent string, logger logging.Logger) string {
 	var code string
 	if isIndent {
 		code = code + indent
-	}
-
-	if cd.Abstract {
-		code = code + "abstract" + " "
 	}
 
 	code = code + cd.ContractKind + " "
