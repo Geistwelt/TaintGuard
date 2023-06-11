@@ -10,6 +10,7 @@ import (
 	"github.com/geistwelt/logging"
 	"github.com/geistwelt/taintguard/src"
 	v05 "github.com/geistwelt/taintguard/src/v0.5"
+	v06 "github.com/geistwelt/taintguard/src/v0.6"
 	v08 "github.com/geistwelt/taintguard/src/v0.8"
 	jsoniter "github.com/json-iterator/go"
 )
@@ -63,9 +64,9 @@ func main() {
 	if strings.Contains(literals, ">=") || strings.Contains(literals, ">") || strings.Contains(literals, "<=") || strings.Contains(literals, "<") {
 		if strings.Contains(literals, ">=") {
 			for index, word := range literals_list {
-				word = strings.Trim(word, "\"")
+				word = src.Trim(word)
 				if word == ">=" {
-					lower_string := strings.Trim(literals_list[index+1], "\"")
+					lower_string := src.Trim(literals_list[index+1])
 					lower, err = strconv.ParseFloat(lower_string, 64)
 					if err != nil {
 						fmt.Printf("1: Failed parse solidity version: [%v], [%s].\n", err, lower_string)
@@ -77,9 +78,9 @@ func main() {
 		}
 		if strings.Contains(literals, ">") {
 			for index, word := range literals_list {
-				word = strings.Trim(word, "\"")
+				word = src.Trim(word)
 				if word == ">" {
-					lower_string := strings.Trim(literals_list[index+1], "\"")
+					lower_string := src.Trim(literals_list[index+1])
 					lower, err = strconv.ParseFloat(lower_string, 64)
 					if err != nil {
 						fmt.Printf("2: Failed parse solidity version: [%v], [%s].\n", err, lower_string)
@@ -92,9 +93,9 @@ func main() {
 		}
 		if strings.Contains(literals, "<=") {
 			for index, word := range literals_list {
-				word = strings.Trim(word, "\"")
+				word = src.Trim(word)
 				if word == "<=" {
-					upper_string := strings.Trim(literals_list[index+1], "\"")
+					upper_string := src.Trim(literals_list[index+1])
 					upper, err = strconv.ParseFloat(upper_string, 64)
 					if err != nil {
 						fmt.Printf("3: Failed parse solidity version: [%v], [%s].\n", err, upper_string)
@@ -108,10 +109,10 @@ func main() {
 		}
 		if strings.Contains(literals, "<") {
 			for index, word := range literals_list {
-				word = strings.Trim(word, "\"")
+				word = src.Trim(word)
 				if word == "<" {
-					upper_string := strings.Trim(literals_list[index+1], "\"")
-					upper_string = strings.Trim(upper_string, " ")
+					upper_string := src.Trim(literals_list[index+1])
+					upper_string = src.Trim(upper_string)
 					upper, err = strconv.ParseFloat(upper_string, 64)
 					if err != nil {
 						fmt.Printf("4: Failed parse solidity version: [%v], [%s].\n", err, upper_string)
@@ -163,7 +164,20 @@ func main() {
 
 		f.Close()
 	case 0.6:
-		fmt.Println("Success")
+		node, err := v06.Run(jsonBytes, false, logger)
+		if err != nil {
+			os.Exit(1)
+		}
+		code := node.SourceCode(false, false, "", logger)
+		f, err := os.OpenFile("test/0.sol", os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0666)
+		if err != nil {
+			fmt.Println("Failed to open file test/0.sol.")
+			os.Exit(1)
+		}
+
+		f.Write([]byte(code))
+
+		f.Close()
 	case 0.5:
 		node, err := v05.Run(jsonBytes, false, logger)
 		if err != nil {
