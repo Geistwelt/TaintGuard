@@ -81,12 +81,12 @@ func GetSourceUnit(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*S
 				return nil, err
 			}
 			su.AppendNode(contractDefinition)
-		case "ErrorDefinition":
-			errorDefinition, err := GetErrorDefinition(gn, sourceUnitChild, logger)
-			if err != nil {
-				return nil, err
-			}
-			su.AppendNode(errorDefinition)
+		// case "ErrorDefinition":
+		// 	errorDefinition, err := GetErrorDefinition(gn, sourceUnitChild, logger)
+		// 	if err != nil {
+		// 		return nil, err
+		// 	}
+		// 	su.AppendNode(errorDefinition)
 		case "VariableDeclaration":
 			variableDeclaration, err := GetVariableDeclaration(gn, sourceUnitChild, logger)
 			if err != nil {

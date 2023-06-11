@@ -1,6 +1,10 @@
 package ast
 
-import "github.com/geistwelt/logging"
+import (
+	"sync"
+
+	"github.com/geistwelt/logging"
+)
 
 type ASTNode interface {
 	Type() string
@@ -53,11 +57,13 @@ type traverseFunctionCall interface {
 var _ traverseFunctionCall = (*Assignment)(nil)
 var _ traverseFunctionCall = (*BinaryOperation)(nil)
 var _ traverseFunctionCall = (*Block)(nil)
-var _ traverseFunctionCall = (*Conditional)(nil)
+
+// var _ traverseFunctionCall = (*Conditional)(nil)
 var _ traverseFunctionCall = (*EmitStatement)(nil)
 var _ traverseFunctionCall = (*EventDefinition)(nil)
 var _ traverseFunctionCall = (*ExpressionStatement)(nil)
-var _ traverseFunctionCall = (*ForStatement)(nil)
+
+// var _ traverseFunctionCall = (*ForStatement)(nil)
 var _ traverseFunctionCall = (*FunctionCall)(nil)
 var _ traverseFunctionCall = (*FunctionDefinition)(nil)
 var _ traverseFunctionCall = (*IfStatement)(nil)
@@ -70,12 +76,13 @@ var _ traverseFunctionCall = (*TupleExpression)(nil)
 var _ traverseFunctionCall = (*UnaryOperation)(nil)
 var _ traverseFunctionCall = (*VariableDeclaration)(nil)
 var _ traverseFunctionCall = (*VariableDeclarationStatement)(nil)
-var _ traverseFunctionCall = (*UncheckedBlock)(nil)
-var _ traverseFunctionCall = (*WhileStatement)(nil)
-var _ traverseFunctionCall = (*FunctionCallOptions)(nil)
-var _ traverseFunctionCall = (*TryCatchClause)(nil)
-var _ traverseFunctionCall = (*TryStatement)(nil)
-var _ traverseFunctionCall = (*DoWhileStatement)(nil)
+
+// var _ traverseFunctionCall = (*UncheckedBlock)(nil)
+// var _ traverseFunctionCall = (*WhileStatement)(nil)
+// var _ traverseFunctionCall = (*FunctionCallOptions)(nil)
+// var _ traverseFunctionCall = (*TryCatchClause)(nil)
+// var _ traverseFunctionCall = (*TryStatement)(nil)
+// var _ traverseFunctionCall = (*DoWhileStatement)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,13 +95,15 @@ var _ traverseTaintOwner = (*FunctionDefinition)(nil)
 var _ traverseTaintOwner = (*Block)(nil)
 var _ traverseTaintOwner = (*ExpressionStatement)(nil)
 var _ traverseTaintOwner = (*IfStatement)(nil)
-var _ traverseTaintOwner = (*ForStatement)(nil)
-var _ traverseTaintOwner = (*UncheckedBlock)(nil)
-var _ traverseTaintOwner = (*WhileStatement)(nil)
-var _ traverseTaintOwner = (*TryStatement)(nil)
-var _ traverseTaintOwner = (*DoWhileStatement)(nil)
+
+// var _ traverseTaintOwner = (*ForStatement)(nil)
+// var _ traverseTaintOwner = (*UncheckedBlock)(nil)
+// var _ traverseTaintOwner = (*WhileStatement)(nil)
+// var _ traverseTaintOwner = (*TryStatement)(nil)
+// var _ traverseTaintOwner = (*DoWhileStatement)(nil)
 var _ traverseTaintOwner = (*Assignment)(nil)
-var _ traverseTaintOwner = (*TryCatchClause)(nil)
+
+// var _ traverseTaintOwner = (*TryCatchClause)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,17 +116,20 @@ var _ traverseDelegatecall = (*FunctionDefinition)(nil)
 var _ traverseDelegatecall = (*Block)(nil)
 var _ traverseDelegatecall = (*ExpressionStatement)(nil)
 var _ traverseDelegatecall = (*IfStatement)(nil)
-var _ traverseDelegatecall = (*ForStatement)(nil)
-var _ traverseDelegatecall = (*UncheckedBlock)(nil)
-var _ traverseDelegatecall = (*WhileStatement)(nil)
-var _ traverseDelegatecall = (*TryStatement)(nil)
-var _ traverseDelegatecall = (*DoWhileStatement)(nil)
+
+// var _ traverseDelegatecall = (*ForStatement)(nil)
+// var _ traverseDelegatecall = (*UncheckedBlock)(nil)
+// var _ traverseDelegatecall = (*WhileStatement)(nil)
+// var _ traverseDelegatecall = (*TryStatement)(nil)
+// var _ traverseDelegatecall = (*DoWhileStatement)(nil)
 var _ traverseDelegatecall = (*VariableDeclarationStatement)(nil)
 var _ traverseDelegatecall = (*FunctionCall)(nil)
-var _ traverseDelegatecall = (*FunctionCallOptions)(nil)
+
+// var _ traverseDelegatecall = (*FunctionCallOptions)(nil)
 var _ traverseDelegatecall = (*MemberAccess)(nil)
 var _ traverseDelegatecall = (*BinaryOperation)(nil)
-var _ traverseDelegatecall = (*TryCatchClause)(nil)
+
+// var _ traverseDelegatecall = (*TryCatchClause)(nil)
 var _ traverseDelegatecall = (*Assignment)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +138,7 @@ var _ traverseDelegatecall = (*Assignment)(nil)
 
 type GlobalNodes struct {
 	nodes           map[int]ASTNode    // id => all ASTNode
-	contractsByID       map[int]ASTNode    // id => all ContractDefinition
+	contractsByID   map[int]ASTNode    // id => all ContractDefinition
 	contractsByName map[string]ASTNode // name => all ContractDefinition
 	functions       map[int]ASTNode    // id => all FunctionDefinition
 	mu              sync.RWMutex
@@ -235,4 +247,3 @@ func Path(ncp *NormalCallPath, path *string) {
 		}
 	}
 }
-

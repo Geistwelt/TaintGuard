@@ -25,7 +25,7 @@ func (ufd *UsingForDirective) SourceCode(isSc bool, isIndent bool, indent string
 
 	if ufd.libraryName != nil {
 		switch libraryNameType := ufd.libraryName.(type) {
-		case *IdentifierPath:
+		case *UserDefinedTypeName:
 			code = code + " " + libraryNameType.SourceCode(false, false, indent, logger)
 		default:
 			logger.Warnf("Unknown libraryName nodeType [%s] for UsingForDirective [src:%s].", libraryNameType.Type(), ufd.Src)
@@ -78,8 +78,8 @@ func GetUsingForDirective(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logg
 	{
 		libraryName := raw.Get("libraryName")
 		switch libraryName.Get("nodeType").ToString() {
-		case "IdentifierPath":
-			ip, err := GetIdentifierPath(gn, libraryName, logger)
+		case "UserDefinedTypeName":
+			ip, err := GetUserDefinedTypeName(gn, libraryName, logger)
 			if err != nil {
 				return nil, err
 			}

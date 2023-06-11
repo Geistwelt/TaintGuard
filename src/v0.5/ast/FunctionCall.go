@@ -55,16 +55,16 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
 				}
 				code = code + expression.SourceCode(false, false, indent, logger)
-			case *NewExpression:
-				if len(expression.ArgumentTypes) != len(fc.arguments) {
-					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
-				}
-				code = code + expression.SourceCode(false, false, indent, logger)
-			case *FunctionCallOptions:
-				if len(expression.ArgumentTypes) != len(fc.arguments) {
-					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
-				}
-				code = code + expression.SourceCode(false, false, indent, logger)
+			// case *NewExpression:
+			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
+			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+			// 	}
+			// 	code = code + expression.SourceCode(false, false, indent, logger)
+			// case *FunctionCallOptions:
+			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
+			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+			// 	}
+			// 	code = code + expression.SourceCode(false, false, indent, logger)
 			default:
 				if expression != nil {
 					logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expression.Type(), fc.Src)
@@ -94,8 +94,8 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					code = code + arg.SourceCode(false, false, indent, logger)
 				case *UnaryOperation:
 					code = code + arg.SourceCode(false, false, indent, logger)
-				case *Conditional:
-					code = code + arg.SourceCode(false, false, indent, logger)
+				// case *Conditional:
+				// 	code = code + arg.SourceCode(false, false, indent, logger)
 				case *ElementaryTypeNameExpression:
 					code = code + arg.SourceCode(false, false, indent, logger)
 				case *TupleExpression:
@@ -168,10 +168,10 @@ func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 				fc.referencedFunctionDefinition = memberAccess.ReferencedDeclaration
 			case "ElementaryTypeNameExpression":
 				fcExpression, err = GetElementaryTypeNameExpression(gn, expression, logger)
-			case "NewExpression":
-				fcExpression, err = GetNewExpression(gn, expression, logger)
-			case "FunctionCallOptions":
-				fcExpression, err = GetFunctionCallOptions(gn, expression, logger)
+			// case "NewExpression":
+			// 	fcExpression, err = GetNewExpression(gn, expression, logger)
+			// case "FunctionCallOptions":
+			// 	fcExpression, err = GetFunctionCallOptions(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expressionNodeType, fc.Src)
 			}
@@ -211,8 +211,8 @@ func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 					fcArgument, err = GetMemberAccess(gn, argument, logger)
 				case "UnaryOperation":
 					fcArgument, err = GetUnaryOperation(gn, argument, logger)
-				case "Conditional":
-					fcArgument, err = GetConditional(gn, argument, logger)
+				// case "Conditional":
+				// 	fcArgument, err = GetConditional(gn, argument, logger)
 				case "ElementaryTypeNameExpression":
 					fcArgument, err = GetElementaryTypeNameExpression(gn, argument, logger)
 				case "TupleExpression":

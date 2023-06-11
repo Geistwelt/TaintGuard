@@ -144,12 +144,12 @@ func GetContractDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 					cdNode, err = GetFunctionDefinition(gn, node, logger)
 					fd, _ := cdNode.(*FunctionDefinition)
 					fd.MakeSignature(cd.Name, logger)
-				case "StructDefinition":
-					cdNode, err = GetStructDefinition(gn, node, logger)
-				case "ErrorDefinition":
-					cdNode, err = GetErrorDefinition(gn, node, logger)
-				case "EnumDefinition":
-					cdNode, err = GetEnumDefinition(gn, node, logger)
+				// case "StructDefinition":
+				// 	cdNode, err = GetStructDefinition(gn, node, logger)
+				// case "ErrorDefinition":
+				// 	cdNode, err = GetErrorDefinition(gn, node, logger)
+				// case "EnumDefinition":
+				// 	cdNode, err = GetEnumDefinition(gn, node, logger)
 				default:
 					logger.Warnf("Unknown nodes nodeType: [%v-%s]", nodeNodeType, node.Get("src").ToString())
 				}

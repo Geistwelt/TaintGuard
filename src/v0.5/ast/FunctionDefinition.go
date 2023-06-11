@@ -21,7 +21,6 @@ type FunctionDefinition struct {
 	Scope            int    `json:"scope"`
 	Src              string `json:"src"`
 	StateMutability  string `json:"stateMutability"`
-	Virtual          bool   `json:"virtual"`
 	Visibility       string `json:"visibility"`
 
 	signature string
@@ -99,9 +98,9 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		// 	}
 		// }
 
-		if fd.Virtual {
-			code = code + " " + "virtual"
-		}
+		// if fd.Virtual {
+		// 	code = code + " " + "virtual"
+		// }
 
 		// returnParameters
 		if fd.returnParameters != nil {
@@ -159,6 +158,12 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				}
 			}
 		}
+
+		// visibility
+		if fd.Visibility != "" {
+			code = code + " " + fd.Visibility
+		}
+
 	} else if fd.Kind == "receive" {
 		code = code + "receive("
 
@@ -194,7 +199,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 
 		return code
 	} else if fd.Kind == "fallback" {
-		code = code + "fallback()"
+		code = code + "function()"
 
 		// visibility
 		if fd.Visibility != "" {
@@ -321,29 +326,29 @@ func GetFunctionDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 	}
 
 	// overrides
-	{
-		overrides := raw.Get("overrides")
-		if overrides.Size() > 0 {
-			overridesNodeType := overrides.Get("nodeType").ToString()
-			var fdOverrides ASTNode
-			var err error
+	// {
+	// 	overrides := raw.Get("overrides")
+	// 	if overrides.Size() > 0 {
+	// 		overridesNodeType := overrides.Get("nodeType").ToString()
+	// 		var fdOverrides ASTNode
+	// 		var err error
 
-			switch overridesNodeType {
-			case "OverrideSpecifier":
-				fdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
-			default:
-				logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overridesNodeType, fd.Src)
-			}
+	// 		switch overridesNodeType {
+	// 		case "OverrideSpecifier":
+	// 			fdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
+	// 		default:
+	// 			logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overridesNodeType, fd.Src)
+	// 		}
 
-			if err != nil {
-				return nil, err
-			}
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
 
-			if fdOverrides != nil {
-				fd.overrides = fdOverrides
-			}
-		}
-	}
+	// 		if fdOverrides != nil {
+	// 			fd.overrides = fdOverrides
+	// 		}
+	// 	}
+	// }
 
 	// parameters
 	{

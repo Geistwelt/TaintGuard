@@ -1,5 +1,13 @@
 package ast
 
+import (
+	"encoding/json"
+	"fmt"
+
+	"github.com/geistwelt/logging"
+	jsoniter "github.com/json-iterator/go"
+)
+
 var instrumentedTrack map[string]bool = make(map[string]bool)
 
 type ExpressionStatement struct {
