@@ -36,8 +36,8 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *InlineAssembly:
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
-			// case *ForStatement:
-			// 	code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *ForStatement:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			// case *RevertStatement:
 			// 	code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *Block:
@@ -50,6 +50,8 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 			// 	code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			// case *DoWhileStatement:
 			// 	code = code + stat.SourceCode(true, true, indent+"    ", logger)
+			case *Break:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			default:
 				if stat != nil {
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", stat.Type(), b.Src)
@@ -112,8 +114,8 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 					bStatement, err = GetVariableDeclarationStatement(gn, statement, logger)
 				case "InlineAssembly":
 					bStatement, err = GetInlineAssembly(gn, statement, logger)
-				// case "ForStatement":
-				// 	bStatement, err = GetForStatement(gn, statement, logger)
+				case "ForStatement":
+					bStatement, err = GetForStatement(gn, statement, logger)
 				// case "RevertStatement":
 				// 	bStatement, err = GetRevertStatement(gn, statement, logger)
 				case "Block":
@@ -126,6 +128,8 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 				// 	bStatement, err = GetTryStatement(gn, statement, logger)
 				// case "DoWhileStatement":
 				// 	bStatement, err = GetDoWhileStatement(gn, statement, logger)
+				case "Break":
+					bStatement, err = GetBreak(gn, statement, logger)
 				default:
 					logger.Warnf("Unknown statement nodeType [%s] for Block [src:%s].", statementNodeType, b.Src)
 				}
@@ -161,8 +165,8 @@ func (b *Block) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt *
 				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *VariableDeclarationStatement:
 				stat.TraverseFunctionCall(ncp, gn, opt, logger)
-			// case *ForStatement:
-			// 	stat.TraverseFunctionCall(ncp, gn, opt, logger)
+			case *ForStatement:
+				stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			// case *RevertStatement:
 			// 	stat.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *Block:
@@ -188,8 +192,8 @@ func (b *Block) TraverseTaintOwner(opt *Option, logger logging.Logger) {
 				stat.TraverseTaintOwner(opt, logger)
 			case *IfStatement:
 				stat.TraverseTaintOwner(opt, logger)
-			// case *ForStatement:
-			// 	stat.TraverseTaintOwner(opt, logger)
+			case *ForStatement:
+				stat.TraverseTaintOwner(opt, logger)
 			case *Block:
 				stat.TraverseTaintOwner(opt, logger)
 			// case *UncheckedBlock:
@@ -238,8 +242,8 @@ func (b *Block) TraverseDelegatecall(opt *Option, logger logging.Logger) {
 				}
 			case *IfStatement:
 				stat.TraverseDelegatecall(opt, logger)
-			// case *ForStatement:
-			// 	stat.TraverseDelegatecall(opt, logger)
+			case *ForStatement:
+				stat.TraverseDelegatecall(opt, logger)
 			case *Block:
 				stat.TraverseDelegatecall(opt, logger)
 			// case *UncheckedBlock:

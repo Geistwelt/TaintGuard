@@ -55,11 +55,13 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
 				}
 				code = code + expression.SourceCode(false, false, indent, logger)
-			// case *NewExpression:
-			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
-			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
-			// 	}
-			// 	code = code + expression.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
+				code = code + expression.SourceCode(false, false, indent, logger)
+			case *NewExpression:
+				if len(expression.ArgumentTypes) != len(fc.arguments) {
+					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+				}
+				code = code + expression.SourceCode(false, false, indent, logger)
 			// case *FunctionCallOptions:
 			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
 			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
@@ -168,10 +170,12 @@ func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 				fc.referencedFunctionDefinition = memberAccess.ReferencedDeclaration
 			case "ElementaryTypeNameExpression":
 				fcExpression, err = GetElementaryTypeNameExpression(gn, expression, logger)
-			// case "NewExpression":
-			// 	fcExpression, err = GetNewExpression(gn, expression, logger)
+			case "NewExpression":
+				fcExpression, err = GetNewExpression(gn, expression, logger)
 			// case "FunctionCallOptions":
 			// 	fcExpression, err = GetFunctionCallOptions(gn, expression, logger)
+			case "FunctionCall":
+				fcExpression, err = GetFunctionCall(gn, expression, logger)
 			default:
 				logger.Warnf("Unknown expression nodeType [%s] for FunctionCall [src:%s].", expressionNodeType, fc.Src)
 			}
@@ -267,11 +271,21 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 								case *ElementaryTypeNameExpression:
 									if fcExpression2.ArgumentTypes[0].TypeString[0:8] == "contract" {
 										logger.Debugf("An explicit contract [%s] is being called using delegatecall.", fcExpression2.ArgumentTypes[0].TypeString[9:])
-										select {
-										case opt.delegatecallKnownContractCh <- fcExpression2.ArgumentTypes[0].TypeString[9:]:
-										default:
+										if opt != nil {
+											select {
+											case opt.delegatecallKnownContractCh <- fcExpression2.ArgumentTypes[0].TypeString[9:]:
+											default:
+											}
 										}
 									}
+								}
+							}
+						} else {
+							// logger.Warnf("A contract with an unknown address is being called using delegatecall.")
+							if opt != nil {
+								select {
+								case opt.delegatecallUnknownContractCh <- struct{}{}:
+								default:
 								}
 							}
 						}

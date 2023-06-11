@@ -42,8 +42,8 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 			code = code + typeName.SourceCode(false, false, indent, logger)
 		case *UserDefinedTypeName:
 			code = code + typeName.SourceCode(false, false, indent, logger)
-		// case *ArrayTypeName:
-		// 	code = code + typeName.SourceCode(false, false, indent, logger)
+		case *ArrayTypeName:
+			code = code + typeName.SourceCode(false, false, indent, logger)
 		default:
 			if typeName != nil {
 				logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeName.Type(), vd.Src)
@@ -51,6 +51,10 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 				logger.Warnf("Unknown typeName nodeType for VariableDeclaration [src:%s].", vd.Src)
 			}
 		}
+	}
+
+	if vd.Constant {
+		code = code + " " + "constant"
 	}
 
 	if vd.StorageLocation != "default" {
@@ -84,6 +88,8 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 		case *UnaryOperation:
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		case *TupleExpression:
+			code = code + " = " + value.SourceCode(false, false, indent, logger)
+		case *ArrayTypeName:
 			code = code + " = " + value.SourceCode(false, false, indent, logger)
 		default:
 			if value != nil {
@@ -135,8 +141,8 @@ func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 			vdTypeName, err = GetElementaryTypeName(gn, typeName, logger)
 		case "UserDefinedTypeName":
 			vdTypeName, err = GetUserDefinedTypeName(gn, typeName, logger)
-		// case "ArrayTypeName":
-		// 	vdTypeName, err = GetArrayTypeName(gn, typeName, logger)
+		case "ArrayTypeName":
+			vdTypeName, err = GetArrayTypeName(gn, typeName, logger)
 		default:
 			logger.Warnf("Unknown typeName nodeType [%s] for VariableDeclaration [src:%s].", typeNameNodeType, vd.Src)
 		}

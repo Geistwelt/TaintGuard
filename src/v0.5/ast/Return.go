@@ -33,8 +33,8 @@ func (r *Return) SourceCode(isSc bool, isIndent bool, indent string, logger logg
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			case *Literal:
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
-			// case *Conditional:
-			// 	code = code + " " + expression.SourceCode(false, false, indent, logger)
+			case *Conditional:
+				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			case *BinaryOperation:
 				code = code + " " + expression.SourceCode(false, false, indent, logger)
 			case *MemberAccess:
@@ -94,8 +94,8 @@ func GetReturn(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Retur
 				rExpression, err = GetIndexAccess(gn, expression, logger)
 			case "Literal":
 				rExpression, err = GetLiteral(gn, expression, logger)
-			// case "Conditional":
-			// 	rExpression, err = GetConditional(gn, expression, logger)
+			case "Conditional":
+				rExpression, err = GetConditional(gn, expression, logger)
 			case "BinaryOperation":
 				rExpression, err = GetBinaryOperation(gn, expression, logger)
 			case "MemberAccess":
@@ -134,8 +134,8 @@ func (r *Return) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNodes, opt 
 			switch expression := r.expression.(type) {
 			case *IndexAccess:
 				expression.TraverseFunctionCall(ncp, gn, opt, logger)
-			// case *Conditional:
-			// 	expression.TraverseFunctionCall(ncp, gn, opt, logger)
+			case *Conditional:
+				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *BinaryOperation:
 				expression.TraverseFunctionCall(ncp, gn, opt, logger)
 			case *MemberAccess:

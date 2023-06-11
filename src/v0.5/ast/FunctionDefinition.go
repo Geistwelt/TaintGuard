@@ -74,7 +74,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				}
 
 				if index < len(fd.modifiers)-1 {
-					code = code + ","
+					code = code + " "
 				}
 			}
 		}
@@ -154,7 +154,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				}
 
 				if index < len(fd.modifiers)-1 {
-					code = code + ","
+					code = code + " "
 				}
 			}
 		}

@@ -40,6 +40,8 @@ func (uo *UnaryOperation) SourceCode(isSc bool, isIndent bool, indent string, lo
 			expression = subExpression.SourceCode(false, false, indent, logger)
 		case *IndexAccess:
 			expression = subExpression.SourceCode(false, false, indent, logger)
+		case *Literal:
+			expression = subExpression.SourceCode(false, false, indent, logger)
 		default:
 			if subExpression != nil {
 				logger.Warnf("Unknown subExpression nodeType [%s] for UnaryOperation [src:%s].", subExpression.Type(), uo.Src)
@@ -101,6 +103,8 @@ func GetUnaryOperation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger)
 				uoSubExpression, err = GetFunctionCall(gn, subExpression, logger)
 			case "IndexAccess":
 				uoSubExpression, err = GetIndexAccess(gn, subExpression, logger)
+			case "Literal":
+				uoSubExpression, err = GetLiteral(gn, subExpression, logger)
 			default:
 				logger.Warnf("Unknown subExpression nodeType [%s] for UnaryOperation [src:%s].", subExpressionNodeType, uo.Src)
 			}

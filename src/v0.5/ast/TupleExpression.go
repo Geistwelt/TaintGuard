@@ -47,6 +47,8 @@ func (te *TupleExpression) SourceCode(isSc bool, isIndent bool, indent string, l
 			// 	code = code + c.SourceCode(false, false, indent, logger)
 			case *IndexAccess:
 				code = code + c.SourceCode(false, false, indent, logger)
+			case *FunctionCall:
+				code = code + c.SourceCode(false, false, indent, logger)
 			default:
 				if c != nil {
 					logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", c.Type(), te.Src)
@@ -112,6 +114,8 @@ func GetTupleExpression(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger
 					// 	teComponent, err = GetConditional(gn, component, logger)
 					case "IndexAccess":
 						teComponent, err = GetIndexAccess(gn, component, logger)
+					case "FunctionCall":
+						teComponent, err = GetFunctionCall(gn, component, logger)
 					default:
 						logger.Warnf("Unknown component nodeType [%s] for TupleExpression [src:%s].", componentNodeType, te.Src)
 					}
