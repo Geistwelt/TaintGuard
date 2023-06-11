@@ -14,7 +14,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/v0.5/1.sol_json.ast"
+var contract_ast_json string = "contracts/v0.6/1.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,
@@ -162,6 +162,8 @@ func main() {
 		f.Write([]byte(code))
 
 		f.Close()
+	case 0.6:
+		fmt.Println("Success")
 	case 0.5:
 		node, err := v05.Run(jsonBytes, false, logger)
 		if err != nil {
@@ -177,5 +179,7 @@ func main() {
 		f.Write([]byte(code))
 
 		f.Close()
+	default:
+		fmt.Println(version)
 	}
 }
