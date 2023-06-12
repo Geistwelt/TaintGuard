@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,1179.5,36"];
+	node [label="\N"];
+	"AnyswapV6L2Impl.bridgeNativeTo(uint256 amount, uint256 toChainId, bytes32 metadata, address receiverAddress, address wrapperTokenAddress)"	 [height=0.5,
+		pos="589.73,18",
+		width=16.381];
+}

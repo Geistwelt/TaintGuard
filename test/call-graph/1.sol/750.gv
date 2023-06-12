@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,871.69,36"];
+	node [label="\N"];
+	"ERC20.permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"	 [height=0.5,
+		pos="435.85,18",
+		width=12.107];
+}

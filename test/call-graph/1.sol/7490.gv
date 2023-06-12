@@ -1,0 +1,24 @@
+digraph "" {
+	graph [bb="0,0,1557,124.8"];
+	node [label="\N"];
+	"StargateImplL2.bridgeERC20To(address token, address senderAddress, address receiverAddress, uint256 amount, uint256 optionalValue, \
+StargateBridgeExtraData calldata stargateBridgeExtraData)"	 [height=0.5,
+		pos="778.5,106.8",
+		width=21.625];
+	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
+		pos="438.5,18",
+		width=10.251];
+	"StargateImplL2.bridgeERC20To(address token, address senderAddress, address receiverAddress, uint256 amount, uint256 optionalValue, \
+StargateBridgeExtraData calldata stargateBridgeExtraData)" -> "SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="651.35,62.4",
+	pos="e,506.33,35.716 709.69,88.83 653.65,74.194 574.55,53.534 516.23,38.303"];
+"SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [height=0.5,
+	pos="1119.5,18",
+	width=8.1727];
+"StargateImplL2.bridgeERC20To(address token, address senderAddress, address receiverAddress, uint256 amount, uint256 optionalValue, \
+StargateBridgeExtraData calldata stargateBridgeExtraData)" -> "SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [key=call,
+label=" call",
+lp="992.35,62.4",
+pos="e,1052,35.565 847.5,88.83 903.89,74.146 983.56,53.399 1042.1,38.153"];
+}

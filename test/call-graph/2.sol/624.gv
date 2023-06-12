@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,568.54,124.8"];
+	node [label="\N"];
+	"ERC20.decreaseAllowance(address spender, uint256 subtractedValue)"	 [height=0.5,
+		pos="284.27,106.8",
+		width=7.8964];
+	"ERC20._approve(address owner, address spender, uint256 amount)"	 [height=0.5,
+		pos="284.27,18",
+		width=7.5471];
+	"ERC20.decreaseAllowance(address spender, uint256 subtractedValue)" -> "ERC20._approve(address owner, address spender, uint256 amount)" [key=call,
+	label=" call",
+	lp="296.12,62.4",
+	pos="e,284.27,36.072 284.27,88.401 284.27,76.295 284.27,60.208 284.27,46.467"];
+}

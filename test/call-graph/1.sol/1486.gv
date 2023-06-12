@@ -1,0 +1,8 @@
+digraph "" {
+	graph [bb="0,0,1193,36"];
+	node [label="\N"];
+	"SpokePool.deposit(address recipient, address originToken, uint256 amount, uint256 destinationChainId, uint64 relayerFeePct, uint32 \
+quoteTimestamp)"	 [height=0.5,
+		pos="596.51,18",
+		width=16.57];
+}

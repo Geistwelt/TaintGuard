@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,475.7,36"];
+	node [label="\N"];
+	"CelerStorageWrapper.deleteTransferId(bytes32 transferId)"	 [height=0.5,
+		pos="237.85,18",
+		width=6.6069];
+}

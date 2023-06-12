@@ -1,0 +1,23 @@
+digraph "" {
+	graph [bb="0,0,1867.7,124.8"];
+	node [label="\N"];
+	"HyphenImpl.bridgeERC20To(uint256 amount, bytes32 metadata, address receiverAddress, address token, uint256 toChainId)"	 [height=0.5,
+		pos="840.03,106.8",
+		width=13.82];
+	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
+		pos="369.03,18",
+		width=10.251];
+	"HyphenImpl.bridgeERC20To(uint256 amount, bytes32 metadata, address receiverAddress, address token, uint256 toChainId)" -> "SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="658.88,62.4",
+	pos="e,461.55,35.444 746.13,89.097 666.86,74.152 553.55,52.789 471.86,37.387"];
+"HyphenLiquidityPoolManager.depositErc20(uint256 toChainId, address tokenAddress, address receiver, uint256 amount, string calldata \
+tag)" [height=0.5,
+	pos="1312,18",
+	width=15.436];
+"HyphenImpl.bridgeERC20To(uint256 amount, bytes32 metadata, address receiverAddress, address token, uint256 toChainId)" -> "HyphenLiquidityPoolManager.depositErc20(uint256 toChainId, address tokenAddress, address receiver, uint256 amount, string calldata \
+tag)" [key=call,
+label=" call",
+lp="1130.9,62.4",
+pos="e,1217.7,35.747 934.13,89.097 1013,74.249 1125.6,53.066 1207.4,37.688"];
+}

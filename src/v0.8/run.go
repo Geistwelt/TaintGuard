@@ -9,7 +9,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-func Run(jsonBytes []byte, isCfg bool, logger logging.Logger) (ast.ASTNode, error) {
+func Run(jsonBytes []byte, isCg bool, logger logging.Logger, solFileName string, dirName string, variables []string) (ast.ASTNode, error) {
 	gn := ast.NewGlobalNodes()
 	fullFile := jsoniter.Get(jsonBytes)
 	sourceUnit, err := ast.GetSourceUnit(gn, fullFile, logger)
@@ -32,22 +32,22 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger) (ast.ASTNode, erro
 		case <-opt.DelegatecallUnknownContractCh():
 			contract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
 			logger.Infof("Contract [%s] should be instrumented directly, because it delegatecall to unknown contract.", contract.Name)
-			if ok, c := IsInheritFromOwnableContract(contract, gn); ok {
-				ownerVariableName := InstrumentCodeForOwner(c)
+			if ok, c := IsInheritFromOwnableContract(contract, gn, variables); ok {
+				ownerVariableName := InstrumentCodeForOwner(c, variables)
 				InstrumentCodeForAssert(ownerVariableName, contract)
 			} else {
-				ownerVariableName := InstrumentCodeForOwner(contract)
+				ownerVariableName := InstrumentCodeForOwner(contract, variables)
 				InstrumentCodeForAssert(ownerVariableName, contract)
 			}
 		case calleeContractName := <-opt.DelegatecallKnownContractCh():
 			callerContract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
 			calleeContract := gn.ContractsByName()[calleeContractName].(*ast.ContractDefinition)
-			if VerifyVariableDeclarationOrder(callerContract, calleeContract, gn) {
-				if ok, c := IsInheritFromOwnableContract(callerContract, gn); ok {
-					ownerVariableName := InstrumentCodeForOwner(c)
+			if VerifyVariableDeclarationOrder(callerContract, calleeContract, gn, variables) {
+				if ok, c := IsInheritFromOwnableContract(callerContract, gn, variables); ok {
+					ownerVariableName := InstrumentCodeForOwner(c, variables)
 					InstrumentCodeForAssert(ownerVariableName, callerContract)
 				} else {
-					ownerVariableName := InstrumentCodeForOwner(callerContract)
+					ownerVariableName := InstrumentCodeForOwner(callerContract, variables)
 				InstrumentCodeForAssert(ownerVariableName, callerContract)
 				logger.Debug("在本地插桩")
 				}
@@ -59,13 +59,13 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger) (ast.ASTNode, erro
 		}
 	}
 
-	if isCfg {
+	if isCg {
 		for _, ncp := range ncps {
 			TraverseFunctionCallAll(ncp.Callees(), gn, logger)
 		}
 
 		for _, ncp := range ncps {
-			cfg.MakeCG(ncp, logger)
+			cfg.MakeCG(ncp, logger, solFileName, dirName)
 		}
 	}
 

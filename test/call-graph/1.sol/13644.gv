@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,400.69,36"];
+	node [label="\N"];
+	"SocketGateway.addRoute(address routeAddress)"	 [height=0.5,
+		pos="200.34,18",
+		width=5.5651];
+}

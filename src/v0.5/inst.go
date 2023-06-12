@@ -7,13 +7,15 @@ import (
 	"github.com/geistwelt/taintguard/src/v0.5/ast"
 )
 
-func IsInheritFromOwnableContract(contract *ast.ContractDefinition, gn *ast.GlobalNodes) (bool, *ast.ContractDefinition) {
+func IsInheritFromOwnableContract(contract *ast.ContractDefinition, gn *ast.GlobalNodes, variables []string) (bool, *ast.ContractDefinition) {
 	for _, node := range contract.Nodes() {
 		switch n := node.(type) {
 		case *ast.VariableDeclaration:
 			// Here the parameter names can be defined via the command line.
-			if n.Name == "owner" || n.Name == "_owner" || n.Name == "owner_" {
-				return false, nil
+			for _, variable := range variables {
+				if n.Name == variable {
+					return false, nil
+				}
 			}
 		}
 	}
@@ -29,8 +31,10 @@ func IsInheritFromOwnableContract(contract *ast.ContractDefinition, gn *ast.Glob
 			for _, node := range baseContract.Nodes() {
 				switch n := node.(type) {
 				case *ast.VariableDeclaration:
-					if n.Name == "owner" || n.Name == "_owner" || n.Name == "owner_" {
-						return true, baseContract
+					for _, variable := range variables {
+						if n.Name == variable {
+							return true, baseContract
+						}
 					}
 				}
 			}
@@ -40,14 +44,20 @@ func IsInheritFromOwnableContract(contract *ast.ContractDefinition, gn *ast.Glob
 	return false, nil
 }
 
-func InstrumentCodeForOwner(contract *ast.ContractDefinition) string {
+func InstrumentCodeForOwner(contract *ast.ContractDefinition, variables []string) string {
 	var ownerVariableName string
 	for _, node := range contract.Nodes() {
 		if node.Type() == "VariableDeclaration" {
 			// check
 			vdNode, _ := node.(*ast.VariableDeclaration)
 			// Here the parameter names can be defined via the command line.
-			if vdNode.Name == "owner" || vdNode.Name == "_owner" || vdNode.Name == "owner_" {
+			var ok bool
+			for _, variable := range variables {
+				if vdNode.Name == variable {
+					ok = true
+				}
+			}
+			if ok {
 				ownerVariableName = vdNode.Name
 
 				instReturnOwnerFunction := &ast.FunctionDefinition{
@@ -227,7 +237,7 @@ func InstrumentCodeForAssert(ownerVariableName string, contract *ast.ContractDef
 	contract.TraverseDelegatecall(&ast.Option{ExpressionStatement: expressionStatement}, logging.MustNewLogger())
 }
 
-func VerifyVariableDeclarationOrder(callerContract, calleeContract *ast.ContractDefinition, gn *ast.GlobalNodes) bool {
+func VerifyVariableDeclarationOrder(callerContract, calleeContract *ast.ContractDefinition, gn *ast.GlobalNodes, variables []string) bool {
 	var callerContractVariables []*variable = make([]*variable, 0) // variableName => variableType
 	var calleeContractVariables []*variable = make([]*variable, 0) // variableName => variableType
 	var same bool = false
@@ -243,9 +253,11 @@ func VerifyVariableDeclarationOrder(callerContract, calleeContract *ast.Contract
 	}
 
 	for i := 0; i < len(callerContractVariables) && i < len(calleeContractVariables); i++ {
-		if (callerContractVariables[i].variableName == "owner" || callerContractVariables[i].variableName == "_owner" ||
-			callerContractVariables[i].variableName == "owner_") && calleeContractVariables[i].variableType == callerContractVariables[i].variableType {
-			same = true
+		for _, variable := range variables {
+			if calleeContractVariables[i].variableName == variable && 
+			calleeContractVariables[i].variableType == callerContractVariables[i].variableType {
+				same = true
+			}
 		}
 	}
 

@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,285.42,36"];
+	node [label="\N"];
+	"Pb.fromBytes(bytes memory raw)"	 [height=0.5,
+		pos="142.71,18",
+		width=3.9641];
+}

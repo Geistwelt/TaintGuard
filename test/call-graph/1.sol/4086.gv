@@ -1,0 +1,16 @@
+digraph "" {
+	graph [bb="0,0,1237.5,124.8"];
+	node [label="\N"];
+	"HopImplL1.bridgeAfterSwap(uint256 amount, bytes calldata bridgeData)"	 [height=0.5,
+		pos="618.73,106.8",
+		width=8.2175];
+	"IHopL1Bridge.sendToL2(uint256 chainId, address recipient, uint256 amount, uint256 amountOutMin, uint256 deadline, address relayer, \
+uint256 relayerFee)"	 [height=0.5,
+		pos="618.73,18",
+		width=17.187];
+	"HopImplL1.bridgeAfterSwap(uint256 amount, bytes calldata bridgeData)" -> "IHopL1Bridge.sendToL2(uint256 chainId, address recipient, uint256 amount, uint256 amountOutMin, uint256 deadline, address relayer, \
+uint256 relayerFee)" [key=call,
+	label=" call",
+	lp="630.59,62.4",
+	pos="e,618.73,36.072 618.73,88.401 618.73,76.295 618.73,60.208 618.73,46.467"];
+}

@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,342.83,36"];
+	node [label="\N"];
+	"ERC20._setupDecimals(uint8 decimals_)"	 [height=0.5,
+		pos="171.41,18",
+		width=4.7615];
+}

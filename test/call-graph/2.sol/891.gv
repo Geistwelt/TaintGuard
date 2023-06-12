@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,1074.3,213.6"];
+	node [label="\N"];
+	"LiuLiuAI.constructor(string memory name, string memory symbol, uint8 decimal)"	 [height=0.5,
+		pos="330.18,195.6",
+		width=9.1718];
+	"ERC20._setupDecimals(uint8 decimals_)"	 [height=0.5,
+		pos="307.18,106.8",
+		width=4.7615];
+	"LiuLiuAI.constructor(string memory name, string memory symbol, uint8 decimal)" -> "ERC20._setupDecimals(uint8 decimals_)" [key=call,
+	label=" call",
+	lp="333.04,151.2",
+	pos="e,311.86,124.87 325.42,177.2 322.25,164.98 318.03,148.69 314.45,134.86"];
+"ERC20._mint(address account, uint256 amount)" [height=0.5,
+	pos="694.18,106.8",
+	width=5.4993];
+"LiuLiuAI.constructor(string memory name, string memory symbol, uint8 decimal)" -> "ERC20._mint(address account, uint256 amount)" [key=call,
+label=" call",
+lp="557.04,151.2",
+pos="e,624.75,123.74 402.53,177.95 463.84,162.99 551.6,141.58 614.82,126.16"];
+"ERC20._beforeTokenTransfer(address from, address to, uint256 amount)" [height=0.5,
+pos="463.18,18",
+width=8.1875];
+"ERC20._mint(address account, uint256 amount)" -> "ERC20._beforeTokenTransfer(address from, address to, uint256 amount)" [key=call,
+label=" call",
+lp="612.04,62.4",
+pos="e,509.52,35.812 648.55,89.256 611.38,74.967 558.74,54.735 519.06,39.478"];
+"SafeMath.add(uint256 a, uint256 b)" [height=0.5,
+pos="925.18,18",
+width=4.1432];
+"ERC20._mint(address account, uint256 amount)" -> "SafeMath.add(uint256 a, uint256 b)" [key=call,
+label=" call",
+lp="843.04,62.4",
+pos="e,880.43,35.205 739.82,89.256 777.48,74.781 831,54.205 870.86,38.882"];
+}

@@ -1,6 +1,7 @@
 package src
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -8,7 +9,8 @@ import (
 func MustReadFile(filePath string) []byte {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
-		panic(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	return content
 }
@@ -29,4 +31,12 @@ func Trim(s string) string {
 		}
 	}
 	return s[:post]
+}
+
+func EnsureDir(dir string) error {
+	err := os.MkdirAll(dir, 0777)
+	if err != nil {
+		return fmt.Errorf("could not create directory %q: %w", dir, err)
+	}
+	return nil
 }

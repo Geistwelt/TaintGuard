@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,905.91,124.8"];
+	node [label="\N"];
+	"ERC20._mint(address account, uint256 amount)"	 [height=0.5,
+		pos="525.75,106.8",
+		width=5.4993];
+	"ERC20._beforeTokenTransfer(address from, address to, uint256 amount)"	 [height=0.5,
+		pos="294.75,18",
+		width=8.1875];
+	"ERC20._mint(address account, uint256 amount)" -> "ERC20._beforeTokenTransfer(address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="443.61,62.4",
+	pos="e,341.08,35.812 480.11,89.256 442.94,74.967 390.31,54.735 350.62,39.478"];
+"SafeMath.add(uint256 a, uint256 b)" [height=0.5,
+	pos="756.75,18",
+	width=4.1432];
+"ERC20._mint(address account, uint256 amount)" -> "SafeMath.add(uint256 a, uint256 b)" [key=call,
+label=" call",
+lp="674.61,62.4",
+pos="e,711.99,35.205 571.39,89.256 609.04,74.781 662.57,54.205 702.43,38.882"];
+}

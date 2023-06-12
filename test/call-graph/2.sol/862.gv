@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,589.5,36"];
+	node [label="\N"];
+	"ERC20._beforeTokenTransfer(address from, address to, uint256 amount)"	 [height=0.5,
+		pos="294.75,18",
+		width=8.1875];
+}

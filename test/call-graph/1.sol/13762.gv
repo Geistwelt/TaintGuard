@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,371.76,36"];
+	node [label="\N"];
+	"SocketGateway.disableRoute(uint32 routeId)"	 [height=0.5,
+		pos="185.88,18",
+		width=5.1633];
+}

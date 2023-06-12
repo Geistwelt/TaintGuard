@@ -1,0 +1,8 @@
+digraph "" {
+	graph [bb="0,0,1296.4,36"];
+	node [label="\N"];
+	"NativeOptimismImpl.bridgeNativeTo(address receiverAddress, address customBridgeAddress, uint32 l2Gas, uint256 amount, bytes32 metadata, \
+bytes calldata data)"	 [height=0.5,
+		pos="648.21,18",
+		width=18.006];
+}

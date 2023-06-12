@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,175.98,36"];
+	node [label="\N"];
+	"Ownable.nominee()"	 [height=0.5,
+		pos="87.992,18",
+		width=2.4442];
+}

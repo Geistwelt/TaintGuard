@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,989.57,36"];
+	node [label="\N"];
+	"RainbowSwapImpl.constructor(address _rainbowSwapAggregator, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="494.78,18",
+		width=13.744];
+}

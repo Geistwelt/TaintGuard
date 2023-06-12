@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,747.52,124.8"];
+	node [label="\N"];
+	"SocketDeployFactory._destroy(uint256 routeId)"	 [height=0.5,
+		pos="436.42,106.8",
+		width=5.4764];
+	"SocketDeployFactory._getContractAddress(uint256 routeId)"	 [height=0.5,
+		pos="245.42,18",
+		width=6.8171];
+	"SocketDeployFactory._destroy(uint256 routeId)" -> "SocketDeployFactory._getContractAddress(uint256 routeId)" [key=call,
+	label=" call",
+	lp="370.27,62.4",
+	pos="e,283.87,35.878 398.22,89.043 368,74.993 325.63,55.295 293.17,40.203"];
+"ISocketBridgeBase.killme()" [height=0.5,
+	pos="628.42,18",
+	width=3.3085];
+"SocketDeployFactory._destroy(uint256 routeId)" -> "ISocketBridgeBase.killme()" [key=call,
+label=" call",
+lp="562.27,62.4",
+pos="e,591.4,35.122 474.81,89.043 505.69,74.763 549.18,54.647 582.01,39.464"];
+}

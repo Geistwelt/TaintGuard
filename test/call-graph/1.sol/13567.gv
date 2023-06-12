@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,886.59,36"];
+	node [label="\N"];
+	"SocketGateway.executeController(ISocketGateway.SocketControllerRequest calldata socketControllerRequest)"	 [height=0.5,
+		pos="443.3,18",
+		width=12.314];
+}

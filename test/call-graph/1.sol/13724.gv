@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,469.33,36"];
+	node [label="\N"];
+	"SocketGateway.addController(address controllerAddress)"	 [height=0.5,
+		pos="234.67,18",
+		width=6.5185];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,530,124.8"];
+	node [label="\N"];
+	"SafeMath.sub(uint256 a, uint256 b)"	 [height=0.5,
+		pos="265,106.8",
+		width=4.1284];
+	"SafeMath.sub(uint256 a, uint256 b, string memory errorMessage)"	 [height=0.5,
+		pos="265,18",
+		width=7.3612];
+	"SafeMath.sub(uint256 a, uint256 b)" -> "SafeMath.sub(uint256 a, uint256 b, string memory errorMessage)" [key=call,
+	label=" call",
+	lp="276.86,62.4",
+	pos="e,265,36.072 265,88.401 265,76.295 265,60.208 265,46.467"];
+}

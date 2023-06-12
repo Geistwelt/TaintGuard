@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,874.33,36"];
+	node [label="\N"];
+	"HyphenImpl.bridgeNativeTo(uint256 amount, bytes32 metadata, address receiverAddress, uint256 toChainId)"	 [height=0.5,
+		pos="437.16,18",
+		width=12.143];
+}

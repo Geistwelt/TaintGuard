@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,681.18,36"];
+	node [label="\N"];
+	"SwapImplBase.constructor(address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="340.59,18",
+		width=9.4608];
+}

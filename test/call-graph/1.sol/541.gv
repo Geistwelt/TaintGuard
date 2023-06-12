@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,679.71,124.8"];
+	node [label="\N"];
+	"ERC20.constructor(string memory _name, string memory _symbol, uint8 _decimals)"	 [height=0.5,
+		pos="339.85,106.8",
+		width=9.4403];
+	"ERC20.computeDomainSeparator()"	 [height=0.5,
+		pos="339.85,18",
+		width=4.1578];
+	"ERC20.constructor(string memory _name, string memory _symbol, uint8 _decimals)" -> "ERC20.computeDomainSeparator()" [key=call,
+	label=" call",
+	lp="351.71,62.4",
+	pos="e,339.85,36.072 339.85,88.401 339.85,76.295 339.85,60.208 339.85,46.467"];
+}

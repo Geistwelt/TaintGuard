@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,277.89,36"];
+	node [label="\N"];
+	"Pb.hasMore(Buffer memory buf)"	 [height=0.5,
+		pos="138.94,18",
+		width=3.8596];
+}

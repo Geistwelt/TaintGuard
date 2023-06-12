@@ -7,13 +7,17 @@ import (
 	"os/exec"
 
 	"github.com/geistwelt/logging"
+	"github.com/geistwelt/taintguard/src"
 	"github.com/geistwelt/taintguard/src/v0.4/ast"
 	"github.com/goccy/go-graphviz"
 	"github.com/goccy/go-graphviz/cgraph"
 )
 
 // make call graph
-func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger) error {
+func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger, solfileName string, dirName string) error {
+	if err := src.EnsureDir(fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName)); err != nil {
+		logger.Error(err.Error())
+	}
 	g := graphviz.New()
 	graph, err := g.Graph()
 	if err != nil {
@@ -25,10 +29,10 @@ func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger) error {
 		return fmt.Errorf("failed to make call graph for [%s]: [%v]", ncp.Name(), err)
 	}
 
-	f, err := os.OpenFile(fmt.Sprintf("test/%d.gv", ncp.ID()), os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
+	f, err := os.OpenFile(fmt.Sprintf("%s/%d.gv", fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName), ncp.ID()), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 	if err != nil {
-		logger.Errorf("Failed to open file [%s]: [%v].", fmt.Sprintf("test/%d.gv", ncp.ID()), err)
-		return fmt.Errorf("failed to open file [%s]: [%v]", fmt.Sprintf("test/%d.gv", ncp.ID()), err)
+		logger.Errorf("Failed to open file [%s]: [%v].", fmt.Sprintf("%s/%d.gv", fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName), ncp.ID()), err)
+		return fmt.Errorf("failed to open file [%s]: [%v]", fmt.Sprintf("%s/%d.gv", fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName), ncp.ID()), err)
 	}
 
 	var buf bytes.Buffer
@@ -42,7 +46,7 @@ func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger) error {
 		return fmt.Errorf("failed to save dot file: [%v]", err)
 	}
 
-	cmd := exec.Command(`/bin/sh`, `-c`, fmt.Sprintf("dot test/%d.gv -T png -o test/%d.png", ncp.ID(), ncp.ID()))
+	cmd := exec.Command(`/bin/sh`, `-c`, fmt.Sprintf("dot %s/%d.gv -T png -o %s/%d.png", fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName), ncp.ID(), fmt.Sprintf("%s/%s/%s", dirName, "call-graph", solfileName), ncp.ID()))
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	if err = cmd.Run(); err != nil {
@@ -50,7 +54,7 @@ func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger) error {
 		return fmt.Errorf("failed to generate file %d.png", ncp.ID())
 	}
 
-	// logger.Infof("Successfully generate call graph for function [%s] => [%d.png | %d.gv].", ncp.Name(), ncp.ID(), ncp.ID())
+	logger.Infof("Successfully generate call graph for function [%s] => [%d.png].", ncp.Name(), ncp.ID(), ncp.ID())
 
 	return nil
 }

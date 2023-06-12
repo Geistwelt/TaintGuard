@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,490.83,36"];
+	node [label="\N"];
+	"SocketDeployFactory._getContractAddress(uint256 routeId)"	 [height=0.5,
+		pos="245.42,18",
+		width=6.8171];
+}

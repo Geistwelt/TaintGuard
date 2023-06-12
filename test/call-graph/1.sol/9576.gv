@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,645.24,36"];
+	node [label="\N"];
+	"SocketGatewayTemplate.executeRoute(uint32 routeId, bytes calldata routeData)"	 [height=0.5,
+		pos="322.62,18",
+		width=8.9616];
+}

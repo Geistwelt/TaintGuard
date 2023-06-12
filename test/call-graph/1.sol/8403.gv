@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,598.61,36"];
+	node [label="\N"];
+	"SocketDeployFactory.constructor(address _owner, address disabledRoute)"	 [height=0.5,
+		pos="299.3,18",
+		width=8.314];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,1204.1,124.8"];
+	node [label="\N"];
+	"NativeArbitrumImpl.swapAndBridge(uint32 swapId, bytes calldata swapData, NativeArbitrumBridgeDataNoToken calldata nativeArbitrumBridgeData)"	 [height=0.5,
+		pos="602.06,106.8",
+		width=16.724];
+	"SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)"	 [height=0.5,
+		pos="602.06,18",
+		width=8.1727];
+	"NativeArbitrumImpl.swapAndBridge(uint32 swapId, bytes calldata swapData, NativeArbitrumBridgeDataNoToken calldata nativeArbitrumBridgeData)" -> "SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="613.91,62.4",
+	pos="e,602.06,36.072 602.06,88.401 602.06,76.295 602.06,60.208 602.06,46.467"];
+}

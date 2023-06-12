@@ -1,0 +1,8 @@
+digraph "" {
+	graph [bb="0,0,1538.9,36"];
+	node [label="\N"];
+	"StargateImplL1.bridgeNativeTo(address receiverAddress, address senderAddress, uint16 stargateDstChainId, uint256 amount, uint256 \
+minReceivedAmt, uint256 optionalValue, bytes32 metadata)"	 [height=0.5,
+		pos="769.43,18",
+		width=21.373];
+}

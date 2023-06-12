@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,484.36,36"];
+	node [label="\N"];
+	"DisabledSocketRoute.constructor(address _socketGateway)"	 [height=0.5,
+		pos="242.18,18",
+		width=6.7272];
+}

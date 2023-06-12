@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,289.64,36"];
+	node [label="\N"];
+	"SocketGatewayTemplate.receive()"	 [height=0.5,
+		pos="144.82,18",
+		width=4.0227];
+}

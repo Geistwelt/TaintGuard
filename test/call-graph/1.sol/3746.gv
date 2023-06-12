@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,751.88,36"];
+	node [label="\N"];
+	"CelerStorageWrapper.setAddressForTransferId(bytes32 transferId, address transferIdAddress)"	 [height=0.5,
+		pos="375.94,18",
+		width=10.443];
+}

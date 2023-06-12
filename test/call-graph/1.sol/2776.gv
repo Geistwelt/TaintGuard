@@ -1,0 +1,24 @@
+digraph "" {
+	graph [bb="0,0,1682.1,124.8"];
+	node [label="\N"];
+	"NativeArbitrumImpl.bridgeERC20To(uint256 amount, uint256 value, uint256 maxGas, uint256 gasPriceBid, bytes32 metadata, address receiverAddress, \
+address token, address gatewayAddress, bytes memory data)"	 [height=0.5,
+		pos="841.04,106.8",
+		width=23.362];
+	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
+		pos="501.04,18",
+		width=10.251];
+	"NativeArbitrumImpl.bridgeERC20To(uint256 amount, uint256 value, uint256 maxGas, uint256 gasPriceBid, bytes32 metadata, address receiverAddress, \
+address token, address gatewayAddress, bytes memory data)" -> "SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="713.9,62.4",
+	pos="e,568.87,35.716 772.24,88.83 716.2,74.194 637.1,53.534 578.78,38.303"];
+"SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [height=0.5,
+	pos="1182,18",
+	width=8.1727];
+"NativeArbitrumImpl.bridgeERC20To(uint256 amount, uint256 value, uint256 maxGas, uint256 gasPriceBid, bytes32 metadata, address receiverAddress, \
+address token, address gatewayAddress, bytes memory data)" -> "SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [key=call,
+label=" call",
+lp="1054.9,62.4",
+pos="e,1114.6,35.565 910.05,88.83 966.43,74.146 1046.1,53.399 1104.7,38.153"];
+}

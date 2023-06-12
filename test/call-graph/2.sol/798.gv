@@ -1,0 +1,32 @@
+digraph "" {
+	graph [bb="0,0,964.37,213.6"];
+	node [label="\N"];
+	"ERC20._burn(address account, uint256 amount)"	 [height=0.5,
+		pos="625.75,195.6",
+		width=5.4991];
+	"ERC20._beforeTokenTransfer(address from, address to, uint256 amount)"	 [height=0.5,
+		pos="294.75,106.8",
+		width=8.1875];
+	"ERC20._burn(address account, uint256 amount)" -> "ERC20._beforeTokenTransfer(address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="502.61,151.2",
+	pos="e,360.36,124.4 561.93,178.48 507.14,163.78 428.09,142.57 370.18,127.04"];
+"SafeMath.sub(uint256 a, uint256 b, string memory errorMessage)" [height=0.5,
+	pos="641.75,18",
+	width=7.3612];
+"ERC20._burn(address account, uint256 amount)" -> "SafeMath.sub(uint256 a, uint256 b, string memory errorMessage)" [key=call,
+label=" call",
+lp="646.61,106.8",
+pos="e,639.63,36.026 626.99,177.44 628.48,156.18 631.14,119.91 634.04,88.8 635.35,74.758 637.02,59.174 638.48,46.209"];
+"SafeMath.sub(uint256 a, uint256 b)" [height=0.5,
+pos="815.75,106.8",
+width=4.1284];
+"ERC20._burn(address account, uint256 amount)" -> "SafeMath.sub(uint256 a, uint256 b)" [key=call,
+label=" call",
+lp="750.61,151.2",
+pos="e,778.15,124.37 663.74,177.84 694,163.7 736.51,143.84 768.88,128.71"];
+"SafeMath.sub(uint256 a, uint256 b)" -> "SafeMath.sub(uint256 a, uint256 b, string memory errorMessage)" [key=call,
+label=" call",
+lp="756.61,62.4",
+pos="e,676.95,35.964 781.37,89.256 754.12,75.345 715.82,55.801 686.23,40.699"];
+}

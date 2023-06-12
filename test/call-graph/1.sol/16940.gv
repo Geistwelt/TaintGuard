@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,348.14,124.8"];
+	node [label="\N"];
+	"SocketGateway()"	 [height=0.5,
+		pos="174.07,106.8",
+		width=2.1684];
+	"SocketGateway.addressAt(uint32 routeId)"	 [height=0.5,
+		pos="174.07,18",
+		width=4.8353];
+	"SocketGateway()" -> "SocketGateway.addressAt(uint32 routeId)" [key=call,
+	label=" call",
+	lp="185.93,62.4",
+	pos="e,174.07,36.072 174.07,88.401 174.07,76.295 174.07,60.208 174.07,46.467"];
+}

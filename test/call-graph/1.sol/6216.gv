@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,884.42,36"];
+	node [label="\N"];
+	"RefuelBridgeImpl.constructor(address _refuelBridge, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="442.21,18",
+		width=12.284];
+}

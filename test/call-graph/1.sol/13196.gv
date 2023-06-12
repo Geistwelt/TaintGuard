@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,421.07,124.8"];
+	node [label="\N"];
+	"SocketGatewayTemplate()"	 [height=0.5,
+		pos="210.54,106.8",
+		width=3.1814];
+	"SocketGatewayTemplate.addressAt(uint32 routeId)"	 [height=0.5,
+		pos="210.54,18",
+		width=5.8483];
+	"SocketGatewayTemplate()" -> "SocketGatewayTemplate.addressAt(uint32 routeId)" [key=call,
+	label=" call",
+	lp="222.39,62.4",
+	pos="e,210.54,36.072 210.54,88.401 210.54,76.295 210.54,60.208 210.54,46.467"];
+}

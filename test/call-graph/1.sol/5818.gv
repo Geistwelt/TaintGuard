@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,1233.6,36"];
+	node [label="\N"];
+	"NativePolygonImpl.constructor(address _rootChainManagerProxy, address _erc20PredicateProxy, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="616.8,18",
+		width=17.133];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,667.82,124.8"];
+	node [label="\N"];
+	"BridgeImplBase.rescueFunds(address token, address userAddress, uint256 amount)"	 [height=0.5,
+		pos="333.91,106.8",
+		width=9.2753];
+	"SafeTransferLib.safeTransfer(ERC20 token, address to, uint256 amount)"	 [height=0.5,
+		pos="333.91,18",
+		width=8.1426];
+	"BridgeImplBase.rescueFunds(address token, address userAddress, uint256 amount)" -> "SafeTransferLib.safeTransfer(ERC20 token, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="345.77,62.4",
+	pos="e,333.91,36.072 333.91,88.401 333.91,76.295 333.91,60.208 333.91,46.467"];
+}

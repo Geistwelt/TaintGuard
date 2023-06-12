@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,344.89,124.8"];
+	node [label="\N"];
+	"Ownable.claimOwner()"	 [height=0.5,
+		pos="172.44,106.8",
+		width=2.8462];
+	"Ownable._claimOwner(address claimer_)"	 [height=0.5,
+		pos="172.44,18",
+		width=4.7901];
+	"Ownable.claimOwner()" -> "Ownable._claimOwner(address claimer_)" [key=call,
+	label=" call",
+	lp="184.3,62.4",
+	pos="e,172.44,36.072 172.44,88.401 172.44,76.295 172.44,60.208 172.44,46.467"];
+}

@@ -1,0 +1,8 @@
+digraph "" {
+	graph [bb="0,0,1225.7,36"];
+	node [label="\N"];
+	"IBridgeStargate.swapETH(uint16 _dstChainId, address payable _refundAddress, bytes calldata _toAddress, uint256 _amountLD, uint256 _\
+minAmountLD)"	 [height=0.5,
+		pos="612.84,18",
+		width=17.023];
+}

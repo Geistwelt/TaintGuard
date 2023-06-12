@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,729.47,36"];
+	node [label="\N"];
+	"NativeOptimismImpl.constructor(address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="364.74,18",
+		width=10.132];
+}

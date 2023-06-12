@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,991.33,36"];
+	node [label="\N"];
+	"ICBridge.send(address _receiver, address _token, uint256 _amount, uint64 _dstChinId, uint64 _nonce, uint32 _maxSlippage)"	 [height=0.5,
+		pos="495.67,18",
+		width=13.769];
+}

@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,348.14,36"];
+	node [label="\N"];
+	"SocketGateway.addressAt(uint32 routeId)"	 [height=0.5,
+		pos="174.07,18",
+		width=4.8353];
+}

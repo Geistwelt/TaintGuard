@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,945.56,36"];
+	node [label="\N"];
+	"ZeroXSwapImpl.constructor(address _zeroXExchangeProxy, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
+		pos="472.78,18",
+		width=13.133];
+}

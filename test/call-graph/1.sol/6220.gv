@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,236.03,36"];
+	node [label="\N"];
+	"RefuelBridgeImpl.receive()"	 [height=0.5,
+		pos="118.02,18",
+		width=3.2782];
+}

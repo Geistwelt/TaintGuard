@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,1052.9,124.8"];
+	node [label="\N"];
+	"SocketGatewayTemplate.setApprovalForRouters(address[] memory routeAddresses, address[] memory tokenAddresses, bool isMax)"	 [height=0.5,
+		pos="526.43,106.8",
+		width=14.623];
+	"ERC20.approve(address spender, uint256 amount)"	 [height=0.5,
+		pos="526.43,18",
+		width=5.7372];
+	"SocketGatewayTemplate.setApprovalForRouters(address[] memory routeAddresses, address[] memory tokenAddresses, bool isMax)" -> "ERC20.approve(address spender, uint256 amount)" [key=call,
+	label=" call",
+	lp="538.28,62.4",
+	pos="e,526.43,36.072 526.43,88.401 526.43,76.295 526.43,60.208 526.43,46.467"];
+}

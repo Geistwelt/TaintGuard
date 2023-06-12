@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,676.86,36"];
+	node [label="\N"];
+	"SocketGateway.executeRoutes(uint32[] calldata routeIds, bytes[] calldata dataItems)"	 [height=0.5,
+		pos="338.43,18",
+		width=9.4008];
+}

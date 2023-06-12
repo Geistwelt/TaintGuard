@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,1294,124.8"];
+	node [label="\N"];
+	"FeesTakerController.takeFeeAndRefuelAndSwapAndBridge(ISocketRequest.FeesTakerRefuelSwapBridgeRequest calldata frsbRequest)"	 [height=0.5,
+		pos="697.03,106.8",
+		width=15.055];
+	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
+		pos="369.03,18",
+		width=10.251];
+	"FeesTakerController.takeFeeAndRefuelAndSwapAndBridge(ISocketRequest.FeesTakerRefuelSwapBridgeRequest calldata frsbRequest)" -> "SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="574.88,62.4",
+	pos="e,434.46,35.716 630.65,88.83 576.7,74.225 500.59,53.62 444.37,38.397"];
+"BaseController._executeRoute(uint32 routeId, bytes memory data)" [height=0.5,
+	pos="1025,18",
+	width=7.4726];
+"FeesTakerController.takeFeeAndRefuelAndSwapAndBridge(ISocketRequest.FeesTakerRefuelSwapBridgeRequest calldata frsbRequest)" -> "BaseController._executeRoute(uint32 routeId, bytes memory data)" [key=call,
+label=" call",
+lp="902.88,62.4",
+pos="e,960.43,35.489 763.4,88.83 817.61,74.153 894.21,53.417 950.51,38.173"];
+}

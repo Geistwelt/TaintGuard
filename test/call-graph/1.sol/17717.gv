@@ -1,0 +1,28 @@
+digraph "" {
+	graph [bb="0,0,1727.4,124.8"];
+	node [label="\N"];
+	"ZeroXSwapImpl.performAction(address fromToken, address toToken, uint256 amount, address receiverAddress, bytes calldata swapExtraData)"	 [height=0.5,
+		pos="1050,106.8",
+		width=15.807];
+	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
+		pos="369.03,18",
+		width=10.251];
+	"ZeroXSwapImpl.performAction(address fromToken, address toToken, uint256 amount, address receiverAddress, bytes calldata swapExtraData)" -> "SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)" [key=call,
+	label=" call",
+	lp="782.88,62.4",
+	pos="e,498.38,34.868 915.48,89.256 797.76,73.905 627.42,51.693 508.3,36.161"];
+"SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [height=0.5,
+	pos="1050,18",
+	width=8.1727];
+"ZeroXSwapImpl.performAction(address fromToken, address toToken, uint256 amount, address receiverAddress, bytes calldata swapExtraData)" -> "SafeTransferLib.safeApprove(ERC20 token, address to, uint256 amount)" [key=call,
+label=" call",
+lp="1061.9,62.4",
+pos="e,1050,36.072 1050,88.401 1050,76.295 1050,60.208 1050,46.467"];
+"ERC20.transfer(address to, uint256 amount)" [height=0.5,
+pos="1545,18",
+width=5.0668];
+"ZeroXSwapImpl.performAction(address fromToken, address toToken, uint256 amount, address receiverAddress, bytes calldata swapExtraData)" -> "ERC20.transfer(address to, uint256 amount)" [key=call,
+label=" call",
+lp="1353.9,62.4",
+pos="e,1457,33.791 1149,89.043 1235.6,73.513 1360.6,51.08 1446.9,35.597"];
+}

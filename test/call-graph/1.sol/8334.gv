@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,344.89,36"];
+	node [label="\N"];
+	"Ownable._claimOwner(address claimer_)"	 [height=0.5,
+		pos="172.44,18",
+		width=4.7901];
+}

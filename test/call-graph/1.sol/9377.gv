@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,415.71,124.8"];
+	node [label="\N"];
+	"Pb.skipValue(Buffer memory buf, WireType wire)"	 [height=0.5,
+		pos="207.86,106.8",
+		width=5.7738];
+	"Pb.decVarint(Buffer memory buf)"	 [height=0.5,
+		pos="207.86,18",
+		width=3.9786];
+	"Pb.skipValue(Buffer memory buf, WireType wire)" -> "Pb.decVarint(Buffer memory buf)" [key=call,
+	label=" call",
+	lp="219.71,62.4",
+	pos="e,207.86,36.072 207.86,88.401 207.86,76.295 207.86,60.208 207.86,46.467"];
+}

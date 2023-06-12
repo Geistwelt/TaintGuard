@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,173.81,36"];
+	node [label="\N"];
+	"CelerImpl.receive()"	 [height=0.5,
+		pos="86.905,18",
+		width=2.414];
+}

@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,423.78,36"];
+	node [label="\N"];
+	"IERC20.transfer(address recipient, uint256 amount)"	 [height=0.5,
+		pos="211.89,18",
+		width=5.8859];
+}

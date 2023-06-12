@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,640.99,36"];
+	node [label="\N"];
+	"RefuelBridgeImpl.bridgeAfterSwap(uint256 amount, bytes calldata bridgeData)"	 [height=0.5,
+		pos="320.5,18",
+		width=8.9027];
+}

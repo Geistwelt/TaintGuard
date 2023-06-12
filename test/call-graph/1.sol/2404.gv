@@ -1,0 +1,8 @@
+digraph "" {
+	graph [bb="0,0,1159.2,36"];
+	node [label="\N"];
+	"L1GatewayRouter.outboundTransfer(address _token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes calldata _\
+data)"	 [height=0.5,
+		pos="579.58,18",
+		width=16.099];
+}

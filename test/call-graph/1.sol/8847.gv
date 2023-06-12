@@ -1,0 +1,7 @@
+digraph "" {
+	graph [bb="0,0,467.25,36"];
+	node [label="\N"];
+	"ISocketController.disableController(uint32 _controllerId)"	 [height=0.5,
+		pos="233.62,18",
+		width=6.4895];
+}

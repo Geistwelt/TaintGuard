@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,1767.8,124.8"];
+	node [label="\N"];
+	"CelerImpl.swapAndBridge(uint32 swapId, bytes calldata swapData, CelerBridgeDataNoToken calldata celerBridgeData)"	 [height=0.5,
+		pos="825.15,106.8",
+		width=13.326];
+	"ICelerStorageWrapper.setAddressForTransferId(bytes32 transferId, address transferIdAddress)"	 [height=0.5,
+		pos="379.15,18",
+		width=10.532];
+	"CelerImpl.swapAndBridge(uint32 swapId, bytes calldata swapData, CelerBridgeDataNoToken calldata celerBridgeData)" -> "ICelerStorageWrapper.setAddressForTransferId(bytes32 transferId, address transferIdAddress)" [key=call,
+	label=" call",
+	lp="654.01,62.4",
+	pos="e,467.15,35.52 736.24,89.097 661.45,74.207 554.67,52.945 477.38,37.556"];
+"ICBridge.send(address _receiver, address _token, uint256 _amount, uint64 _dstChinId, uint64 _nonce, uint32 _maxSlippage)" [height=0.5,
+	pos="1272.2,18",
+	width=13.769];
+"CelerImpl.swapAndBridge(uint32 swapId, bytes calldata swapData, CelerBridgeDataNoToken calldata celerBridgeData)" -> "ICBridge.send(address _receiver, address _token, uint256 _amount, uint64 _dstChinId, uint64 _nonce, uint32 _maxSlippage)" [key=call,
+label=" call",
+lp="1101,62.4",
+pos="e,1182.8,35.747 914.27,89.097 988.86,74.279 1095.2,53.153 1172.6,37.782"];
+}
