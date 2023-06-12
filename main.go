@@ -10,12 +10,13 @@ import (
 	"github.com/geistwelt/logging"
 	"github.com/geistwelt/taintguard/src"
 	v05 "github.com/geistwelt/taintguard/src/v0.5"
+	v04 "github.com/geistwelt/taintguard/src/v0.4"
 	v06 "github.com/geistwelt/taintguard/src/v0.6"
 	v08 "github.com/geistwelt/taintguard/src/v0.8"
 	jsoniter "github.com/json-iterator/go"
 )
 
-var contract_ast_json string = "contracts/v0.6/1.sol_json.ast"
+var contract_ast_json string = "contracts/v0.4/3.sol_json.ast"
 var opt = logging.Option{
 	Module:         "TaintGuard",
 	FilterLevel:    logging.DebugLevel,
@@ -148,7 +149,7 @@ func main() {
 	}
 
 	switch version {
-	case 0.8:
+	case 0.7, 0.8:
 		node, err := v08.Run(jsonBytes, false, logger)
 		if err != nil {
 			os.Exit(1)
@@ -180,6 +181,21 @@ func main() {
 		f.Close()
 	case 0.5:
 		node, err := v05.Run(jsonBytes, false, logger)
+		if err != nil {
+			os.Exit(1)
+		}
+		code := node.SourceCode(false, false, "", logger)
+		f, err := os.OpenFile("test/0.sol", os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0666)
+		if err != nil {
+			fmt.Println("Failed to open file test/0.sol.")
+			os.Exit(1)
+		}
+
+		f.Write([]byte(code))
+
+		f.Close()
+	case 0.4:
+		node, err := v04.Run(jsonBytes, false, logger)
 		if err != nil {
 			os.Exit(1)
 		}
