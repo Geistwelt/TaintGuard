@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,179.23,36"];
-	node [label="\N"];
-	"Context._msgData()"	 [height=0.5,
-		pos="89.613,18",
-		width=2.4893];
-}

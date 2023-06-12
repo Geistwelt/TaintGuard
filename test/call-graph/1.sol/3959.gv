@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,655.44,36"];
-	node [label="\N"];
-	"HopImplL1.constructor(address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
-		pos="327.72,18",
-		width=9.1033];
-}

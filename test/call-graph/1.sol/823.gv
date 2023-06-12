@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,350.91,36"];
-	node [label="\N"];
-	"ERC20._mint(address to, uint256 amount)"	 [height=0.5,
-		pos="175.46,18",
-		width=4.8738];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,823.29,36"];
-	node [label="\N"];
-	"AnyswapL2Impl.constructor(address _router, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
-		pos="411.65,18",
-		width=11.435];
-}

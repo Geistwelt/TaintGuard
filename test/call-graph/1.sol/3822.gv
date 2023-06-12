@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,917.85,36"];
-	node [label="\N"];
-	"ICBridge.sendNative(address _receiver, uint256 _amount, uint64 _dstChinId, uint64 _nonce, uint32 _maxSlippage)"	 [height=0.5,
-		pos="458.92,18",
-		width=12.748];
-}

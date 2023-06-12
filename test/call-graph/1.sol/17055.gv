@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,184.05,36"];
-	node [label="\N"];
-	"RainbowSwapImpl()"	 [height=0.5,
-		pos="92.027,18",
-		width=2.5563];
-}

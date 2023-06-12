@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1880.1,36"];
-	node [label="\N"];
-	"IBridgeStargate.swap(uint16 _dstChainId, uint256 _srcPoolId, uint256 _dstPoolId, address payable _refundAddress, uint256 _amountLD, \
-uint256 _minAmountLD, lzTxObj memory _lzTxParams, bytes calldata _to, bytes calldata _payload)"	 [height=0.5,
-		pos="940.06,18",
-		width=26.113];
-}

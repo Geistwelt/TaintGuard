@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1263,36"];
-	node [label="\N"];
-	"CelerImpl.constructor(address _routerAddress, address _weth, address _celerStorageWrapperAddress, address _socketGateway, address _\
-socketDeployFactory)"	 [height=0.5,
-		pos="631.5,18",
-		width=17.542];
-}

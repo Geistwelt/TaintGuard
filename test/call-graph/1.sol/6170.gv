@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,562.19,36"];
-	node [label="\N"];
-	"IRefuel.depositNativeToken(uint256 destinationChainId, address _to)"	 [height=0.5,
-		pos="281.09,18",
-		width=7.8082];
-}

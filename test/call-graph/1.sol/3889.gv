@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1623.3,36"];
-	node [label="\N"];
-	"HopAMM.swapAndSend(uint256 chainId, address recipient, uint256 amount, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, \
-uint256 destinationAmountOutMin, uint256 destinationDeadline)"	 [height=0.5,
-		pos="811.64,18",
-		width=22.545];
-}

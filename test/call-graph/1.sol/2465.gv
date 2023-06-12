@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,852.25,36"];
-	node [label="\N"];
-	"NativeArbitrumImpl.constructor(address _router, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
-		pos="426.13,18",
-		width=11.837];
-}

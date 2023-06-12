@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,968.62,36"];
-	node [label="\N"];
-	"StargateImplL1.constructor(address _router, address _routerEth, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
-		pos="484.31,18",
-		width=13.453];
-}

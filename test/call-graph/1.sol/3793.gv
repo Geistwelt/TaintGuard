@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,558.31,36"];
-	node [label="\N"];
-	"CelerStorageWrapper.getAddressFromTransferId(bytes32 transferId)"	 [height=0.5,
-		pos="279.16,18",
-		width=7.7543];
-}

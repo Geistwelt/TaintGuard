@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,612.01,36"];
-	node [label="\N"];
-	"BridgeImplBase.rescueEther(address payable userAddress, uint256 amount)"	 [height=0.5,
-		pos="306,18",
-		width=8.5001];
-}

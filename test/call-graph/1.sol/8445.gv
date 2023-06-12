@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,518.67,36"];
-	node [label="\N"];
-	"SocketDeployFactory.removeDisablerAddress(address disabler)"	 [height=0.5,
-		pos="259.33,18",
-		width=7.2037];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,996.09,36"];
-	node [label="\N"];
-	"SocketGatewayTemplate.swapAndMultiBridge(ISocketRequest.SwapMultiBridgeRequest calldata swapMultiBridgeRequest)"	 [height=0.5,
-		pos="498.05,18",
-		width=13.835];
-}

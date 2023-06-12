@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,513.34,36"];
-	node [label="\N"];
-	"SocketGatewayTemplate.disableController(uint32 controllerId)"	 [height=0.5,
-		pos="256.67,18",
-		width=7.1297];
-}

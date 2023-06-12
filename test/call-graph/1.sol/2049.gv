@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,856.15,36"];
-	node [label="\N"];
-	"AnyswapV6Router.anySwapOutUnderlying(address token, address to, uint256 amount, uint256 toChainID)"	 [height=0.5,
-		pos="428.07,18",
-		width=11.891];
-}

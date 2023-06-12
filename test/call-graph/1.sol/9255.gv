@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,286.46,36"];
-	node [label="\N"];
-	"Pb.decVarint(Buffer memory buf)"	 [height=0.5,
-		pos="143.23,18",
-		width=3.9786];
-}

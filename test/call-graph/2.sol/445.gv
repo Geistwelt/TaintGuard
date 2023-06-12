@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,153.51,36"];
-	node [label="\N"];
-	"ERC20.symbol()"	 [height=0.5,
-		pos="76.754,18",
-		width=2.1321];
-}

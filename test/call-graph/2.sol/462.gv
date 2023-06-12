@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,185.7,36"];
-	node [label="\N"];
-	"ERC20.totalSupply()"	 [height=0.5,
-		pos="92.849,18",
-		width=2.5791];
-}

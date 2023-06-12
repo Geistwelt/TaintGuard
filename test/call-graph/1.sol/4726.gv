@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,2013.7,36"];
-	node [label="\N"];
-	"HopImplL2.bridgeNativeTo(address receiverAddress, address hopAMM, uint256 amount, uint256 toChainId, uint256 bonderFee, uint256 \
-amountOutMin, uint256 deadline, uint256 amountOutMinDestination, uint256 deadlineDestination, bytes32 metadata)"	 [height=0.5,
-		pos="1006.9,18",
-		width=27.968];
-}

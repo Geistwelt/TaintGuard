@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,778.3,36"];
-	node [label="\N"];
-	"NativePolygonImpl.bridgeNativeTo(uint256 amount, bytes32 metadata, address receiverAddress)"	 [height=0.5,
-		pos="389.15,18",
-		width=10.81];
-}

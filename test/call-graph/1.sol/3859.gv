@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,482.13,36"];
-	node [label="\N"];
-	"ICelerStorageWrapper.deleteTransferId(bytes32 transferId)"	 [height=0.5,
-		pos="241.06,18",
-		width=6.6962];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,709.09,36"];
-	node [label="\N"];
-	"IRootChainManager.depositFor(address sender, address token, bytes memory extraData)"	 [height=0.5,
-		pos="354.54,18",
-		width=9.8484];
-}

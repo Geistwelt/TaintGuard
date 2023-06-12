@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,758.31,36"];
-	node [label="\N"];
-	"ICelerStorageWrapper.setAddressForTransferId(bytes32 transferId, address transferIdAddress)"	 [height=0.5,
-		pos="379.15,18",
-		width=10.532];
-}

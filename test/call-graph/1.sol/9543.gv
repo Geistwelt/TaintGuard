@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,633.98,36"];
-	node [label="\N"];
-	"SocketGatewayTemplate.constructor(address _owner, address _disabledRoute)"	 [height=0.5,
-		pos="316.99,18",
-		width=8.8053];
-}

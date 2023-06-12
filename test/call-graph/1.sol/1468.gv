@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1230.5,36"];
-	node [label="\N"];
-	"AcrossImpl.bridgeNativeTo(uint256 amount, uint256 toChainId, bytes32 metadata, address receiverAddress, uint32 quoteTimestamp, uint64 \
-relayerFeePct)"	 [height=0.5,
-		pos="615.24,18",
-		width=17.09];
-}

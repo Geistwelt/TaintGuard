@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,639.89,36"];
-	node [label="\N"];
-	"RefuelSwapAndBridgeController.constructor(address _socketGatewayAddress)"	 [height=0.5,
-		pos="319.94,18",
-		width=8.8873];
-}

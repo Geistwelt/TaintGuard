@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,898.36,36"];
-	node [label="\N"];
-	"OneInchImpl.constructor(address _oneinchAggregator, address _socketGateway, address _socketDeployFactory)"	 [height=0.5,
-		pos="449.18,18",
-		width=12.477];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,964.37,36"];
-	node [label="\N"];
-	"ICBridge.withdraw(bytes calldata _wdmsg, bytes[] calldata _sigs, address[] calldata _signers, uint256[] calldata _powers)"	 [height=0.5,
-		pos="482.18,18",
-		width=13.394];
-}

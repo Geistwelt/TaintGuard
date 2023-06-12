@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,254.34,36"];
-	node [label="\N"];
-	"Pb._bytes32(bytes memory b)"	 [height=0.5,
-		pos="127.17,18",
-		width=3.5324];
-}

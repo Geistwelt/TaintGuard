@@ -1,8 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1237.5,36"];
-	node [label="\N"];
-	"IHopL1Bridge.sendToL2(uint256 chainId, address recipient, uint256 amount, uint256 amountOutMin, uint256 deadline, address relayer, \
-uint256 relayerFee)"	 [height=0.5,
-		pos="618.73,18",
-		width=17.187];
-}

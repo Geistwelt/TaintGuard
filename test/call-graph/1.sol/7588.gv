@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,497.21,36"];
-	node [label="\N"];
-	"BaseController.constructor(address _socketGatewayAddress)"	 [height=0.5,
-		pos="248.61,18",
-		width=6.9058];
-}

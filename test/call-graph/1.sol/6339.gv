@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,1104.9,36"];
-	node [label="\N"];
-	"RefuelBridgeImpl.swapAndBridge(uint32 swapId, address receiverAddress, uint256 toChainId, bytes32 metadata, bytes calldata swapData)"	 [height=0.5,
-		pos="552.45,18",
-		width=15.346];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,324.58,36"];
-	node [label="\N"];
-	"ISocketRoute.getRoute(uint32 routeId)"	 [height=0.5,
-		pos="162.29,18",
-		width=4.5081];
-}

@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,738.05,36"];
-	node [label="\N"];
-	"SafeTransferLib.safeTransferFrom(ERC20 token, address from, address to, uint256 amount)"	 [height=0.5,
-		pos="369.03,18",
-		width=10.251];
-}

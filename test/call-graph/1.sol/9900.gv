@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,473.62,36"];
-	node [label="\N"];
-	"SocketGatewayTemplate.addRoute(address routeAddress)"	 [height=0.5,
-		pos="236.81,18",
-		width=6.5781];
-}

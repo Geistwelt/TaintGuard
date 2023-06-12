@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,806.74,36"];
-	node [label="\N"];
-	"HyphenLiquidityPoolManager.depositNative(address receiver, uint256 toChainId, string calldata tag)"	 [height=0.5,
-		pos="403.37,18",
-		width=11.205];
-}

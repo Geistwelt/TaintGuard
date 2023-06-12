@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,298.78,36"];
-	node [label="\N"];
-	"ERC20.balanceOf(address account)"	 [height=0.5,
-		pos="149.39,18",
-		width=4.1497];
-}

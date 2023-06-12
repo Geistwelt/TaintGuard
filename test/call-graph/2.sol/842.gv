@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,543.39,36"];
-	node [label="\N"];
-	"ERC20._approve(address owner, address spender, uint256 amount)"	 [height=0.5,
-		pos="271.7,18",
-		width=7.5471];
-}

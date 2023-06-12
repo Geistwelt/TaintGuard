@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,627.05,36"];
-	node [label="\N"];
-	"BridgeImplBase.bridgeAfterSwap(uint256 amount, bytes calldata bridgeData)"	 [height=0.5,
-		pos="313.52,18",
-		width=8.709];
-}

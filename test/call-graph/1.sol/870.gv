@@ -1,7 +1,0 @@
-digraph "" {
-	graph [bb="0,0,509.54,36"];
-	node [label="\N"];
-	"SafeTransferLib.safeTransferETH(address to, uint256 amount)"	 [height=0.5,
-		pos="254.77,18",
-		width=7.0769];
-}
