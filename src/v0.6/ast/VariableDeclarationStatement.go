@@ -232,3 +232,16 @@ func (vds *VariableDeclarationStatement) TraverseDelegatecall(opt *Option, logge
 		}
 	}
 }
+
+func (vds *VariableDeclarationStatement) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if vds.initialValue != nil {
+		switch initialValue := vds.initialValue.(type) {
+		case *FunctionCall:
+			initialValue.TraverseIndirectDelegatecall(opt, logger)
+		case *MemberAccess:
+			initialValue.TraverseIndirectDelegatecall(opt, logger)
+		case *BinaryOperation:
+			initialValue.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+}

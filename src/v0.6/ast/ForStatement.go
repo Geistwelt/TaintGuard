@@ -301,3 +301,33 @@ func (fs *ForStatement) TraverseDelegatecall(opt *Option, logger logging.Logger)
 		}
 	}
 }
+
+func (fs *ForStatement) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if fs.initializationExpression != nil {
+		switch initializationExpression := fs.initializationExpression.(type) {
+		case *VariableDeclarationStatement:
+			initializationExpression.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+
+	if fs.condition != nil {
+		switch condition := fs.condition.(type) {
+		case *BinaryOperation:
+			condition.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+
+	if fs.loopExpression != nil {
+		switch loopExpression := fs.loopExpression.(type) {
+		case *ExpressionStatement:
+			loopExpression.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+
+	if fs.body != nil {
+		switch body := fs.body.(type) {
+		case *Block:
+			body.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+}

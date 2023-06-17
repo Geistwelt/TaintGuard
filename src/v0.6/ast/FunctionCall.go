@@ -3,6 +3,7 @@ package ast
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/geistwelt/logging"
 	jsoniter "github.com/json-iterator/go"
@@ -286,11 +287,24 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 					}
 				}
 			}
+		case *Identifier:
+			if strings.Contains(fcExpression.Name, "delegateCall") {
+				if opt != nil {
+					select {
+					case opt.indirectDelegatecallCh <- struct{}{}:
+					default:
+					}
+				}
+			}
 		}
 	}
 }
 
 func (fc *FunctionCall) TraverseDelegatecall(opt *Option, logger logging.Logger) {
+
+}
+
+func (fc *FunctionCall) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
 
 }
 

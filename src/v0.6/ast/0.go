@@ -22,6 +22,8 @@ type Option struct {
 	// search object that delegatecall known contract
 	delegatecallKnownContractCh chan string
 
+	indirectDelegatecallCh chan struct{}
+
 	// instrument track code
 	TrackFunctionDefinitionName string
 	TrackOwnerVariableName      string
@@ -42,12 +44,20 @@ func (opt *Option) MakeDelegatecallKnownContractCh(size int) {
 	opt.delegatecallKnownContractCh = make(chan string, size)
 }
 
+func (opt *Option) MakeIndirectDelegatecallCh(size int) {
+	opt.indirectDelegatecallCh = make(chan struct{}, size)
+}
+
 func (opt *Option) DelegatecallUnknownContractCh() <-chan struct{} {
 	return opt.delegatecallUnknownContractCh
 }
 
 func (opt *Option) DelegatecallKnownContractCh() <-chan string {
 	return opt.delegatecallKnownContractCh
+}
+
+func (opt *Option) IndirectDelegatecallCh() <-chan struct{} {
+	return opt.indirectDelegatecallCh
 }
 
 type traverseFunctionCall interface {
@@ -123,6 +133,30 @@ var _ traverseDelegatecall = (*MemberAccess)(nil)
 var _ traverseDelegatecall = (*BinaryOperation)(nil)
 // var _ traverseDelegatecall = (*TryCatchClause)(nil)
 var _ traverseDelegatecall = (*Assignment)(nil)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+type traverseIndirectDelegatecall interface {
+	TraverseIndirectDelegatecall(opt *Option, logger logging.Logger)
+}
+
+var _ traverseIndirectDelegatecall = (*ContractDefinition)(nil)
+var _ traverseIndirectDelegatecall = (*FunctionDefinition)(nil)
+var _ traverseIndirectDelegatecall = (*Block)(nil)
+var _ traverseIndirectDelegatecall = (*ExpressionStatement)(nil)
+var _ traverseIndirectDelegatecall = (*IfStatement)(nil)
+var _ traverseIndirectDelegatecall = (*ForStatement)(nil)
+// var _ traverseDelegatecall = (*UncheckedBlock)(nil)
+// var _ traverseDelegatecall = (*WhileStatement)(nil)
+// var _ traverseDelegatecall = (*TryStatement)(nil)
+// var _ traverseDelegatecall = (*DoWhileStatement)(nil)
+var _ traverseIndirectDelegatecall = (*VariableDeclarationStatement)(nil)
+var _ traverseIndirectDelegatecall = (*FunctionCall)(nil)
+// var _ traverseDelegatecall = (*FunctionCallOptions)(nil)
+var _ traverseIndirectDelegatecall = (*MemberAccess)(nil)
+var _ traverseIndirectDelegatecall = (*BinaryOperation)(nil)
+// var _ traverseDelegatecall = (*TryCatchClause)(nil)
+var _ traverseIndirectDelegatecall = (*Assignment)(nil)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -202,3 +202,12 @@ func (es *ExpressionStatement) TraverseDelegatecall(opt *Option, logger logging.
 func (es *ExpressionStatement) SetExpression(expression ASTNode) {
 	es.expression = expression
 }
+
+func (es *ExpressionStatement) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if es.expression != nil {
+		switch expression := es.expression.(type) {
+		case *Assignment:
+			expression.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+}

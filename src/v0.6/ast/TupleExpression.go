@@ -30,7 +30,11 @@ func (te *TupleExpression) SourceCode(isSc bool, isIndent bool, indent string, l
 		code = code + indent
 	}
 
-	code = code + "("
+	if te.IsInlineArray {
+		code = code + "["
+	} else {
+		code = code + "("
+	}
 
 	if len(te.components) > 0 {
 		for index, component := range te.components {
@@ -68,7 +72,11 @@ func (te *TupleExpression) SourceCode(isSc bool, isIndent bool, indent string, l
 		logger.Warnf("TupleExpression [src:%s] should have more than 0 components.", te.Src)
 	}
 
-	code = code + ")"
+	if te.IsInlineArray {
+		code = code + "]"
+	} else {
+		code = code + ")"
+	}
 
 	return code
 }

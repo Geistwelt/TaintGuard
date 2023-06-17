@@ -264,3 +264,44 @@ func (b *Block) TraverseDelegatecall(opt *Option, logger logging.Logger) {
 		}
 	}
 }
+
+func (b *Block) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if len(b.statements) > 0 {
+		for index, statement := range b.statements {
+			switch stat := statement.(type) {
+			case *ExpressionStatement:
+				if strings.Contains(stat.SourceCode(false, false, "", logger), ".delegatecall(") {
+					if opt.ExpressionStatement != nil {
+						b.InsertStatement(opt.ExpressionStatement, index+1)
+					}
+				}
+			case *IfStatement:
+				stat.TraverseIndirectDelegatecall(opt, logger)
+			case *ForStatement:
+				stat.TraverseIndirectDelegatecall(opt, logger)
+			case *Block:
+				stat.TraverseIndirectDelegatecall(opt, logger)
+			case *Return:
+				if strings.Contains(stat.SourceCode(false, false, "", logger), "delegateCall(") {
+					if opt.ExpressionStatement != nil {
+						b.InsertStatement(opt.ExpressionStatement, index+1)
+					}
+				}
+			// case *UncheckedBlock:
+			// 	stat.TraverseDelegatecall(opt, logger)
+			// case *WhileStatement:
+			// 	stat.TraverseDelegatecall(opt, logger)
+			// case *TryStatement:
+			// 	stat.TraverseDelegatecall(opt, logger)
+			// case *DoWhileStatement:
+			// 	stat.TraverseDelegatecall(opt, logger)
+			case *VariableDeclarationStatement:
+				if strings.Contains(stat.SourceCode(false, false, "", logger), "delegateCall(") {
+					if opt.ExpressionStatement != nil {
+						b.InsertStatement(opt.ExpressionStatement, index+1)
+					}
+				}
+			}
+		}
+	}
+}

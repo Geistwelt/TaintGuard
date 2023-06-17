@@ -14,6 +14,7 @@ type VariableDeclaration struct {
 	Mutability       string `json:"mutability"`
 	Name             string `json:"name"`
 	NodeType         string `json:"nodeType"`
+	overrides        ASTNode
 	Scope            int    `json:"scope"`
 	Src              string `json:"src"`
 	StateVariable    bool   `json:"stateVariable"`
@@ -59,6 +60,10 @@ func (vd *VariableDeclaration) SourceCode(isSc bool, isIndent bool, indent strin
 
 	if vd.Visibility != "" && vd.Visibility != "internal" {
 		code = code + " " + vd.Visibility
+	}
+
+	if vd.overrides != nil {
+		code = code + " " + vd.overrides.SourceCode(false, false, "", logger)
 	}
 
 	if vd.Mutability != "" && vd.Mutability != "mutable" {
@@ -149,6 +154,31 @@ func GetVariableDeclaration(gn *GlobalNodes, raw jsoniter.Any, logger logging.Lo
 			return nil, err
 		}
 		vd.typeName = vdTypeName
+	}
+
+	// overrides
+	{
+		overrides := raw.Get("overrides")
+		if overrides.Size() > 0 {
+			overridesNodeType := overrides.Get("nodeType").ToString()
+			var vdOverrides ASTNode
+			var err error
+
+			switch overridesNodeType {
+			case "OverrideSpecifier":
+				vdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
+			default:
+				logger.Warnf("Unknown overrides nodeType [%s] for VariableDeclaration [src:%s].", overridesNodeType, vd.Src)
+			}
+
+			if err != nil {
+				return nil, err
+			}
+
+			if vdOverrides != nil {
+				vd.overrides = vdOverrides
+			}
+		}
 	}
 
 	// value

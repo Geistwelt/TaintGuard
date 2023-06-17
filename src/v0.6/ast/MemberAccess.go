@@ -156,3 +156,17 @@ func (ma *MemberAccess) TraverseDelegatecall(opt *Option, logger logging.Logger)
 		}
 	}
 }
+
+func (ma *MemberAccess) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	// expression
+	{
+		if ma.expression != nil {
+			switch expression := ma.expression.(type) {
+			case *FunctionCall:
+				expression.TraverseIndirectDelegatecall(opt, logger)
+			case *MemberAccess:
+				expression.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+}

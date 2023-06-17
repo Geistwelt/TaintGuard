@@ -296,3 +296,29 @@ func (a *Assignment) TraverseDelegatecall(opt *Option, logger logging.Logger) {
 		}
 	}
 }
+
+func (a *Assignment) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	// leftHandSide
+	{
+		if a.leftHandSide != nil {
+			switch leftHandSide := a.leftHandSide.(type) {
+			case *MemberAccess:
+				leftHandSide.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+
+	//rightHandSide
+	{
+		if a.rightHandSide != nil {
+			switch rightHandSide := a.rightHandSide.(type) {
+			case *FunctionCall:
+				rightHandSide.TraverseIndirectDelegatecall(opt, logger)
+			case *MemberAccess:
+				rightHandSide.TraverseIndirectDelegatecall(opt, logger)
+			case *BinaryOperation:
+				rightHandSide.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+}

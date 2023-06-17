@@ -484,3 +484,13 @@ func (fd *FunctionDefinition) TraverseDelegatecall(opt *Option, logger logging.L
 		}
 	}
 }
+
+func (fd *FunctionDefinition) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	opt.TrackFunctionDefinitionName = fd.Signature()
+	if fd.body != nil {
+		switch body := fd.body.(type) {
+		case *Block:
+			body.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+}

@@ -268,3 +268,27 @@ func (bo *BinaryOperation) SetLeftExpression(leftExpression ASTNode) {
 func (bo *BinaryOperation) SetRightExpression(rightExpression ASTNode) {
 	bo.rightExpression = rightExpression
 }
+
+func (bo *BinaryOperation) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if bo.leftExpression != nil {
+		switch leftExpression := bo.leftExpression.(type) {
+		case *BinaryOperation:
+			leftExpression.TraverseIndirectDelegatecall(opt, logger)
+		case *FunctionCall:
+			leftExpression.TraverseIndirectDelegatecall(opt, logger)
+		case *MemberAccess:
+			leftExpression.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+
+	if bo.rightExpression != nil {
+		switch rightExpression := bo.rightExpression.(type) {
+		case *BinaryOperation:
+			rightExpression.TraverseIndirectDelegatecall(opt, logger)
+		case *FunctionCall:
+			rightExpression.TraverseIndirectDelegatecall(opt, logger)
+		case *MemberAccess:
+			rightExpression.TraverseIndirectDelegatecall(opt, logger)
+		}
+	}
+}

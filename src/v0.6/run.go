@@ -25,19 +25,34 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger, solFileName string
 		opt := &ast.Option{}
 		opt.MakeDelegatecallUnknownContractCh(1)
 		opt.MakeDelegatecallKnownContractCh(1)
+		opt.MakeIndirectDelegatecallCh(1)
 
 		f.TraverseFunctionCall(ncp, gn, opt, logger)
 		ncps = append(ncps, ncp)
 		select {
 		case <-opt.DelegatecallUnknownContractCh():
 			contract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
-			logger.Infof("Contract [%s] should be instrumented directly, because it delegatecall to unknown contract.", contract.Name)
+			logger.Infof("Contract [%s] may should be instrumented directly, because it delegatecall to unknown contract.", contract.Name)
 			if ok, c := IsInheritFromOwnableContract(contract, gn, variables); ok {
 				ownerVariableName := InstrumentCodeForOwner(c, variables)
 				InstrumentCodeForAssert(ownerVariableName, contract)
 			} else {
 				ownerVariableName := InstrumentCodeForOwner(contract, variables)
-				InstrumentCodeForAssert(ownerVariableName, contract)
+				if ownerVariableName != "" {
+					InstrumentCodeForAssert(ownerVariableName, contract)
+				}
+			}
+		case <-opt.IndirectDelegatecallCh():
+			contract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
+			logger.Infof("Contract [%s] may should be instrumented directly, because it delegatecall to unknown contract.", contract.Name)
+			if ok, c := IsInheritFromOwnableContract(contract, gn, variables); ok {
+				ownerVariableName := InstrumentCodeForOwner(c, variables)
+				InsertAssertCode(ownerVariableName, contract)
+			} else {
+				ownerVariableName := InstrumentCodeForOwner(contract, variables)
+				if ownerVariableName != "" {
+					InstrumentCodeForAssert(ownerVariableName, contract)
+				}
 			}
 		case calleeContractName := <-opt.DelegatecallKnownContractCh():
 			callerContract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
@@ -48,8 +63,8 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger, solFileName string
 					InstrumentCodeForAssert(ownerVariableName, callerContract)
 				} else {
 					ownerVariableName := InstrumentCodeForOwner(callerContract, variables)
-				InstrumentCodeForAssert(ownerVariableName, callerContract)
-				logger.Debug("在本地插桩")
+					InstrumentCodeForAssert(ownerVariableName, callerContract)
+					logger.Debug("在本地插桩")
 				}
 			} else {
 				logger.Debug("No instrumentation protection required.")

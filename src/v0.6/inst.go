@@ -237,6 +237,66 @@ func InstrumentCodeForAssert(ownerVariableName string, contract *ast.ContractDef
 	contract.TraverseDelegatecall(&ast.Option{ExpressionStatement: expressionStatement}, logging.MustNewLogger())
 }
 
+func InsertAssertCode(ownerVariableName string, contract *ast.ContractDefinition) {
+	expressionStatement := &ast.ExpressionStatement{
+		NodeType: "ExpressionStatement",
+		Src:      "xxx",
+	}
+	functionCall := &ast.FunctionCall{
+		Kind:     "functionCall",
+		NodeType: "FunctionCall",
+		Src:      "xxx",
+	}
+	functionCallExpression := &ast.Identifier{
+		ArgumentTypes: []struct {
+			TypeIdentifier string `json:"typeIdentifier"`
+			TypeString     string `json:"typeString"`
+		}{{TypeIdentifier: "t_bool", TypeString: "bool"}},
+		Name:     "assert",
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	functionCallArgument := &ast.BinaryOperation{
+		NodeType: "BinaryOperation",
+		Operator: "==",
+		Src:      "xxx",
+	}
+	binaryOperationRightExpression := &ast.FunctionCall{
+		Kind:     "functionCall",
+		NodeType: "FunctionCall",
+		Src:      "xxx",
+	}
+	binaryOperationRightExpressionFunctionCallExpression := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_func_%s", ownerVariableName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpression := &ast.IndexAccess{
+		NodeType: "IndexAccess",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpressionBaseExpression := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_mapping_%s", ownerVariableName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpressionIndexExpression := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_%s", ownerVariableName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	expressionStatement.SetExpression(functionCall)
+	functionCall.SetExpression(functionCallExpression)
+	functionCallArgument.SetLeftExpression(binaryOperationLeftExpression)
+	functionCallArgument.SetRightExpression(binaryOperationRightExpression)
+	binaryOperationRightExpression.SetExpression(binaryOperationRightExpressionFunctionCallExpression)
+	binaryOperationLeftExpression.SetBaseExpression(binaryOperationLeftExpressionBaseExpression)
+	binaryOperationLeftExpression.SetIndexExpression(binaryOperationLeftExpressionIndexExpression)
+	functionCall.AppendArgument(functionCallArgument)
+
+	contract.TraverseIndirectDelegatecall(&ast.Option{ExpressionStatement: expressionStatement}, logging.MustNewLogger())
+}
+
 func VerifyVariableDeclarationOrder(callerContract, calleeContract *ast.ContractDefinition, gn *ast.GlobalNodes, variables []string) bool {
 	var callerContractVariables []*variable = make([]*variable, 0) // variableName => variableType
 	var calleeContractVariables []*variable = make([]*variable, 0) // variableName => variableType

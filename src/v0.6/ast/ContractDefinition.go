@@ -216,3 +216,14 @@ func (cd *ContractDefinition) TraverseDelegatecall(opt *Option, logger logging.L
 		}
 	}
 }
+
+func (cd *ContractDefinition) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	if len(cd.nodes) > 0 {
+		for _, node := range cd.nodes {
+			switch n := node.(type) {
+			case *FunctionDefinition:
+				n.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+}

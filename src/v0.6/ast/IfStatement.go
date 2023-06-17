@@ -341,3 +341,31 @@ func (is *IfStatement) TraverseDelegatecall(opt *Option, logger logging.Logger) 
 		}
 	}
 }
+
+func (is *IfStatement) TraverseIndirectDelegatecall(opt *Option, logger logging.Logger) {
+	//falseBody
+	{
+		if is.falseBody != nil {
+			switch falseBody := is.falseBody.(type) {
+			case *Block:
+				falseBody.TraverseIndirectDelegatecall(opt, logger)
+			case *ExpressionStatement:
+				falseBody.TraverseIndirectDelegatecall(opt, logger)
+			case *IfStatement:
+				falseBody.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+
+	// trueBody
+	{
+		if is.trueBody != nil {
+			switch trueBody := is.trueBody.(type) {
+			case *Block:
+				trueBody.TraverseIndirectDelegatecall(opt, logger)
+			case *ExpressionStatement:
+				trueBody.TraverseIndirectDelegatecall(opt, logger)
+			}
+		}
+	}
+}

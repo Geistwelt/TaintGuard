@@ -1,0 +1,140 @@
+{
+    "expression": {
+        "argumentTypes": null,
+        "id": 3394,
+        "isConstant": false,
+        "isLValue": false,
+        "isPure": false,
+        "lValueRequested": false,
+        "leftHandSide": {
+            "argumentTypes": null,
+            "id": 3386,
+            "name": "lock",
+            "nodeType": "Identifier",
+            "overloadedDeclarations": [],
+            "referencedDeclaration": 3350,
+            "src": "44856:4:0",
+            "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_uint256_$2_memory_ptr",
+                "typeString": "uint256[2] memory"
+            }
+        },
+        "nodeType": "Assignment",
+        "operator": "=",
+        "rightHandSide": {
+            "argumentTypes": null,
+            "components": [
+                {
+                    "argumentTypes": null,
+                    "expression": {
+                        "argumentTypes": null,
+                        "expression": {
+                            "argumentTypes": null,
+                            "id": 3387,
+                            "name": "tokenData",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3361,
+                            "src": "44865:9:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_TokenData_$2200_storage_ptr",
+                                "typeString": "struct TokenStorage.TokenData storage pointer"
+                            }
+                        },
+                        "id": 3388,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "lock",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 2196,
+                        "src": "44865:14:0",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Lock_$2164_storage",
+                            "typeString": "struct TokenStorage.Lock storage ref"
+                        }
+                    },
+                    "id": 3389,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "startAt",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 2154,
+                    "src": "44865:22:0",
+                    "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                    }
+                },
+                {
+                    "argumentTypes": null,
+                    "expression": {
+                        "argumentTypes": null,
+                        "expression": {
+                            "argumentTypes": null,
+                            "id": 3390,
+                            "name": "tokenData",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3361,
+                            "src": "44889:9:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_TokenData_$2200_storage_ptr",
+                                "typeString": "struct TokenStorage.TokenData storage pointer"
+                            }
+                        },
+                        "id": 3391,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "lock",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 2196,
+                        "src": "44889:14:0",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Lock_$2164_storage",
+                            "typeString": "struct TokenStorage.Lock storage ref"
+                        }
+                    },
+                    "id": 3392,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "endAt",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 2156,
+                    "src": "44889:20:0",
+                    "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                    }
+                }
+            ],
+            "id": 3393,
+            "isConstant": false,
+            "isInlineArray": true,
+            "isLValue": false,
+            "isPure": false,
+            "lValueRequested": false,
+            "nodeType": "TupleExpression",
+            "src": "44863:48:0",
+            "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_uint256_$2_memory_ptr",
+                "typeString": "uint256[2] memory"
+            }
+        },
+        "src": "44856:55:0",
+        "typeDescriptions": {
+            "typeIdentifier": "t_array$_t_uint256_$2_memory_ptr",
+            "typeString": "uint256[2] memory"
+        }
+    },
+    "id": 3395,
+    "nodeType": "ExpressionStatement",
+    "src": "44856:55:0"
+}
