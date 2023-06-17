@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,616.27,36"];
+	node [label="\N"];
+	"ITokenDelegate.approve(address _sender, address _spender, uint256 _value)"	 [height=0.5,
+		pos="308.13,18",
+		width=8.5593];
+}
+digraph "" {
+	graph [bb="0,0,616.27,36"];
+	node [label="\N"];
+	"ITokenDelegate.approve(address _sender, address _spender, uint256 _value)"	 [height=0.5,
+		pos="308.13,18",
+		width=8.5593];
+}
+digraph "" {
+	graph [bb="0,0,616.27,36"];
+	node [label="\N"];
+	"ITokenDelegate.approve(address _sender, address _spender, uint256 _value)"	 [height=0.5,
+		pos="308.13,18",
+		width=8.5593];
+}
+digraph "" {
+	graph [bb="0,0,616.27,36"];
+	node [label="\N"];
+	"ITokenDelegate.approve(address _sender, address _spender, uint256 _value)"	 [height=0.5,
+		pos="308.13,18",
+		width=8.5593];
+}
+digraph "" {
+	graph [bb="0,0,616.27,36"];
+	node [label="\N"];
+	"ITokenDelegate.approve(address _sender, address _spender, uint256 _value)"	 [height=0.5,
+		pos="308.13,18",
+		width=8.5593];
+}

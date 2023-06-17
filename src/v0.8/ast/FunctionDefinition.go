@@ -163,6 +163,11 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 				}
 			}
 		}
+
+		// visibility
+		if fd.Visibility != "" {
+			code = code + " " + fd.Visibility
+		}
 	} else if fd.Kind == "receive" {
 		code = code + "receive("
 

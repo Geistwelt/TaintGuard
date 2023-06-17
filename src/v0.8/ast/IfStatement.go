@@ -64,7 +64,7 @@ func (is *IfStatement) SourceCode(isSc bool, isIndent bool, indent string, logge
 			case *RevertStatement:
 				code = code + trueBody.SourceCode(true, true, indent, logger)
 			case *Return:
-				code = code + trueBody.SourceCode(true, true, indent, logger)
+				code = code + trueBody.SourceCode(true, true, indent+"    ", logger)
 			case *IfStatement:
 				code = code + trueBody.SourceCode(false, true, indent, logger)
 			case *Break:

@@ -1,0 +1,28 @@
+digraph "" {
+	graph [bb="0,0,435.11,124.8"];
+	node [label="\N"];
+	"LendingProxy.getRemainingAmount(uint256 loanId)"	 [height=0.5,
+		pos="217.56,106.8",
+		width=6.0433];
+	"SafeMath.sub(uint256 a, uint256 b)"	 [height=0.5,
+		pos="217.56,18",
+		width=4.1284];
+	"LendingProxy.getRemainingAmount(uint256 loanId)" -> "SafeMath.sub(uint256 a, uint256 b)" [key=call,
+	label=" call",
+	lp="229.41,62.4",
+	pos="e,217.56,36.072 217.56,88.401 217.56,76.295 217.56,60.208 217.56,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,435.11,124.8"];
+	node [label="\N"];
+	"LendingProxy.getRemainingAmount(uint256 loanId)"	 [height=0.5,
+		pos="217.56,106.8",
+		width=6.0433];
+	"SafeMath.sub(uint256 a, uint256 b)"	 [height=0.5,
+		pos="217.56,18",
+		width=4.1284];
+	"LendingProxy.getRemainingAmount(uint256 loanId)" -> "SafeMath.sub(uint256 a, uint256 b)" [key=call,
+	label=" call",
+	lp="229.41,62.4",
+	pos="e,217.56,36.072 217.56,88.401 217.56,76.295 217.56,60.208 217.56,46.467"];
+}

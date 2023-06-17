@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,502.08,36"];
+	node [label="\N"];
+	"ITokenCore.removeAudits(address _scope, uint256 _scopeId)"	 [height=0.5,
+		pos="251.04,18",
+		width=6.9733];
+}
+digraph "" {
+	graph [bb="0,0,502.08,36"];
+	node [label="\N"];
+	"ITokenCore.removeAudits(address _scope, uint256 _scopeId)"	 [height=0.5,
+		pos="251.04,18",
+		width=6.9733];
+}
+digraph "" {
+	graph [bb="0,0,502.08,36"];
+	node [label="\N"];
+	"ITokenCore.removeAudits(address _scope, uint256 _scopeId)"	 [height=0.5,
+		pos="251.04,18",
+		width=6.9733];
+}
+digraph "" {
+	graph [bb="0,0,502.08,36"];
+	node [label="\N"];
+	"ITokenCore.removeAudits(address _scope, uint256 _scopeId)"	 [height=0.5,
+		pos="251.04,18",
+		width=6.9733];
+}
+digraph "" {
+	graph [bb="0,0,502.08,36"];
+	node [label="\N"];
+	"ITokenCore.removeAudits(address _scope, uint256 _scopeId)"	 [height=0.5,
+		pos="251.04,18",
+		width=6.9733];
+}

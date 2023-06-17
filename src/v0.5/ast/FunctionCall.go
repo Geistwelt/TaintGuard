@@ -284,7 +284,7 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 							// logger.Warnf("A contract with an unknown address is being called using delegatecall.")
 							if opt != nil {
 								select {
-								case opt.delegatecallUnknownContractCh <- struct{}{}:
+								case opt.delegatecallUnknownContractCh <- fc.SourceCode(false, false, "", logger):
 								default:
 								}
 							}
@@ -293,7 +293,7 @@ func (fc *FunctionCall) TraverseFunctionCall(ncp *NormalCallPath, gn *GlobalNode
 						// logger.Warnf("A contract with an unknown address is being called using delegatecall.")
 						if opt != nil {
 							select {
-							case opt.delegatecallUnknownContractCh <- struct{}{}:
+							case opt.delegatecallUnknownContractCh <- fc.SourceCode(false, false, "", logger):
 							default:
 							}
 						}

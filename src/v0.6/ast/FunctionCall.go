@@ -55,11 +55,11 @@ func (fc *FunctionCall) SourceCode(isSc bool, isIndent bool, indent string, logg
 					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
 				}
 				code = code + expression.SourceCode(false, false, indent, logger)
-			// case *NewExpression:
-			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
-			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
-			// 	}
-			// 	code = code + expression.SourceCode(false, false, indent, logger)
+			case *NewExpression:
+				if len(expression.ArgumentTypes) != len(fc.arguments) {
+					logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
+				}
+				code = code + expression.SourceCode(false, false, indent, logger)
 			// case *FunctionCallOptions:
 			// 	if len(expression.ArgumentTypes) != len(fc.arguments) {
 			// 		logger.Warnf("Number of arguments mismatch [%d:%d] in FunctionCall: [src:%s].", len(expression.ArgumentTypes), len(fc.arguments), fc.Src)
@@ -168,8 +168,8 @@ func GetFunctionCall(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (
 				fc.referencedFunctionDefinition = memberAccess.ReferencedDeclaration
 			case "ElementaryTypeNameExpression":
 				fcExpression, err = GetElementaryTypeNameExpression(gn, expression, logger)
-			// case "NewExpression":
-			// 	fcExpression, err = GetNewExpression(gn, expression, logger)
+			case "NewExpression":
+				fcExpression, err = GetNewExpression(gn, expression, logger)
 			// case "FunctionCallOptions":
 			// 	fcExpression, err = GetFunctionCallOptions(gn, expression, logger)
 			default:

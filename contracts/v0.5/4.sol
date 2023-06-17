@@ -424,7 +424,7 @@ pragma solidity ^0.5.0;
  * For full specification of ERC-20 standard see:
  * https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
  */
-contract Ope is ERC20 {
+contract Waffles is ERC20 {
 
     string private _name;
     string private _symbol;

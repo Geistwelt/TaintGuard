@@ -1,0 +1,40 @@
+digraph "" {
+	graph [bb="0,0,1143.6,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersFullExternal(uint256[] calldata _userIds, uint256 _validUntilTime, bool _suspended, uint256[] calldata _\
+values)"	 [height=0.5,
+		pos="571.8,18",
+		width=15.883];
+}
+digraph "" {
+	graph [bb="0,0,1143.6,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersFullExternal(uint256[] calldata _userIds, uint256 _validUntilTime, bool _suspended, uint256[] calldata _\
+values)"	 [height=0.5,
+		pos="571.8,18",
+		width=15.883];
+}
+digraph "" {
+	graph [bb="0,0,1143.6,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersFullExternal(uint256[] calldata _userIds, uint256 _validUntilTime, bool _suspended, uint256[] calldata _\
+values)"	 [height=0.5,
+		pos="571.8,18",
+		width=15.883];
+}
+digraph "" {
+	graph [bb="0,0,1143.6,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersFullExternal(uint256[] calldata _userIds, uint256 _validUntilTime, bool _suspended, uint256[] calldata _\
+values)"	 [height=0.5,
+		pos="571.8,18",
+		width=15.883];
+}
+digraph "" {
+	graph [bb="0,0,1143.6,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersFullExternal(uint256[] calldata _userIds, uint256 _validUntilTime, bool _suspended, uint256[] calldata _\
+values)"	 [height=0.5,
+		pos="571.8,18",
+		width=15.883];
+}

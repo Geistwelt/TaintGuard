@@ -1,0 +1,28 @@
+digraph "" {
+	graph [bb="0,0,647.55,124.8"];
+	node [label="\N"];
+	"console.log(string memory p0, string memory p1, uint256 p2, string memory p3)"	 [height=0.5,
+		pos="323.77,106.8",
+		width=8.9937];
+	"console._sendLogPayload(bytes memory payload)"	 [height=0.5,
+		pos="323.77,18",
+		width=5.7372];
+	"console.log(string memory p0, string memory p1, uint256 p2, string memory p3)" -> "console._sendLogPayload(bytes memory payload)" [key=call,
+	label=" call",
+	lp="335.63,62.4",
+	pos="e,323.77,36.072 323.77,88.401 323.77,76.295 323.77,60.208 323.77,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,647.55,124.8"];
+	node [label="\N"];
+	"console.log(string memory p0, string memory p1, uint256 p2, string memory p3)"	 [height=0.5,
+		pos="323.77,106.8",
+		width=8.9937];
+	"console._sendLogPayload(bytes memory payload)"	 [height=0.5,
+		pos="323.77,18",
+		width=5.7372];
+	"console.log(string memory p0, string memory p1, uint256 p2, string memory p3)" -> "console._sendLogPayload(bytes memory payload)" [key=call,
+	label=" call",
+	lp="335.63,62.4",
+	pos="e,323.77,36.072 323.77,88.401 323.77,76.295 323.77,60.208 323.77,46.467"];
+}

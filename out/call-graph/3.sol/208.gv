@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,718.2,36"];
+	node [label="\N"];
+	"IOperableStorage.hasProxyPrivilege(address _address, address _proxy, bytes4 _privilege)"	 [height=0.5,
+		pos="359.1,18",
+		width=9.975];
+}
+digraph "" {
+	graph [bb="0,0,718.2,36"];
+	node [label="\N"];
+	"IOperableStorage.hasProxyPrivilege(address _address, address _proxy, bytes4 _privilege)"	 [height=0.5,
+		pos="359.1,18",
+		width=9.975];
+}
+digraph "" {
+	graph [bb="0,0,718.2,36"];
+	node [label="\N"];
+	"IOperableStorage.hasProxyPrivilege(address _address, address _proxy, bytes4 _privilege)"	 [height=0.5,
+		pos="359.1,18",
+		width=9.975];
+}
+digraph "" {
+	graph [bb="0,0,718.2,36"];
+	node [label="\N"];
+	"IOperableStorage.hasProxyPrivilege(address _address, address _proxy, bytes4 _privilege)"	 [height=0.5,
+		pos="359.1,18",
+		width=9.975];
+}
+digraph "" {
+	graph [bb="0,0,718.2,36"];
+	node [label="\N"];
+	"IOperableStorage.hasProxyPrivilege(address _address, address _proxy, bytes4 _privilege)"	 [height=0.5,
+		pos="359.1,18",
+		width=9.975];
+}

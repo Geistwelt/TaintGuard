@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,464.51,124.8"];
+	node [label="\N"];
+	"TokenCore.defineRules(address _token, IRule[] calldata)"	 [height=0.5,
+		pos="232.25,106.8",
+		width=6.4515];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="232.25,18",
+		width=4.0457];
+	"TokenCore.defineRules(address _token, IRule[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="244.11,62.4",
+	pos="e,232.25,36.072 232.25,88.401 232.25,76.295 232.25,60.208 232.25,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,464.51,124.8"];
+	node [label="\N"];
+	"TokenCore.defineRules(address _token, IRule[] calldata)"	 [height=0.5,
+		pos="232.25,106.8",
+		width=6.4515];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="232.25,18",
+		width=4.0457];
+	"TokenCore.defineRules(address _token, IRule[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="244.11,62.4",
+	pos="e,232.25,36.072 232.25,88.401 232.25,76.295 232.25,60.208 232.25,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,464.51,124.8"];
+	node [label="\N"];
+	"TokenCore.defineRules(address _token, IRule[] calldata)"	 [height=0.5,
+		pos="232.25,106.8",
+		width=6.4515];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="232.25,18",
+		width=4.0457];
+	"TokenCore.defineRules(address _token, IRule[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="244.11,62.4",
+	pos="e,232.25,36.072 232.25,88.401 232.25,76.295 232.25,60.208 232.25,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,464.51,124.8"];
+	node [label="\N"];
+	"TokenCore.defineRules(address _token, IRule[] calldata)"	 [height=0.5,
+		pos="232.25,106.8",
+		width=6.4515];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="232.25,18",
+		width=4.0457];
+	"TokenCore.defineRules(address _token, IRule[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="244.11,62.4",
+	pos="e,232.25,36.072 232.25,88.401 232.25,76.295 232.25,60.208 232.25,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,464.51,124.8"];
+	node [label="\N"];
+	"TokenCore.defineRules(address _token, IRule[] calldata)"	 [height=0.5,
+		pos="232.25,106.8",
+		width=6.4515];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="232.25,18",
+		width=4.0457];
+	"TokenCore.defineRules(address _token, IRule[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="244.11,62.4",
+	pos="e,232.25,36.072 232.25,88.401 232.25,76.295 232.25,60.208 232.25,46.467"];
+}

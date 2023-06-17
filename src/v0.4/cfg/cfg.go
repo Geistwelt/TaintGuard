@@ -54,7 +54,7 @@ func MakeCG(ncp *ast.NormalCallPath, logger logging.Logger, solfileName string, 
 		return fmt.Errorf("failed to generate file %d.png", ncp.ID())
 	}
 
-	logger.Infof("Successfully generate call graph for function [%s] => [%d.png].", ncp.Name(), ncp.ID(), ncp.ID())
+	logger.Infof("Successfully generate call graph for function [%s] => [%d.png | %d.gv].", ncp.Name(), ncp.ID(), ncp.ID())
 
 	return nil
 }

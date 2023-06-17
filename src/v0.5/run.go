@@ -29,12 +29,20 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger, solFileName string
 		f.TraverseFunctionCall(ncp, gn, opt, logger)
 		ncps = append(ncps, ncp)
 		select {
-		case <-opt.DelegatecallUnknownContractCh():
+		case code := <-opt.DelegatecallUnknownContractCh():
 			contract := gn.ContractsByID()[f.Scope].(*ast.ContractDefinition)
-			logger.Infof("Contract [%s] should be instrumented directly, because it delegatecall to unknown contract.", contract.Name)
+			logger.Infof("Contract [%s] should be instrumented directly, because it delegatecall to unknown contract: [%s].", contract.Name, code)
 			if ok, c := IsInheritFromOwnableContract(contract, gn, variables); ok {
-				ownerVariableName := InstrumentCodeForOwner(c, variables)
-				InstrumentCodeForAssert(ownerVariableName, contract)
+				if ok, representOwnerName := IsOwnableOnlyHasBytesPosition(c, variables); ok {
+					if ok := LookupSetRepresentOwnerName(c, representOwnerName); ok {
+						if ok, getOwner := LookupGetRepresentOwnerName(c, representOwnerName); ok {
+							InsertCodeForAssert(representOwnerName, contract, getOwner)
+						}
+					}
+				} else {
+					ownerVariableName := InstrumentCodeForOwner(c, variables)
+					InstrumentCodeForAssert(ownerVariableName, contract)
+				}
 			} else {
 				ownerVariableName := InstrumentCodeForOwner(contract, variables)
 				InstrumentCodeForAssert(ownerVariableName, contract)
@@ -48,8 +56,7 @@ func Run(jsonBytes []byte, isCfg bool, logger logging.Logger, solFileName string
 					InstrumentCodeForAssert(ownerVariableName, callerContract)
 				} else {
 					ownerVariableName := InstrumentCodeForOwner(callerContract, variables)
-				InstrumentCodeForAssert(ownerVariableName, callerContract)
-				logger.Debug("在本地插桩")
+					InstrumentCodeForAssert(ownerVariableName, callerContract)
 				}
 			} else {
 				logger.Debug("No instrumentation protection required.")

@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,355.64,36"];
+	node [label="\N"];
+	"ITokenCore.removeToken(address _token)"	 [height=0.5,
+		pos="177.82,18",
+		width=4.9395];
+}
+digraph "" {
+	graph [bb="0,0,355.64,36"];
+	node [label="\N"];
+	"ITokenCore.removeToken(address _token)"	 [height=0.5,
+		pos="177.82,18",
+		width=4.9395];
+}
+digraph "" {
+	graph [bb="0,0,355.64,36"];
+	node [label="\N"];
+	"ITokenCore.removeToken(address _token)"	 [height=0.5,
+		pos="177.82,18",
+		width=4.9395];
+}
+digraph "" {
+	graph [bb="0,0,355.64,36"];
+	node [label="\N"];
+	"ITokenCore.removeToken(address _token)"	 [height=0.5,
+		pos="177.82,18",
+		width=4.9395];
+}
+digraph "" {
+	graph [bb="0,0,355.64,36"];
+	node [label="\N"];
+	"ITokenCore.removeToken(address _token)"	 [height=0.5,
+		pos="177.82,18",
+		width=4.9395];
+}

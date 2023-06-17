@@ -1,0 +1,16 @@
+digraph "" {
+	graph [bb="0,0,1167.1,36"];
+	node [label="\N"];
+	"IERC1155Receiver.onERC1155BatchReceived(address operator, address from, uint256[] calldata ids, uint256[] calldata values, bytes \
+calldata data)"	 [height=0.5,
+		pos="583.55,18",
+		width=16.21];
+}
+digraph "" {
+	graph [bb="0,0,1167.1,36"];
+	node [label="\N"];
+	"IERC1155Receiver.onERC1155BatchReceived(address operator, address from, uint256[] calldata ids, uint256[] calldata values, bytes \
+calldata data)"	 [height=0.5,
+		pos="583.55,18",
+		width=16.21];
+}

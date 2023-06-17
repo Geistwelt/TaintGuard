@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,320.84,36"];
+	node [label="\N"];
+	"SafeMath.tryDiv(uint256 a, uint256 b)"	 [height=0.5,
+		pos="160.42,18",
+		width=4.4562];
+}
+digraph "" {
+	graph [bb="0,0,320.84,36"];
+	node [label="\N"];
+	"SafeMath.tryDiv(uint256 a, uint256 b)"	 [height=0.5,
+		pos="160.42,18",
+		width=4.4562];
+}

@@ -46,6 +46,8 @@ func (mi *ModifierInvocation) SourceCode(isSc bool, isIndent bool, indent string
 				code = code + arg.SourceCode(false, false, indent, logger)
 			case *Literal:
 				code = code + arg.SourceCode(false, false, indent, logger)
+			case *MemberAccess:
+				code = code + arg.SourceCode(false, false, indent, logger)
 			default:
 				if arg != nil {
 					logger.Warnf("Unknown argument nodeType [%s] for ModifierInvocation [src:%s].", arg.Type(), mi.Src)
@@ -101,6 +103,8 @@ func GetModifierInvocation(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 						miArgument, err = GetIdentifier(gn, argument, logger)
 					case "Literal":
 						miArgument, err = GetLiteral(gn, argument, logger)
+					case "MemberAccess":
+						miArgument, err = GetMemberAccess(gn, argument, logger)
 					default:
 						logger.Warnf("Unknown argument nodeType [%s] for ModifierInvocation [src:%s].", argumentNodeType, mi.Src)
 					}

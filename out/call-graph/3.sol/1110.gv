@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,786.3,36"];
+	node [label="\N"];
+	"OperableCore.assignProxyOperators(address _proxy, bytes32 _role, address[] memory _operators)"	 [height=0.5,
+		pos="393.15,18",
+		width=10.921];
+}
+digraph "" {
+	graph [bb="0,0,786.3,36"];
+	node [label="\N"];
+	"OperableCore.assignProxyOperators(address _proxy, bytes32 _role, address[] memory _operators)"	 [height=0.5,
+		pos="393.15,18",
+		width=10.921];
+}
+digraph "" {
+	graph [bb="0,0,786.3,36"];
+	node [label="\N"];
+	"OperableCore.assignProxyOperators(address _proxy, bytes32 _role, address[] memory _operators)"	 [height=0.5,
+		pos="393.15,18",
+		width=10.921];
+}
+digraph "" {
+	graph [bb="0,0,786.3,36"];
+	node [label="\N"];
+	"OperableCore.assignProxyOperators(address _proxy, bytes32 _role, address[] memory _operators)"	 [height=0.5,
+		pos="393.15,18",
+		width=10.921];
+}
+digraph "" {
+	graph [bb="0,0,786.3,36"];
+	node [label="\N"];
+	"OperableCore.assignProxyOperators(address _proxy, bytes32 _role, address[] memory _operators)"	 [height=0.5,
+		pos="393.15,18",
+		width=10.921];
+}

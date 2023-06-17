@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,569.1,124.8"];
+	node [label="\N"];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="284.55,106.8",
+		width=7.9041];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="284.55,18",
+		width=4.0457];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="296.4,62.4",
+	pos="e,284.55,36.072 284.55,88.401 284.55,76.295 284.55,60.208 284.55,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,569.1,124.8"];
+	node [label="\N"];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="284.55,106.8",
+		width=7.9041];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="284.55,18",
+		width=4.0457];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="296.4,62.4",
+	pos="e,284.55,36.072 284.55,88.401 284.55,76.295 284.55,60.208 284.55,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,569.1,124.8"];
+	node [label="\N"];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="284.55,106.8",
+		width=7.9041];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="284.55,18",
+		width=4.0457];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="296.4,62.4",
+	pos="e,284.55,36.072 284.55,88.401 284.55,76.295 284.55,60.208 284.55,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,569.1,124.8"];
+	node [label="\N"];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="284.55,106.8",
+		width=7.9041];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="284.55,18",
+		width=4.0457];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="296.4,62.4",
+	pos="e,284.55,36.072 284.55,88.401 284.55,76.295 284.55,60.208 284.55,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,569.1,124.8"];
+	node [label="\N"];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="284.55,106.8",
+		width=7.9041];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="284.55,18",
+		width=4.0457];
+	"TokenCore.mint(address _token, address[] calldata, uint256[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="296.4,62.4",
+	pos="e,284.55,36.072 284.55,88.401 284.55,76.295 284.55,60.208 284.55,46.467"];
+}

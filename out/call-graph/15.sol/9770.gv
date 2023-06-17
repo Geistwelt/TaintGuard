@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,395.41,36"];
+	node [label="\N"];
+	"LendingProxy.getApprovalCost(uint256 loanId)"	 [height=0.5,
+		pos="197.7,18",
+		width=5.4918];
+}
+digraph "" {
+	graph [bb="0,0,395.41,36"];
+	node [label="\N"];
+	"LendingProxy.getApprovalCost(uint256 loanId)"	 [height=0.5,
+		pos="197.7,18",
+		width=5.4918];
+}

@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,1034.7,36"];
+	node [label="\N"];
+	"ITokenCore.defineToken(address _token, uint256 _delegateId, string memory _name, string memory _symbol, uint256 _decimals)"	 [height=0.5,
+		pos="517.37,18",
+		width=14.371];
+}
+digraph "" {
+	graph [bb="0,0,1034.7,36"];
+	node [label="\N"];
+	"ITokenCore.defineToken(address _token, uint256 _delegateId, string memory _name, string memory _symbol, uint256 _decimals)"	 [height=0.5,
+		pos="517.37,18",
+		width=14.371];
+}
+digraph "" {
+	graph [bb="0,0,1034.7,36"];
+	node [label="\N"];
+	"ITokenCore.defineToken(address _token, uint256 _delegateId, string memory _name, string memory _symbol, uint256 _decimals)"	 [height=0.5,
+		pos="517.37,18",
+		width=14.371];
+}
+digraph "" {
+	graph [bb="0,0,1034.7,36"];
+	node [label="\N"];
+	"ITokenCore.defineToken(address _token, uint256 _delegateId, string memory _name, string memory _symbol, uint256 _decimals)"	 [height=0.5,
+		pos="517.37,18",
+		width=14.371];
+}
+digraph "" {
+	graph [bb="0,0,1034.7,36"];
+	node [label="\N"];
+	"ITokenCore.defineToken(address _token, uint256 _delegateId, string memory _name, string memory _symbol, uint256 _decimals)"	 [height=0.5,
+		pos="517.37,18",
+		width=14.371];
+}

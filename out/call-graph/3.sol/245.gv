@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,576.61,36"];
+	node [label="\N"];
+	"IOperableCore.defineRole(bytes32 _role, bytes4[] memory _privileges)"	 [height=0.5,
+		pos="288.31,18",
+		width=8.0085];
+}
+digraph "" {
+	graph [bb="0,0,576.61,36"];
+	node [label="\N"];
+	"IOperableCore.defineRole(bytes32 _role, bytes4[] memory _privileges)"	 [height=0.5,
+		pos="288.31,18",
+		width=8.0085];
+}
+digraph "" {
+	graph [bb="0,0,576.61,36"];
+	node [label="\N"];
+	"IOperableCore.defineRole(bytes32 _role, bytes4[] memory _privileges)"	 [height=0.5,
+		pos="288.31,18",
+		width=8.0085];
+}
+digraph "" {
+	graph [bb="0,0,576.61,36"];
+	node [label="\N"];
+	"IOperableCore.defineRole(bytes32 _role, bytes4[] memory _privileges)"	 [height=0.5,
+		pos="288.31,18",
+		width=8.0085];
+}
+digraph "" {
+	graph [bb="0,0,576.61,36"];
+	node [label="\N"];
+	"IOperableCore.defineRole(bytes32 _role, bytes4[] memory _privileges)"	 [height=0.5,
+		pos="288.31,18",
+		width=8.0085];
+}

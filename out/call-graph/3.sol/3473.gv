@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,348.18,124.8"];
+	node [label="\N"];
+	"TokenCore.finishMinting(address _token)"	 [height=0.5,
+		pos="174.09,106.8",
+		width=4.8359];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="174.09,18",
+		width=4.0457];
+	"TokenCore.finishMinting(address _token)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="185.95,62.4",
+	pos="e,174.09,36.072 174.09,88.401 174.09,76.295 174.09,60.208 174.09,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.18,124.8"];
+	node [label="\N"];
+	"TokenCore.finishMinting(address _token)"	 [height=0.5,
+		pos="174.09,106.8",
+		width=4.8359];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="174.09,18",
+		width=4.0457];
+	"TokenCore.finishMinting(address _token)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="185.95,62.4",
+	pos="e,174.09,36.072 174.09,88.401 174.09,76.295 174.09,60.208 174.09,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.18,124.8"];
+	node [label="\N"];
+	"TokenCore.finishMinting(address _token)"	 [height=0.5,
+		pos="174.09,106.8",
+		width=4.8359];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="174.09,18",
+		width=4.0457];
+	"TokenCore.finishMinting(address _token)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="185.95,62.4",
+	pos="e,174.09,36.072 174.09,88.401 174.09,76.295 174.09,60.208 174.09,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.18,124.8"];
+	node [label="\N"];
+	"TokenCore.finishMinting(address _token)"	 [height=0.5,
+		pos="174.09,106.8",
+		width=4.8359];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="174.09,18",
+		width=4.0457];
+	"TokenCore.finishMinting(address _token)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="185.95,62.4",
+	pos="e,174.09,36.072 174.09,88.401 174.09,76.295 174.09,60.208 174.09,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.18,124.8"];
+	node [label="\N"];
+	"TokenCore.finishMinting(address _token)"	 [height=0.5,
+		pos="174.09,106.8",
+		width=4.8359];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="174.09,18",
+		width=4.0457];
+	"TokenCore.finishMinting(address _token)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="185.95,62.4",
+	pos="e,174.09,36.072 174.09,88.401 174.09,76.295 174.09,60.208 174.09,46.467"];
+}

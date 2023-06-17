@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,824.85,36"];
+	node [label="\N"];
+	"IUserRegistry.attachManyAddressesExternal(uint256[] calldata _userIds, address[] calldata _addresses)"	 [height=0.5,
+		pos="412.43,18",
+		width=11.456];
+}
+digraph "" {
+	graph [bb="0,0,824.85,36"];
+	node [label="\N"];
+	"IUserRegistry.attachManyAddressesExternal(uint256[] calldata _userIds, address[] calldata _addresses)"	 [height=0.5,
+		pos="412.43,18",
+		width=11.456];
+}
+digraph "" {
+	graph [bb="0,0,824.85,36"];
+	node [label="\N"];
+	"IUserRegistry.attachManyAddressesExternal(uint256[] calldata _userIds, address[] calldata _addresses)"	 [height=0.5,
+		pos="412.43,18",
+		width=11.456];
+}
+digraph "" {
+	graph [bb="0,0,824.85,36"];
+	node [label="\N"];
+	"IUserRegistry.attachManyAddressesExternal(uint256[] calldata _userIds, address[] calldata _addresses)"	 [height=0.5,
+		pos="412.43,18",
+		width=11.456];
+}
+digraph "" {
+	graph [bb="0,0,824.85,36"];
+	node [label="\N"];
+	"IUserRegistry.attachManyAddressesExternal(uint256[] calldata _userIds, address[] calldata _addresses)"	 [height=0.5,
+		pos="412.43,18",
+		width=11.456];
+}

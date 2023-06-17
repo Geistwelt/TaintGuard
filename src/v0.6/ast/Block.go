@@ -28,14 +28,14 @@ func (b *Block) SourceCode(isSc bool, isIndent bool, indent string, logger loggi
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *Return:
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
-			// case *EmitStatement:
-			// 	code = code + stat.SourceCode(true, true, indent+"    ", logger)
+			case *EmitStatement:
+				code = code + stat.SourceCode(true, true, indent+"    ", logger)
 			case *IfStatement:
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *VariableDeclarationStatement:
 				code = code + stat.SourceCode(true, true, indent+"    ", logger)
-			// case *InlineAssembly:
-			// 	code = code + stat.SourceCode(false, true, indent+"    ", logger)
+			case *InlineAssembly:
+				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			case *ForStatement:
 				code = code + stat.SourceCode(false, true, indent+"    ", logger)
 			// case *RevertStatement:
@@ -106,14 +106,14 @@ func GetBlock(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*Block,
 					bStatement, err = GetExpressionStatement(gn, statement, logger)
 				case "Return":
 					bStatement, err = GetReturn(gn, statement, logger)
-				// case "EmitStatement":
-				// 	bStatement, err = GetEmitStatement(gn, statement, logger)
+				case "EmitStatement":
+					bStatement, err = GetEmitStatement(gn, statement, logger)
 				case "IfStatement":
 					bStatement, err = GetIfStatement(gn, statement, logger)
 				case "VariableDeclarationStatement":
 					bStatement, err = GetVariableDeclarationStatement(gn, statement, logger)
-				// case "InlineAssembly":
-				// 	bStatement, err = GetInlineAssembly(gn, statement, logger)
+				case "InlineAssembly":
+					bStatement, err = GetInlineAssembly(gn, statement, logger)
 				case "ForStatement":
 					bStatement, err = GetForStatement(gn, statement, logger)
 				// case "RevertStatement":

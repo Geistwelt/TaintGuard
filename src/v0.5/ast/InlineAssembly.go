@@ -29,15 +29,19 @@ func (ia *InlineAssembly) SourceCode(isSc bool, isIndent bool, indent string, lo
 		code = code + indent
 	}
 
-	code = code + "assembly {\n"
-
 	operations := strings.Split(ia.Operations, "\n")
-	for i := 1; i < len(operations); i++ {
-		if isIndent {
-			code = code + indent + operations[i]
-		}
-		if i < len(operations)-1 {
-			code = code +"\n"
+
+	if len(operations) == 1 {
+		code = code + "assembly " + ia.Operations
+	} else {
+		code = code + "assembly {\n"
+		for i := 1; i < len(operations); i++ {
+			if isIndent {
+				code = code + indent + operations[i]
+			}
+			if i < len(operations)-1 {
+				code = code +"\n"
+			}
 		}
 	}
 

@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,1028.2,36"];
+	node [label="\N"];
+	"IUserRegistry.registerManyUsersFullExternal(address[] calldata _addresses, uint256 _validUntilTime, uint256[] calldata _values)"	 [height=0.5,
+		pos="514.1,18",
+		width=14.281];
+}
+digraph "" {
+	graph [bb="0,0,1028.2,36"];
+	node [label="\N"];
+	"IUserRegistry.registerManyUsersFullExternal(address[] calldata _addresses, uint256 _validUntilTime, uint256[] calldata _values)"	 [height=0.5,
+		pos="514.1,18",
+		width=14.281];
+}
+digraph "" {
+	graph [bb="0,0,1028.2,36"];
+	node [label="\N"];
+	"IUserRegistry.registerManyUsersFullExternal(address[] calldata _addresses, uint256 _validUntilTime, uint256[] calldata _values)"	 [height=0.5,
+		pos="514.1,18",
+		width=14.281];
+}
+digraph "" {
+	graph [bb="0,0,1028.2,36"];
+	node [label="\N"];
+	"IUserRegistry.registerManyUsersFullExternal(address[] calldata _addresses, uint256 _validUntilTime, uint256[] calldata _values)"	 [height=0.5,
+		pos="514.1,18",
+		width=14.281];
+}
+digraph "" {
+	graph [bb="0,0,1028.2,36"];
+	node [label="\N"];
+	"IUserRegistry.registerManyUsersFullExternal(address[] calldata _addresses, uint256 _validUntilTime, uint256[] calldata _values)"	 [height=0.5,
+		pos="514.1,18",
+		width=14.281];
+}

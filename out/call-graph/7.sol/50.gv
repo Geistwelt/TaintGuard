@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,342.74,36"];
+	node [label="\N"];
+	"Ownable.setMaster(address _newMaster)"	 [height=0.5,
+		pos="171.37,18",
+		width=4.7603];
+}
+digraph "" {
+	graph [bb="0,0,342.74,36"];
+	node [label="\N"];
+	"Ownable.setMaster(address _newMaster)"	 [height=0.5,
+		pos="171.37,18",
+		width=4.7603];
+}
+digraph "" {
+	graph [bb="0,0,342.74,36"];
+	node [label="\N"];
+	"Ownable.setMaster(address _newMaster)"	 [height=0.5,
+		pos="171.37,18",
+		width=4.7603];
+}

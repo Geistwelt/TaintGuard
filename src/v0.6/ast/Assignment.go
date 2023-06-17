@@ -73,6 +73,8 @@ func (a *Assignment) SourceCode(isSc bool, isIndent bool, indent string, logger 
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			case *UnaryOperation:
 				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
+			case *TupleExpression:
+				code = code + " " + rightHandSide.SourceCode(false, false, indent, logger)
 			default:
 				if rightHandSide != nil {
 					logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSide.Type(), a.Src)
@@ -163,6 +165,8 @@ func GetAssignment(gn *GlobalNodes, raw jsoniter.Any, logger logging.Logger) (*A
 				aRightHandSide, err = GetIndexAccess(gn, rightHandSide, logger)
 			case "UnaryOperation":
 				aRightHandSide, err = GetUnaryOperation(gn, rightHandSide, logger)
+			case "TupleExpression":
+				aRightHandSide, err = GetTupleExpression(gn, rightHandSide, logger)
 			default:
 				logger.Warnf("Unknown rightHandSide nodeType [%s] for Assignment [src:%s].", rightHandSideNodeType, a.Src)
 			}

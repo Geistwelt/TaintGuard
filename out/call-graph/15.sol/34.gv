@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,325.13,36"];
+	node [label="\N"];
+	"SafeMath.tryAdd(uint256 a, uint256 b)"	 [height=0.5,
+		pos="162.57,18",
+		width=4.5157];
+}
+digraph "" {
+	graph [bb="0,0,325.13,36"];
+	node [label="\N"];
+	"SafeMath.tryAdd(uint256 a, uint256 b)"	 [height=0.5,
+		pos="162.57,18",
+		width=4.5157];
+}

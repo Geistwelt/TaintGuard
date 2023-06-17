@@ -1,0 +1,42 @@
+digraph "" {
+	graph [bb="0,0,643.8,124.8"];
+	node [label="\N"];
+	"LendingCore.canBeTerminated(uint256 loanId)"	 [height=0.5,
+		pos="314.15,106.8",
+		width=5.4463];
+	"SafeMath.add(uint256 a, uint256 b)"	 [height=0.5,
+		pos="149.15,18",
+		width=4.1432];
+	"LendingCore.canBeTerminated(uint256 loanId)" -> "SafeMath.add(uint256 a, uint256 b)" [key=call,
+	label=" call",
+	lp="259.01,62.4",
+	pos="e,181.81,35.574 281.16,89.043 255.22,75.083 218.92,55.547 190.95,40.493"];
+"LendingCore.min(uint256 a, uint256 b)" [height=0.5,
+	pos="480.15,18",
+	width=4.5458];
+"LendingCore.canBeTerminated(uint256 loanId)" -> "LendingCore.min(uint256 a, uint256 b)" [key=call,
+label=" call",
+lp="424.01,62.4",
+pos="e,447.02,35.726 347.35,89.043 373.47,75.068 410.05,55.504 438.2,40.444"];
+}
+digraph "" {
+	graph [bb="0,0,643.8,124.8"];
+	node [label="\N"];
+	"LendingCore.canBeTerminated(uint256 loanId)"	 [height=0.5,
+		pos="314.15,106.8",
+		width=5.4463];
+	"SafeMath.add(uint256 a, uint256 b)"	 [height=0.5,
+		pos="149.15,18",
+		width=4.1432];
+	"LendingCore.canBeTerminated(uint256 loanId)" -> "SafeMath.add(uint256 a, uint256 b)" [key=call,
+	label=" call",
+	lp="259.01,62.4",
+	pos="e,181.81,35.574 281.16,89.043 255.22,75.083 218.92,55.547 190.95,40.493"];
+"LendingCore.min(uint256 a, uint256 b)" [height=0.5,
+	pos="480.15,18",
+	width=4.5458];
+"LendingCore.canBeTerminated(uint256 loanId)" -> "LendingCore.min(uint256 a, uint256 b)" [key=call,
+label=" call",
+lp="424.01,62.4",
+pos="e,447.02,35.726 347.35,89.043 373.47,75.068 410.05,55.504 438.2,40.444"];
+}

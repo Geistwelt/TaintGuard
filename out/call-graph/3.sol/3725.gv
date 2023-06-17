@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,839.34,36"];
+	node [label="\N"];
+	"TokenCore.defineOracle(IUserRegistry _userRegistry, IRatesProvider _ratesProvider, address _currency)"	 [height=0.5,
+		pos="419.67,18",
+		width=11.658];
+}
+digraph "" {
+	graph [bb="0,0,839.34,36"];
+	node [label="\N"];
+	"TokenCore.defineOracle(IUserRegistry _userRegistry, IRatesProvider _ratesProvider, address _currency)"	 [height=0.5,
+		pos="419.67,18",
+		width=11.658];
+}
+digraph "" {
+	graph [bb="0,0,839.34,36"];
+	node [label="\N"];
+	"TokenCore.defineOracle(IUserRegistry _userRegistry, IRatesProvider _ratesProvider, address _currency)"	 [height=0.5,
+		pos="419.67,18",
+		width=11.658];
+}
+digraph "" {
+	graph [bb="0,0,839.34,36"];
+	node [label="\N"];
+	"TokenCore.defineOracle(IUserRegistry _userRegistry, IRatesProvider _ratesProvider, address _currency)"	 [height=0.5,
+		pos="419.67,18",
+		width=11.658];
+}
+digraph "" {
+	graph [bb="0,0,839.34,36"];
+	node [label="\N"];
+	"TokenCore.defineOracle(IUserRegistry _userRegistry, IRatesProvider _ratesProvider, address _currency)"	 [height=0.5,
+		pos="419.67,18",
+		width=11.658];
+}

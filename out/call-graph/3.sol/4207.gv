@@ -1,0 +1,105 @@
+digraph "" {
+	graph [bb="0,0,568.07,213.6"];
+	node [label="\N"];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="284.03,195.6",
+		width=7.8898];
+	"TokenCore.transferFrom(address, address, address, uint256)"	 [height=0.5,
+		pos="284.03,106.8",
+		width=6.7943];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)" -> "TokenCore.transferFrom(address, address, address, uint256)" [key=call,
+	label=" call",
+	lp="295.89,151.2",
+	pos="e,284.03,124.87 284.03,177.2 284.03,165.09 284.03,149.01 284.03,135.27"];
+"Core.delegateCall(address _proxy)" [height=0.5,
+	pos="284.03,18",
+	width=4.0457];
+"TokenCore.transferFrom(address, address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+label=" call",
+lp="295.89,62.4",
+pos="e,284.03,36.072 284.03,88.401 284.03,76.295 284.03,60.208 284.03,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,568.07,213.6"];
+	node [label="\N"];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="284.03,195.6",
+		width=7.8898];
+	"TokenCore.transferFrom(address, address, address, uint256)"	 [height=0.5,
+		pos="284.03,106.8",
+		width=6.7943];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)" -> "TokenCore.transferFrom(address, address, address, uint256)" [key=call,
+	label=" call",
+	lp="295.89,151.2",
+	pos="e,284.03,124.87 284.03,177.2 284.03,165.09 284.03,149.01 284.03,135.27"];
+"Core.delegateCall(address _proxy)" [height=0.5,
+	pos="284.03,18",
+	width=4.0457];
+"TokenCore.transferFrom(address, address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+label=" call",
+lp="295.89,62.4",
+pos="e,284.03,36.072 284.03,88.401 284.03,76.295 284.03,60.208 284.03,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,568.07,213.6"];
+	node [label="\N"];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="284.03,195.6",
+		width=7.8898];
+	"TokenCore.transferFrom(address, address, address, uint256)"	 [height=0.5,
+		pos="284.03,106.8",
+		width=6.7943];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)" -> "TokenCore.transferFrom(address, address, address, uint256)" [key=call,
+	label=" call",
+	lp="295.89,151.2",
+	pos="e,284.03,124.87 284.03,177.2 284.03,165.09 284.03,149.01 284.03,135.27"];
+"Core.delegateCall(address _proxy)" [height=0.5,
+	pos="284.03,18",
+	width=4.0457];
+"TokenCore.transferFrom(address, address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+label=" call",
+lp="295.89,62.4",
+pos="e,284.03,36.072 284.03,88.401 284.03,76.295 284.03,60.208 284.03,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,568.07,213.6"];
+	node [label="\N"];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="284.03,195.6",
+		width=7.8898];
+	"TokenCore.transferFrom(address, address, address, uint256)"	 [height=0.5,
+		pos="284.03,106.8",
+		width=6.7943];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)" -> "TokenCore.transferFrom(address, address, address, uint256)" [key=call,
+	label=" call",
+	lp="295.89,151.2",
+	pos="e,284.03,124.87 284.03,177.2 284.03,165.09 284.03,149.01 284.03,135.27"];
+"Core.delegateCall(address _proxy)" [height=0.5,
+	pos="284.03,18",
+	width=4.0457];
+"TokenCore.transferFrom(address, address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+label=" call",
+lp="295.89,62.4",
+pos="e,284.03,36.072 284.03,88.401 284.03,76.295 284.03,60.208 284.03,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,568.07,213.6"];
+	node [label="\N"];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="284.03,195.6",
+		width=7.8898];
+	"TokenCore.transferFrom(address, address, address, uint256)"	 [height=0.5,
+		pos="284.03,106.8",
+		width=6.7943];
+	"TokenProxy.transferFrom(address _from, address _to, uint256 _value)" -> "TokenCore.transferFrom(address, address, address, uint256)" [key=call,
+	label=" call",
+	lp="295.89,151.2",
+	pos="e,284.03,124.87 284.03,177.2 284.03,165.09 284.03,149.01 284.03,135.27"];
+"Core.delegateCall(address _proxy)" [height=0.5,
+	pos="284.03,18",
+	width=4.0457];
+"TokenCore.transferFrom(address, address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+label=" call",
+lp="295.89,62.4",
+pos="e,284.03,36.072 284.03,88.401 284.03,76.295 284.03,60.208 284.03,46.467"];
+}

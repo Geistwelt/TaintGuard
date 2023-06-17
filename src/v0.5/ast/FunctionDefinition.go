@@ -480,3 +480,31 @@ func (fd *FunctionDefinition) TraverseDelegatecall(opt *Option, logger logging.L
 		}
 	}
 }
+
+func (fd *FunctionDefinition) GetParameters() ASTNode {
+	return fd.parameters
+}
+
+func (fd *FunctionDefinition) GetReturnParameters() ASTNode {
+	return fd.returnParameters
+}
+
+func (fd *FunctionDefinition) AppendNode(node ASTNode) {
+	var isExist bool = false
+
+	if block, ok := fd.body.(*Block); ok {
+		for _, statement := range block.statements {
+			if statement.Type() == "ExpressionStatement" {
+				if statement.SourceCode(false, false, "", nil) == node.SourceCode(false, false, "", nil) {
+					isExist = true
+					break
+				}
+			}
+		}
+	}
+
+	if !isExist {
+		block, _ := fd.body.(*Block)
+		block.statements = append(block.statements, node)
+	}
+}

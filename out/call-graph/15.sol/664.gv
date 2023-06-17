@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,303.07,36"];
+	node [label="\N"];
+	"IERC721.balanceOf(address owner)"	 [height=0.5,
+		pos="151.53,18",
+		width=4.2093];
+}
+digraph "" {
+	graph [bb="0,0,303.07,36"];
+	node [label="\N"];
+	"IERC721.balanceOf(address owner)"	 [height=0.5,
+		pos="151.53,18",
+		width=4.2093];
+}

@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,383.01,124.8"];
+	node [label="\N"];
+	"TokenCore.approve(address, address, uint256)"	 [height=0.5,
+		pos="191.5,106.8",
+		width=5.3195];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="191.5,18",
+		width=4.0457];
+	"TokenCore.approve(address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="203.36,62.4",
+	pos="e,191.5,36.072 191.5,88.401 191.5,76.295 191.5,60.208 191.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,383.01,124.8"];
+	node [label="\N"];
+	"TokenCore.approve(address, address, uint256)"	 [height=0.5,
+		pos="191.5,106.8",
+		width=5.3195];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="191.5,18",
+		width=4.0457];
+	"TokenCore.approve(address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="203.36,62.4",
+	pos="e,191.5,36.072 191.5,88.401 191.5,76.295 191.5,60.208 191.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,383.01,124.8"];
+	node [label="\N"];
+	"TokenCore.approve(address, address, uint256)"	 [height=0.5,
+		pos="191.5,106.8",
+		width=5.3195];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="191.5,18",
+		width=4.0457];
+	"TokenCore.approve(address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="203.36,62.4",
+	pos="e,191.5,36.072 191.5,88.401 191.5,76.295 191.5,60.208 191.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,383.01,124.8"];
+	node [label="\N"];
+	"TokenCore.approve(address, address, uint256)"	 [height=0.5,
+		pos="191.5,106.8",
+		width=5.3195];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="191.5,18",
+		width=4.0457];
+	"TokenCore.approve(address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="203.36,62.4",
+	pos="e,191.5,36.072 191.5,88.401 191.5,76.295 191.5,60.208 191.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,383.01,124.8"];
+	node [label="\N"];
+	"TokenCore.approve(address, address, uint256)"	 [height=0.5,
+		pos="191.5,106.8",
+		width=5.3195];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="191.5,18",
+		width=4.0457];
+	"TokenCore.approve(address, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="203.36,62.4",
+	pos="e,191.5,36.072 191.5,88.401 191.5,76.295 191.5,60.208 191.5,46.467"];
+}

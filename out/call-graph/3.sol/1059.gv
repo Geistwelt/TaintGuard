@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,583.57,124.8"];
+	node [label="\N"];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,106.8",
+		width=8.1051];
+	"Core.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,18",
+		width=7.1222];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)" -> "Core.defineProxyInternal(address _proxy, uint256 _delegateId)" [key=call,
+	label=" call",
+	lp="303.64,62.4",
+	pos="e,291.79,36.072 291.79,88.401 291.79,76.295 291.79,60.208 291.79,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,583.57,124.8"];
+	node [label="\N"];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,106.8",
+		width=8.1051];
+	"Core.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,18",
+		width=7.1222];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)" -> "Core.defineProxyInternal(address _proxy, uint256 _delegateId)" [key=call,
+	label=" call",
+	lp="303.64,62.4",
+	pos="e,291.79,36.072 291.79,88.401 291.79,76.295 291.79,60.208 291.79,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,583.57,124.8"];
+	node [label="\N"];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,106.8",
+		width=8.1051];
+	"Core.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,18",
+		width=7.1222];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)" -> "Core.defineProxyInternal(address _proxy, uint256 _delegateId)" [key=call,
+	label=" call",
+	lp="303.64,62.4",
+	pos="e,291.79,36.072 291.79,88.401 291.79,76.295 291.79,60.208 291.79,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,583.57,124.8"];
+	node [label="\N"];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,106.8",
+		width=8.1051];
+	"Core.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,18",
+		width=7.1222];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)" -> "Core.defineProxyInternal(address _proxy, uint256 _delegateId)" [key=call,
+	label=" call",
+	lp="303.64,62.4",
+	pos="e,291.79,36.072 291.79,88.401 291.79,76.295 291.79,60.208 291.79,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,583.57,124.8"];
+	node [label="\N"];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,106.8",
+		width=8.1051];
+	"Core.defineProxyInternal(address _proxy, uint256 _delegateId)"	 [height=0.5,
+		pos="291.79,18",
+		width=7.1222];
+	"OperableCore.defineProxyInternal(address _proxy, uint256 _delegateId)" -> "Core.defineProxyInternal(address _proxy, uint256 _delegateId)" [key=call,
+	label=" call",
+	lp="303.64,62.4",
+	pos="e,291.79,36.072 291.79,88.401 291.79,76.295 291.79,60.208 291.79,46.467"];
+}

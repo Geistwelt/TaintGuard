@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,571.78,36"];
+	node [label="\N"];
+	"IUserRegistry.suspendManyUsersExternal(uint256[] calldata _userIds)"	 [height=0.5,
+		pos="285.89,18",
+		width=7.9413];
+}
+digraph "" {
+	graph [bb="0,0,571.78,36"];
+	node [label="\N"];
+	"IUserRegistry.suspendManyUsersExternal(uint256[] calldata _userIds)"	 [height=0.5,
+		pos="285.89,18",
+		width=7.9413];
+}
+digraph "" {
+	graph [bb="0,0,571.78,36"];
+	node [label="\N"];
+	"IUserRegistry.suspendManyUsersExternal(uint256[] calldata _userIds)"	 [height=0.5,
+		pos="285.89,18",
+		width=7.9413];
+}
+digraph "" {
+	graph [bb="0,0,571.78,36"];
+	node [label="\N"];
+	"IUserRegistry.suspendManyUsersExternal(uint256[] calldata _userIds)"	 [height=0.5,
+		pos="285.89,18",
+		width=7.9413];
+}
+digraph "" {
+	graph [bb="0,0,571.78,36"];
+	node [label="\N"];
+	"IUserRegistry.suspendManyUsersExternal(uint256[] calldata _userIds)"	 [height=0.5,
+		pos="285.89,18",
+		width=7.9413];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,321.93,36"];
+	node [label="\N"];
+	"SafeMath.trySub(uint256 a, uint256 b)"	 [height=0.5,
+		pos="160.96,18",
+		width=4.4712];
+}
+digraph "" {
+	graph [bb="0,0,321.93,36"];
+	node [label="\N"];
+	"SafeMath.trySub(uint256 a, uint256 b)"	 [height=0.5,
+		pos="160.96,18",
+		width=4.4712];
+}

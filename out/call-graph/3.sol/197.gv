@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,582.49,36"];
+	node [label="\N"];
+	"IOperableStorage.hasCorePrivilege(address _address, bytes4 _privilege)"	 [height=0.5,
+		pos="291.25,18",
+		width=8.0902];
+}
+digraph "" {
+	graph [bb="0,0,582.49,36"];
+	node [label="\N"];
+	"IOperableStorage.hasCorePrivilege(address _address, bytes4 _privilege)"	 [height=0.5,
+		pos="291.25,18",
+		width=8.0902];
+}
+digraph "" {
+	graph [bb="0,0,582.49,36"];
+	node [label="\N"];
+	"IOperableStorage.hasCorePrivilege(address _address, bytes4 _privilege)"	 [height=0.5,
+		pos="291.25,18",
+		width=8.0902];
+}
+digraph "" {
+	graph [bb="0,0,582.49,36"];
+	node [label="\N"];
+	"IOperableStorage.hasCorePrivilege(address _address, bytes4 _privilege)"	 [height=0.5,
+		pos="291.25,18",
+		width=8.0902];
+}
+digraph "" {
+	graph [bb="0,0,582.49,36"];
+	node [label="\N"];
+	"IOperableStorage.hasCorePrivilege(address _address, bytes4 _privilege)"	 [height=0.5,
+		pos="291.25,18",
+		width=8.0902];
+}

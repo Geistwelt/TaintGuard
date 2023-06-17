@@ -17,7 +17,7 @@ type ASTNode interface {
 
 type Option struct {
 	// search object that delegatecall unknown contract
-	delegatecallUnknownContractCh chan struct{}
+	delegatecallUnknownContractCh chan string
 
 	// search object that delegatecall known contract
 	delegatecallKnownContractCh chan string
@@ -35,14 +35,14 @@ type Option struct {
 }
 
 func (opt *Option) MakeDelegatecallUnknownContractCh(size int) {
-	opt.delegatecallUnknownContractCh = make(chan struct{}, size)
+	opt.delegatecallUnknownContractCh = make(chan string, size)
 }
 
 func (opt *Option) MakeDelegatecallKnownContractCh(size int) {
 	opt.delegatecallKnownContractCh = make(chan string, size)
 }
 
-func (opt *Option) DelegatecallUnknownContractCh() <-chan struct{} {
+func (opt *Option) DelegatecallUnknownContractCh() <-chan string {
 	return opt.delegatecallUnknownContractCh
 }
 

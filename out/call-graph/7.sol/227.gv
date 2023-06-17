@@ -1,0 +1,63 @@
+digraph "" {
+	graph [bb="0,0,698.8,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)"	 [height=0.5,
+		pos="349.4,106.8",
+		width=9.7056];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="175.4,18",
+		width=4.8347];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="290.26,62.4",
+	pos="e,210.26,35.792 314.19,88.83 286.86,74.882 248.81,55.464 219.46,40.486"];
+"Proxy.setTarget(address _newTarget)" [height=0.5,
+	pos="523.4,18",
+	width=4.3433];
+"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Proxy.setTarget(address _newTarget)" [key=call,
+label=" call",
+lp="464.26,62.4",
+pos="e,488.84,35.64 384.61,88.83 412.03,74.837 450.24,55.336 479.63,40.339"];
+}
+digraph "" {
+	graph [bb="0,0,698.8,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)"	 [height=0.5,
+		pos="349.4,106.8",
+		width=9.7056];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="175.4,18",
+		width=4.8347];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="290.26,62.4",
+	pos="e,210.26,35.792 314.19,88.83 286.86,74.882 248.81,55.464 219.46,40.486"];
+"Proxy.setTarget(address _newTarget)" [height=0.5,
+	pos="523.4,18",
+	width=4.3433];
+"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Proxy.setTarget(address _newTarget)" [key=call,
+label=" call",
+lp="464.26,62.4",
+pos="e,488.84,35.64 384.61,88.83 412.03,74.837 450.24,55.336 479.63,40.339"];
+}
+digraph "" {
+	graph [bb="0,0,698.8,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)"	 [height=0.5,
+		pos="349.4,106.8",
+		width=9.7056];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="175.4,18",
+		width=4.8347];
+	"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="290.26,62.4",
+	pos="e,210.26,35.792 314.19,88.83 286.86,74.882 248.81,55.464 219.46,40.486"];
+"Proxy.setTarget(address _newTarget)" [height=0.5,
+	pos="523.4,18",
+	width=4.3433];
+"Proxy.upgradeTarget(address newTarget, bytes calldata newTargetUpgradeParameters)" -> "Proxy.setTarget(address _newTarget)" [key=call,
+label=" call",
+lp="464.26,62.4",
+pos="e,488.84,35.64 384.61,88.83 412.03,74.837 450.24,55.336 479.63,40.339"];
+}

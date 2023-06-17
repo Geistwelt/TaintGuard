@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,192.13,36"];
+	node [label="\N"];
+	"IERC20.totalSupply()"	 [height=0.5,
+		pos="96.064,18",
+		width=2.6684];
+}
+digraph "" {
+	graph [bb="0,0,192.13,36"];
+	node [label="\N"];
+	"IERC20.totalSupply()"	 [height=0.5,
+		pos="96.064,18",
+		width=2.6684];
+}
+digraph "" {
+	graph [bb="0,0,192.13,36"];
+	node [label="\N"];
+	"IERC20.totalSupply()"	 [height=0.5,
+		pos="96.064,18",
+		width=2.6684];
+}
+digraph "" {
+	graph [bb="0,0,192.13,36"];
+	node [label="\N"];
+	"IERC20.totalSupply()"	 [height=0.5,
+		pos="96.064,18",
+		width=2.6684];
+}
+digraph "" {
+	graph [bb="0,0,192.13,36"];
+	node [label="\N"];
+	"IERC20.totalSupply()"	 [height=0.5,
+		pos="96.064,18",
+		width=2.6684];
+}

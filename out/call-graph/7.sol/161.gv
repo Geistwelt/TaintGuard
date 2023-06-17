@@ -1,0 +1,21 @@
+digraph "" {
+	graph [bb="0,0,259.13,36"];
+	node [label="\N"];
+	"Proxy.initialize(bytes calldata)"	 [height=0.5,
+		pos="129.56,18",
+		width=3.599];
+}
+digraph "" {
+	graph [bb="0,0,259.13,36"];
+	node [label="\N"];
+	"Proxy.initialize(bytes calldata)"	 [height=0.5,
+		pos="129.56,18",
+		width=3.599];
+}
+digraph "" {
+	graph [bb="0,0,259.13,36"];
+	node [label="\N"];
+	"Proxy.initialize(bytes calldata)"	 [height=0.5,
+		pos="129.56,18",
+		width=3.599];
+}

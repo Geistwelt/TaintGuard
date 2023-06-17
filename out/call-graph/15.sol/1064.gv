@@ -1,0 +1,42 @@
+digraph "" {
+	graph [bb="0,0,1410,124.8"];
+	node [label="\N"];
+	"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)"	 [height=0.5,
+		pos="767.35,106.8",
+		width=8.1503];
+	"IERC1155.safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)"	 [height=0.5,
+		pos="410.35,18",
+		width=11.399];
+	"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)" -> "IERC1155.safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)" [key=call,
+	label=" call",
+	lp="633.2,62.4",
+	pos="e,481.65,35.735 696.81,89.256 637.7,74.551 553.27,53.55 491.38,38.156"];
+"IERC721.safeTransferFrom(address from, address to, uint256 tokenId)" [height=0.5,
+	pos="1124.3,18",
+	width=7.9342];
+"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)" -> "IERC721.safeTransferFrom(address from, address to, uint256 tokenId)" [key=call,
+label=" call",
+lp="990.2,62.4",
+pos="e,1054,35.508 837.88,89.256 897.29,74.479 982.25,53.344 1044.2,37.93"];
+}
+digraph "" {
+	graph [bb="0,0,1410,124.8"];
+	node [label="\N"];
+	"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)"	 [height=0.5,
+		pos="767.35,106.8",
+		width=8.1503];
+	"IERC1155.safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)"	 [height=0.5,
+		pos="410.35,18",
+		width=11.399];
+	"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)" -> "IERC1155.safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data)" [key=call,
+	label=" call",
+	lp="633.2,62.4",
+	pos="e,481.65,35.735 696.81,89.256 637.7,74.551 553.27,53.55 491.38,38.156"];
+"IERC721.safeTransferFrom(address from, address to, uint256 tokenId)" [height=0.5,
+	pos="1124.3,18",
+	width=7.9342];
+"TrustNFTRelay.transferNFT(address from, address to, NFT memory nft)" -> "IERC721.safeTransferFrom(address from, address to, uint256 tokenId)" [key=call,
+label=" call",
+lp="990.2,62.4",
+pos="e,1054,35.508 837.88,89.256 897.29,74.479 982.25,53.344 1044.2,37.93"];
+}

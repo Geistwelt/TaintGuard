@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,423.23,36"];
+	node [label="\N"];
+	"ITokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="211.61,18",
+		width=5.8782];
+}
+digraph "" {
+	graph [bb="0,0,423.23,36"];
+	node [label="\N"];
+	"ITokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="211.61,18",
+		width=5.8782];
+}
+digraph "" {
+	graph [bb="0,0,423.23,36"];
+	node [label="\N"];
+	"ITokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="211.61,18",
+		width=5.8782];
+}
+digraph "" {
+	graph [bb="0,0,423.23,36"];
+	node [label="\N"];
+	"ITokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="211.61,18",
+		width=5.8782];
+}
+digraph "" {
+	graph [bb="0,0,423.23,36"];
+	node [label="\N"];
+	"ITokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="211.61,18",
+		width=5.8782];
+}

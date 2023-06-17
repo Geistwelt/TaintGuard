@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,647.43,36"];
+	node [label="\N"];
+	"TokenCore.auditTriggers(uint256 _configurationId, address[] memory _triggers)"	 [height=0.5,
+		pos="323.72,18",
+		width=8.9921];
+}
+digraph "" {
+	graph [bb="0,0,647.43,36"];
+	node [label="\N"];
+	"TokenCore.auditTriggers(uint256 _configurationId, address[] memory _triggers)"	 [height=0.5,
+		pos="323.72,18",
+		width=8.9921];
+}
+digraph "" {
+	graph [bb="0,0,647.43,36"];
+	node [label="\N"];
+	"TokenCore.auditTriggers(uint256 _configurationId, address[] memory _triggers)"	 [height=0.5,
+		pos="323.72,18",
+		width=8.9921];
+}
+digraph "" {
+	graph [bb="0,0,647.43,36"];
+	node [label="\N"];
+	"TokenCore.auditTriggers(uint256 _configurationId, address[] memory _triggers)"	 [height=0.5,
+		pos="323.72,18",
+		width=8.9921];
+}
+digraph "" {
+	graph [bb="0,0,647.43,36"];
+	node [label="\N"];
+	"TokenCore.auditTriggers(uint256 _configurationId, address[] memory _triggers)"	 [height=0.5,
+		pos="323.72,18",
+		width=8.9921];
+}

@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,419.96,124.8"];
+	node [label="\N"];
+	"Ownable.transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,106.8",
+		width=5.6986];
+	"Ownable._transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,18",
+		width=5.8327];
+	"Ownable.transferOwnership(address _newOwner)" -> "Ownable._transferOwnership(address _newOwner)" [key=call,
+	label=" call",
+	lp="221.83,62.4",
+	pos="e,209.98,36.072 209.98,88.401 209.98,76.295 209.98,60.208 209.98,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,419.96,124.8"];
+	node [label="\N"];
+	"Ownable.transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,106.8",
+		width=5.6986];
+	"Ownable._transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,18",
+		width=5.8327];
+	"Ownable.transferOwnership(address _newOwner)" -> "Ownable._transferOwnership(address _newOwner)" [key=call,
+	label=" call",
+	lp="221.83,62.4",
+	pos="e,209.98,36.072 209.98,88.401 209.98,76.295 209.98,60.208 209.98,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,419.96,124.8"];
+	node [label="\N"];
+	"Ownable.transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,106.8",
+		width=5.6986];
+	"Ownable._transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,18",
+		width=5.8327];
+	"Ownable.transferOwnership(address _newOwner)" -> "Ownable._transferOwnership(address _newOwner)" [key=call,
+	label=" call",
+	lp="221.83,62.4",
+	pos="e,209.98,36.072 209.98,88.401 209.98,76.295 209.98,60.208 209.98,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,419.96,124.8"];
+	node [label="\N"];
+	"Ownable.transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,106.8",
+		width=5.6986];
+	"Ownable._transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,18",
+		width=5.8327];
+	"Ownable.transferOwnership(address _newOwner)" -> "Ownable._transferOwnership(address _newOwner)" [key=call,
+	label=" call",
+	lp="221.83,62.4",
+	pos="e,209.98,36.072 209.98,88.401 209.98,76.295 209.98,60.208 209.98,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,419.96,124.8"];
+	node [label="\N"];
+	"Ownable.transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,106.8",
+		width=5.6986];
+	"Ownable._transferOwnership(address _newOwner)"	 [height=0.5,
+		pos="209.98,18",
+		width=5.8327];
+	"Ownable.transferOwnership(address _newOwner)" -> "Ownable._transferOwnership(address _newOwner)" [key=call,
+	label=" call",
+	lp="221.83,62.4",
+	pos="e,209.98,36.072 209.98,88.401 209.98,76.295 209.98,60.208 209.98,46.467"];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,1036.2,36"];
+	node [label="\N"];
+	"IERC1155.safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)"	 [height=0.5,
+		pos="518.12,18",
+		width=14.392];
+}
+digraph "" {
+	graph [bb="0,0,1036.2,36"];
+	node [label="\N"];
+	"IERC1155.safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data)"	 [height=0.5,
+		pos="518.12,18",
+		width=14.392];
+}

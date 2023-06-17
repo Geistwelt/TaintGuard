@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,234.95,36"];
+	node [label="\N"];
+	"IRatesProvider.currencies()"	 [height=0.5,
+		pos="117.47,18",
+		width=3.2632];
+}
+digraph "" {
+	graph [bb="0,0,234.95,36"];
+	node [label="\N"];
+	"IRatesProvider.currencies()"	 [height=0.5,
+		pos="117.47,18",
+		width=3.2632];
+}
+digraph "" {
+	graph [bb="0,0,234.95,36"];
+	node [label="\N"];
+	"IRatesProvider.currencies()"	 [height=0.5,
+		pos="117.47,18",
+		width=3.2632];
+}
+digraph "" {
+	graph [bb="0,0,234.95,36"];
+	node [label="\N"];
+	"IRatesProvider.currencies()"	 [height=0.5,
+		pos="117.47,18",
+		width=3.2632];
+}
+digraph "" {
+	graph [bb="0,0,234.95,36"];
+	node [label="\N"];
+	"IRatesProvider.currencies()"	 [height=0.5,
+		pos="117.47,18",
+		width=3.2632];
+}

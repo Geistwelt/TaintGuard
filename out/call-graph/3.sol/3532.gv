@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,627.52,124.8"];
+	node [label="\N"];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)"	 [height=0.5,
+		pos="313.76,106.8",
+		width=8.7155];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="313.76,18",
+		width=4.0457];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="325.61,62.4",
+	pos="e,313.76,36.072 313.76,88.401 313.76,76.295 313.76,60.208 313.76,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,627.52,124.8"];
+	node [label="\N"];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)"	 [height=0.5,
+		pos="313.76,106.8",
+		width=8.7155];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="313.76,18",
+		width=4.0457];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="325.61,62.4",
+	pos="e,313.76,36.072 313.76,88.401 313.76,76.295 313.76,60.208 313.76,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,627.52,124.8"];
+	node [label="\N"];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)"	 [height=0.5,
+		pos="313.76,106.8",
+		width=8.7155];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="313.76,18",
+		width=4.0457];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="325.61,62.4",
+	pos="e,313.76,36.072 313.76,88.401 313.76,76.295 313.76,60.208 313.76,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,627.52,124.8"];
+	node [label="\N"];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)"	 [height=0.5,
+		pos="313.76,106.8",
+		width=8.7155];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="313.76,18",
+		width=4.0457];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="325.61,62.4",
+	pos="e,313.76,36.072 313.76,88.401 313.76,76.295 313.76,60.208 313.76,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,627.52,124.8"];
+	node [label="\N"];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)"	 [height=0.5,
+		pos="313.76,106.8",
+		width=8.7155];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="313.76,18",
+		width=4.0457];
+	"TokenCore.freezeManyAddresses(address _token, address[] calldata, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="325.61,62.4",
+	pos="e,313.76,36.072 313.76,88.401 313.76,76.295 313.76,60.208 313.76,46.467"];
+}

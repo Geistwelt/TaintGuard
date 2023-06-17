@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,229.65,124.8"];
+	node [label="\N"];
+	"TokenProxy.symbol()"	 [height=0.5,
+		pos="114.83,106.8",
+		width=2.6683];
+	"TokenCore.tokenSymbol()"	 [height=0.5,
+		pos="114.83,18",
+		width=3.1897];
+	"TokenProxy.symbol()" -> "TokenCore.tokenSymbol()" [key=call,
+	label=" call",
+	lp="126.68,62.4",
+	pos="e,114.83,36.072 114.83,88.401 114.83,76.295 114.83,60.208 114.83,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,229.65,124.8"];
+	node [label="\N"];
+	"TokenProxy.symbol()"	 [height=0.5,
+		pos="114.83,106.8",
+		width=2.6683];
+	"TokenCore.tokenSymbol()"	 [height=0.5,
+		pos="114.83,18",
+		width=3.1897];
+	"TokenProxy.symbol()" -> "TokenCore.tokenSymbol()" [key=call,
+	label=" call",
+	lp="126.68,62.4",
+	pos="e,114.83,36.072 114.83,88.401 114.83,76.295 114.83,60.208 114.83,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,229.65,124.8"];
+	node [label="\N"];
+	"TokenProxy.symbol()"	 [height=0.5,
+		pos="114.83,106.8",
+		width=2.6683];
+	"TokenCore.tokenSymbol()"	 [height=0.5,
+		pos="114.83,18",
+		width=3.1897];
+	"TokenProxy.symbol()" -> "TokenCore.tokenSymbol()" [key=call,
+	label=" call",
+	lp="126.68,62.4",
+	pos="e,114.83,36.072 114.83,88.401 114.83,76.295 114.83,60.208 114.83,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,229.65,124.8"];
+	node [label="\N"];
+	"TokenProxy.symbol()"	 [height=0.5,
+		pos="114.83,106.8",
+		width=2.6683];
+	"TokenCore.tokenSymbol()"	 [height=0.5,
+		pos="114.83,18",
+		width=3.1897];
+	"TokenProxy.symbol()" -> "TokenCore.tokenSymbol()" [key=call,
+	label=" call",
+	lp="126.68,62.4",
+	pos="e,114.83,36.072 114.83,88.401 114.83,76.295 114.83,60.208 114.83,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,229.65,124.8"];
+	node [label="\N"];
+	"TokenProxy.symbol()"	 [height=0.5,
+		pos="114.83,106.8",
+		width=2.6683];
+	"TokenCore.tokenSymbol()"	 [height=0.5,
+		pos="114.83,18",
+		width=3.1897];
+	"TokenProxy.symbol()" -> "TokenCore.tokenSymbol()" [key=call,
+	label=" call",
+	lp="126.68,62.4",
+	pos="e,114.83,36.072 114.83,88.401 114.83,76.295 114.83,60.208 114.83,46.467"];
+}

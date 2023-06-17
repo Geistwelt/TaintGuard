@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,421.61,124.8"];
+	node [label="\N"];
+	"TokenProxy.canTransfer(address, address, uint256)"	 [height=0.5,
+		pos="210.8,106.8",
+		width=5.8556];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="210.8,18",
+		width=3.0854];
+	"TokenProxy.canTransfer(address, address, uint256)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="222.66,62.4",
+	pos="e,210.8,36.072 210.8,88.401 210.8,76.295 210.8,60.208 210.8,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,421.61,124.8"];
+	node [label="\N"];
+	"TokenProxy.canTransfer(address, address, uint256)"	 [height=0.5,
+		pos="210.8,106.8",
+		width=5.8556];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="210.8,18",
+		width=3.0854];
+	"TokenProxy.canTransfer(address, address, uint256)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="222.66,62.4",
+	pos="e,210.8,36.072 210.8,88.401 210.8,76.295 210.8,60.208 210.8,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,421.61,124.8"];
+	node [label="\N"];
+	"TokenProxy.canTransfer(address, address, uint256)"	 [height=0.5,
+		pos="210.8,106.8",
+		width=5.8556];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="210.8,18",
+		width=3.0854];
+	"TokenProxy.canTransfer(address, address, uint256)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="222.66,62.4",
+	pos="e,210.8,36.072 210.8,88.401 210.8,76.295 210.8,60.208 210.8,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,421.61,124.8"];
+	node [label="\N"];
+	"TokenProxy.canTransfer(address, address, uint256)"	 [height=0.5,
+		pos="210.8,106.8",
+		width=5.8556];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="210.8,18",
+		width=3.0854];
+	"TokenProxy.canTransfer(address, address, uint256)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="222.66,62.4",
+	pos="e,210.8,36.072 210.8,88.401 210.8,76.295 210.8,60.208 210.8,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,421.61,124.8"];
+	node [label="\N"];
+	"TokenProxy.canTransfer(address, address, uint256)"	 [height=0.5,
+		pos="210.8,106.8",
+		width=5.8556];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="210.8,18",
+		width=3.0854];
+	"TokenProxy.canTransfer(address, address, uint256)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="222.66,62.4",
+	pos="e,210.8,36.072 210.8,88.401 210.8,76.295 210.8,60.208 210.8,46.467"];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,300.47,36"];
+	node [label="\N"];
+	"SafeMath.mul(uint256 a, uint256 b)"	 [height=0.5,
+		pos="150.24,18",
+		width=4.1732];
+}
+digraph "" {
+	graph [bb="0,0,300.47,36"];
+	node [label="\N"];
+	"SafeMath.mul(uint256 a, uint256 b)"	 [height=0.5,
+		pos="150.24,18",
+		width=4.1732];
+}

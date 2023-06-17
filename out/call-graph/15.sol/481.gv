@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,719.38,36"];
+	node [label="\N"];
+	"ERC1155Holder.onERC1155Received(address, address, uint256, uint256, bytes memory)"	 [height=0.5,
+		pos="359.69,18",
+		width=9.9914];
+}
+digraph "" {
+	graph [bb="0,0,719.38,36"];
+	node [label="\N"];
+	"ERC1155Holder.onERC1155Received(address, address, uint256, uint256, bytes memory)"	 [height=0.5,
+		pos="359.69,18",
+		width=9.9914];
+}

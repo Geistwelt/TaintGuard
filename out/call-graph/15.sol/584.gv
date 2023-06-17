@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,516.04,36"];
+	node [label="\N"];
+	"IERC1155.setApprovalForAll(address operator, bool approved)"	 [height=0.5,
+		pos="258.02,18",
+		width=7.1672];
+}
+digraph "" {
+	graph [bb="0,0,516.04,36"];
+	node [label="\N"];
+	"IERC1155.setApprovalForAll(address operator, bool approved)"	 [height=0.5,
+		pos="258.02,18",
+		width=7.1672];
+}

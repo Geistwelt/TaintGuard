@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,518.13,36"];
+	node [label="\N"];
+	"ITokenCore.mint(address, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="259.06,18",
+		width=7.1962];
+}
+digraph "" {
+	graph [bb="0,0,518.13,36"];
+	node [label="\N"];
+	"ITokenCore.mint(address, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="259.06,18",
+		width=7.1962];
+}
+digraph "" {
+	graph [bb="0,0,518.13,36"];
+	node [label="\N"];
+	"ITokenCore.mint(address, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="259.06,18",
+		width=7.1962];
+}
+digraph "" {
+	graph [bb="0,0,518.13,36"];
+	node [label="\N"];
+	"ITokenCore.mint(address, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="259.06,18",
+		width=7.1962];
+}
+digraph "" {
+	graph [bb="0,0,518.13,36"];
+	node [label="\N"];
+	"ITokenCore.mint(address, address[] calldata, uint256[] calldata)"	 [height=0.5,
+		pos="259.06,18",
+		width=7.1962];
+}

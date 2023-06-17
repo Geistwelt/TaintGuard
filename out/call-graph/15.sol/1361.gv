@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,452.27,36"];
+	node [label="\N"];
+	"LendingCore.getPromissoryPermission(uint256 loanId)"	 [height=0.5,
+		pos="226.14,18",
+		width=6.2815];
+}
+digraph "" {
+	graph [bb="0,0,452.27,36"];
+	node [label="\N"];
+	"LendingCore.getPromissoryPermission(uint256 loanId)"	 [height=0.5,
+		pos="226.14,18",
+		width=6.2815];
+}

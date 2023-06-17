@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,424.81,36"];
+	node [label="\N"];
+	"IERC20.allowance(address owner, address spender)"	 [height=0.5,
+		pos="212.4,18",
+		width=5.9001];
+}
+digraph "" {
+	graph [bb="0,0,424.81,36"];
+	node [label="\N"];
+	"IERC20.allowance(address owner, address spender)"	 [height=0.5,
+		pos="212.4,18",
+		width=5.9001];
+}

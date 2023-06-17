@@ -1,0 +1,40 @@
+digraph "" {
+	graph [bb="0,0,1525.8,36"];
+	node [label="\N"];
+	"TokenCore.defineAuditTriggers(uint256 _configurationId, address[] calldata _triggerAddresses, bool[] calldata _triggerTokens, bool[] \
+calldata _triggerSenders, bool[] calldata _triggerReceivers)"	 [height=0.5,
+		pos="762.92,18",
+		width=21.192];
+}
+digraph "" {
+	graph [bb="0,0,1525.8,36"];
+	node [label="\N"];
+	"TokenCore.defineAuditTriggers(uint256 _configurationId, address[] calldata _triggerAddresses, bool[] calldata _triggerTokens, bool[] \
+calldata _triggerSenders, bool[] calldata _triggerReceivers)"	 [height=0.5,
+		pos="762.92,18",
+		width=21.192];
+}
+digraph "" {
+	graph [bb="0,0,1525.8,36"];
+	node [label="\N"];
+	"TokenCore.defineAuditTriggers(uint256 _configurationId, address[] calldata _triggerAddresses, bool[] calldata _triggerTokens, bool[] \
+calldata _triggerSenders, bool[] calldata _triggerReceivers)"	 [height=0.5,
+		pos="762.92,18",
+		width=21.192];
+}
+digraph "" {
+	graph [bb="0,0,1525.8,36"];
+	node [label="\N"];
+	"TokenCore.defineAuditTriggers(uint256 _configurationId, address[] calldata _triggerAddresses, bool[] calldata _triggerTokens, bool[] \
+calldata _triggerSenders, bool[] calldata _triggerReceivers)"	 [height=0.5,
+		pos="762.92,18",
+		width=21.192];
+}
+digraph "" {
+	graph [bb="0,0,1525.8,36"];
+	node [label="\N"];
+	"TokenCore.defineAuditTriggers(uint256 _configurationId, address[] calldata _triggerAddresses, bool[] calldata _triggerTokens, bool[] \
+calldata _triggerSenders, bool[] calldata _triggerReceivers)"	 [height=0.5,
+		pos="762.92,18",
+		width=21.192];
+}

@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,416.8,124.8"];
+	node [label="\N"];
+	"TokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="208.4,106.8",
+		width=5.7889];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="208.4,18",
+		width=4.0457];
+	"TokenCore.seize(address _token, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="220.25,62.4",
+	pos="e,208.4,36.072 208.4,88.401 208.4,76.295 208.4,60.208 208.4,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,416.8,124.8"];
+	node [label="\N"];
+	"TokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="208.4,106.8",
+		width=5.7889];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="208.4,18",
+		width=4.0457];
+	"TokenCore.seize(address _token, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="220.25,62.4",
+	pos="e,208.4,36.072 208.4,88.401 208.4,76.295 208.4,60.208 208.4,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,416.8,124.8"];
+	node [label="\N"];
+	"TokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="208.4,106.8",
+		width=5.7889];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="208.4,18",
+		width=4.0457];
+	"TokenCore.seize(address _token, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="220.25,62.4",
+	pos="e,208.4,36.072 208.4,88.401 208.4,76.295 208.4,60.208 208.4,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,416.8,124.8"];
+	node [label="\N"];
+	"TokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="208.4,106.8",
+		width=5.7889];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="208.4,18",
+		width=4.0457];
+	"TokenCore.seize(address _token, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="220.25,62.4",
+	pos="e,208.4,36.072 208.4,88.401 208.4,76.295 208.4,60.208 208.4,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,416.8,124.8"];
+	node [label="\N"];
+	"TokenCore.seize(address _token, address, uint256)"	 [height=0.5,
+		pos="208.4,106.8",
+		width=5.7889];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="208.4,18",
+		width=4.0457];
+	"TokenCore.seize(address _token, address, uint256)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="220.25,62.4",
+	pos="e,208.4,36.072 208.4,88.401 208.4,76.295 208.4,60.208 208.4,46.467"];
+}

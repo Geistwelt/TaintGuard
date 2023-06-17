@@ -115,3 +115,7 @@ func (pl *ParameterList) AppendParameter(parameter ASTNode) {
 
 	pl.parameters = append(pl.parameters, parameter)
 }
+
+func (pl *ParameterList) GetParameters() []ASTNode {
+	return pl.parameters
+}

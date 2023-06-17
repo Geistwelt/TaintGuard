@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,374.45,36"];
+	node [label="\N"];
+	"IERC20.transfer(address _to, uint256 _value)"	 [height=0.5,
+		pos="187.22,18",
+		width=5.2007];
+}
+digraph "" {
+	graph [bb="0,0,374.45,36"];
+	node [label="\N"];
+	"IERC20.transfer(address _to, uint256 _value)"	 [height=0.5,
+		pos="187.22,18",
+		width=5.2007];
+}
+digraph "" {
+	graph [bb="0,0,374.45,36"];
+	node [label="\N"];
+	"IERC20.transfer(address _to, uint256 _value)"	 [height=0.5,
+		pos="187.22,18",
+		width=5.2007];
+}
+digraph "" {
+	graph [bb="0,0,374.45,36"];
+	node [label="\N"];
+	"IERC20.transfer(address _to, uint256 _value)"	 [height=0.5,
+		pos="187.22,18",
+		width=5.2007];
+}
+digraph "" {
+	graph [bb="0,0,374.45,36"];
+	node [label="\N"];
+	"IERC20.transfer(address _to, uint256 _value)"	 [height=0.5,
+		pos="187.22,18",
+		width=5.2007];
+}

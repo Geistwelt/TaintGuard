@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,768.13,36"];
+	node [label="\N"];
+	"LendingProxy.constructor(address _promissoryNoteAddress, address _lendingMethodsAddress)"	 [height=0.5,
+		pos="384.06,18",
+		width=10.668];
+}
+digraph "" {
+	graph [bb="0,0,768.13,36"];
+	node [label="\N"];
+	"LendingProxy.constructor(address _promissoryNoteAddress, address _lendingMethodsAddress)"	 [height=0.5,
+		pos="384.06,18",
+		width=10.668];
+}

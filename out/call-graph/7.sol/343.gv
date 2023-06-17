@@ -1,0 +1,42 @@
+digraph "" {
+	graph [bb="0,0,348.1,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeCanceled()"	 [height=0.5,
+		pos="174.05,106.8",
+		width=3.055];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="174.05,18",
+		width=4.8347];
+	"Proxy.upgradeCanceled()" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="185.9,62.4",
+	pos="e,174.05,36.072 174.05,88.401 174.05,76.295 174.05,60.208 174.05,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.1,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeCanceled()"	 [height=0.5,
+		pos="174.05,106.8",
+		width=3.055];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="174.05,18",
+		width=4.8347];
+	"Proxy.upgradeCanceled()" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="185.9,62.4",
+	pos="e,174.05,36.072 174.05,88.401 174.05,76.295 174.05,60.208 174.05,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,348.1,124.8"];
+	node [label="\N"];
+	"Proxy.upgradeCanceled()"	 [height=0.5,
+		pos="174.05,106.8",
+		width=3.055];
+	"Ownable.requireMaster(address _address)"	 [height=0.5,
+		pos="174.05,18",
+		width=4.8347];
+	"Proxy.upgradeCanceled()" -> "Ownable.requireMaster(address _address)" [key=call,
+	label=" call",
+	lp="185.9,62.4",
+	pos="e,174.05,36.072 174.05,88.401 174.05,76.295 174.05,60.208 174.05,46.467"];
+}

@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,892.6,36"];
+	node [label="\N"];
+	"LendingProxy.borrow(uint256 loanAmount, uint256 time, address currency, uint256 nftValue, NFT calldata nft)"	 [height=0.5,
+		pos="446.3,18",
+		width=12.397];
+}
+digraph "" {
+	graph [bb="0,0,892.6,36"];
+	node [label="\N"];
+	"LendingProxy.borrow(uint256 loanAmount, uint256 time, address currency, uint256 nftValue, NFT calldata nft)"	 [height=0.5,
+		pos="446.3,18",
+		width=12.397];
+}

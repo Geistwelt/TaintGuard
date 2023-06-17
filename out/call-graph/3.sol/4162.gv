@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,339.01,124.8"];
+	node [label="\N"];
+	"TokenProxy.allowance(address, address)"	 [height=0.5,
+		pos="169.5,106.8",
+		width=4.7084];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="169.5,18",
+		width=3.0854];
+	"TokenProxy.allowance(address, address)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="181.36,62.4",
+	pos="e,169.5,36.072 169.5,88.401 169.5,76.295 169.5,60.208 169.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,339.01,124.8"];
+	node [label="\N"];
+	"TokenProxy.allowance(address, address)"	 [height=0.5,
+		pos="169.5,106.8",
+		width=4.7084];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="169.5,18",
+		width=3.0854];
+	"TokenProxy.allowance(address, address)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="181.36,62.4",
+	pos="e,169.5,36.072 169.5,88.401 169.5,76.295 169.5,60.208 169.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,339.01,124.8"];
+	node [label="\N"];
+	"TokenProxy.allowance(address, address)"	 [height=0.5,
+		pos="169.5,106.8",
+		width=4.7084];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="169.5,18",
+		width=3.0854];
+	"TokenProxy.allowance(address, address)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="181.36,62.4",
+	pos="e,169.5,36.072 169.5,88.401 169.5,76.295 169.5,60.208 169.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,339.01,124.8"];
+	node [label="\N"];
+	"TokenProxy.allowance(address, address)"	 [height=0.5,
+		pos="169.5,106.8",
+		width=4.7084];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="169.5,18",
+		width=3.0854];
+	"TokenProxy.allowance(address, address)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="181.36,62.4",
+	pos="e,169.5,36.072 169.5,88.401 169.5,76.295 169.5,60.208 169.5,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,339.01,124.8"];
+	node [label="\N"];
+	"TokenProxy.allowance(address, address)"	 [height=0.5,
+		pos="169.5,106.8",
+		width=4.7084];
+	"Proxy.staticCallUint256()"	 [height=0.5,
+		pos="169.5,18",
+		width=3.0854];
+	"TokenProxy.allowance(address, address)" -> "Proxy.staticCallUint256()" [key=call,
+	label=" call",
+	lp="181.36,62.4",
+	pos="e,169.5,36.072 169.5,88.401 169.5,76.295 169.5,60.208 169.5,46.467"];
+}

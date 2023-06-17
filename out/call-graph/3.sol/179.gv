@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,523.52,36"];
+	node [label="\N"];
+	"IOperableStorage.rolePrivilege(bytes32 _role, bytes4 _privilege)"	 [height=0.5,
+		pos="261.76,18",
+		width=7.2711];
+}
+digraph "" {
+	graph [bb="0,0,523.52,36"];
+	node [label="\N"];
+	"IOperableStorage.rolePrivilege(bytes32 _role, bytes4 _privilege)"	 [height=0.5,
+		pos="261.76,18",
+		width=7.2711];
+}
+digraph "" {
+	graph [bb="0,0,523.52,36"];
+	node [label="\N"];
+	"IOperableStorage.rolePrivilege(bytes32 _role, bytes4 _privilege)"	 [height=0.5,
+		pos="261.76,18",
+		width=7.2711];
+}
+digraph "" {
+	graph [bb="0,0,523.52,36"];
+	node [label="\N"];
+	"IOperableStorage.rolePrivilege(bytes32 _role, bytes4 _privilege)"	 [height=0.5,
+		pos="261.76,18",
+		width=7.2711];
+}
+digraph "" {
+	graph [bb="0,0,523.52,36"];
+	node [label="\N"];
+	"IOperableStorage.rolePrivilege(bytes32 _role, bytes4 _privilege)"	 [height=0.5,
+		pos="261.76,18",
+		width=7.2711];
+}

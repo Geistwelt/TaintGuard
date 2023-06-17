@@ -9,7 +9,9 @@ import (
 )
 
 type FunctionDefinition struct {
+	BaseFunctions    []int `json:"baseFunctions"`
 	body             ASTNode
+	FunctionSelector string `json:"functionSelector"`
 	ID               int    `json:"id"`
 	Implemented      bool   `json:"implemented"`
 	Kind             string `json:"kind"`
@@ -89,8 +91,8 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		// overrides
 		if fd.overrides != nil {
 			switch overrides := fd.overrides.(type) {
-			// case *OverrideSpecifier:
-			// 	code = code + " " + overrides.SourceCode(false, false, indent, logger)
+			case *OverrideSpecifier:
+				code = code + " " + overrides.SourceCode(false, false, indent, logger)
 			default:
 				if overrides != nil {
 					logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overrides.Type(), fd.Src)
@@ -165,7 +167,7 @@ func (fd *FunctionDefinition) SourceCode(isSc bool, isIndent bool, indent string
 		if fd.Visibility != "" {
 			code = code + " " + fd.Visibility
 		}
-		
+
 	} else if fd.Kind == "receive" {
 		code = code + "receive("
 
@@ -336,8 +338,8 @@ func GetFunctionDefinition(gn *GlobalNodes, raw jsoniter.Any, logger logging.Log
 			var err error
 
 			switch overridesNodeType {
-			// case "OverrideSpecifier":
-			// 	fdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
+			case "OverrideSpecifier":
+				fdOverrides, err = GetOverrideSpecifier(gn, overrides, logger)
 			default:
 				logger.Warnf("Unknown overrides nodeType [%s] for FunctionDefinition [src:%s].", overridesNodeType, fd.Src)
 			}

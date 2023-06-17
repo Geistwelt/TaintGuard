@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,648.39,36"];
+	node [label="\N"];
+	"ITokenDelegate.canTransfer(address _sender, address _receiver, uint256 _value)"	 [height=0.5,
+		pos="324.19,18",
+		width=9.0054];
+}
+digraph "" {
+	graph [bb="0,0,648.39,36"];
+	node [label="\N"];
+	"ITokenDelegate.canTransfer(address _sender, address _receiver, uint256 _value)"	 [height=0.5,
+		pos="324.19,18",
+		width=9.0054];
+}
+digraph "" {
+	graph [bb="0,0,648.39,36"];
+	node [label="\N"];
+	"ITokenDelegate.canTransfer(address _sender, address _receiver, uint256 _value)"	 [height=0.5,
+		pos="324.19,18",
+		width=9.0054];
+}
+digraph "" {
+	graph [bb="0,0,648.39,36"];
+	node [label="\N"];
+	"ITokenDelegate.canTransfer(address _sender, address _receiver, uint256 _value)"	 [height=0.5,
+		pos="324.19,18",
+		width=9.0054];
+}
+digraph "" {
+	graph [bb="0,0,648.39,36"];
+	node [label="\N"];
+	"ITokenDelegate.canTransfer(address _sender, address _receiver, uint256 _value)"	 [height=0.5,
+		pos="324.19,18",
+		width=9.0054];
+}

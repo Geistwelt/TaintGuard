@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,192.06,36"];
+	node [label="\N"];
+	"IRatesProvider.rates()"	 [height=0.5,
+		pos="96.029,18",
+		width=2.6675];
+}
+digraph "" {
+	graph [bb="0,0,192.06,36"];
+	node [label="\N"];
+	"IRatesProvider.rates()"	 [height=0.5,
+		pos="96.029,18",
+		width=2.6675];
+}
+digraph "" {
+	graph [bb="0,0,192.06,36"];
+	node [label="\N"];
+	"IRatesProvider.rates()"	 [height=0.5,
+		pos="96.029,18",
+		width=2.6675];
+}
+digraph "" {
+	graph [bb="0,0,192.06,36"];
+	node [label="\N"];
+	"IRatesProvider.rates()"	 [height=0.5,
+		pos="96.029,18",
+		width=2.6675];
+}
+digraph "" {
+	graph [bb="0,0,192.06,36"];
+	node [label="\N"];
+	"IRatesProvider.rates()"	 [height=0.5,
+		pos="96.029,18",
+		width=2.6675];
+}

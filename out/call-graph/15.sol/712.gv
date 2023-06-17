@@ -1,0 +1,14 @@
+digraph "" {
+	graph [bb="0,0,385.19,36"];
+	node [label="\N"];
+	"IERC721.approve(address to, uint256 tokenId)"	 [height=0.5,
+		pos="192.6,18",
+		width=5.3499];
+}
+digraph "" {
+	graph [bb="0,0,385.19,36"];
+	node [label="\N"];
+	"IERC721.approve(address to, uint256 tokenId)"	 [height=0.5,
+		pos="192.6,18",
+		width=5.3499];
+}

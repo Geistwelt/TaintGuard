@@ -292,3 +292,11 @@ func (a *Assignment) TraverseDelegatecall(opt *Option, logger logging.Logger) {
 		}
 	}
 }
+
+func (a *Assignment) SetLeft(left ASTNode) {
+	a.leftHandSide = left
+}
+
+func (a *Assignment) SetRight(right ASTNode) {
+	a.rightHandSide = right
+}

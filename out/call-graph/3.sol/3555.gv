@@ -1,0 +1,70 @@
+digraph "" {
+	graph [bb="0,0,612.56,124.8"];
+	node [label="\N"];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)"	 [height=0.5,
+		pos="306.28,106.8",
+		width=8.5078];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="306.28,18",
+		width=4.0457];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="318.14,62.4",
+	pos="e,306.28,36.072 306.28,88.401 306.28,76.295 306.28,60.208 306.28,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,612.56,124.8"];
+	node [label="\N"];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)"	 [height=0.5,
+		pos="306.28,106.8",
+		width=8.5078];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="306.28,18",
+		width=4.0457];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="318.14,62.4",
+	pos="e,306.28,36.072 306.28,88.401 306.28,76.295 306.28,60.208 306.28,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,612.56,124.8"];
+	node [label="\N"];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)"	 [height=0.5,
+		pos="306.28,106.8",
+		width=8.5078];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="306.28,18",
+		width=4.0457];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="318.14,62.4",
+	pos="e,306.28,36.072 306.28,88.401 306.28,76.295 306.28,60.208 306.28,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,612.56,124.8"];
+	node [label="\N"];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)"	 [height=0.5,
+		pos="306.28,106.8",
+		width=8.5078];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="306.28,18",
+		width=4.0457];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="318.14,62.4",
+	pos="e,306.28,36.072 306.28,88.401 306.28,76.295 306.28,60.208 306.28,46.467"];
+}
+digraph "" {
+	graph [bb="0,0,612.56,124.8"];
+	node [label="\N"];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)"	 [height=0.5,
+		pos="306.28,106.8",
+		width=8.5078];
+	"Core.delegateCall(address _proxy)"	 [height=0.5,
+		pos="306.28,18",
+		width=4.0457];
+	"TokenCore.defineLock(address _token, uint256, uint256, address[] calldata)" -> "Core.delegateCall(address _proxy)" [key=call,
+	label=" call",
+	lp="318.14,62.4",
+	pos="e,306.28,36.072 306.28,88.401 306.28,76.295 306.28,60.208 306.28,46.467"];
+}

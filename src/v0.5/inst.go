@@ -2,6 +2,7 @@ package v05
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/geistwelt/logging"
 	"github.com/geistwelt/taintguard/src/v0.5/ast"
@@ -42,6 +43,281 @@ func IsInheritFromOwnableContract(contract *ast.ContractDefinition, gn *ast.Glob
 	}
 
 	return false, nil
+}
+
+func IsOwnableOnlyHasBytesPosition(contract *ast.ContractDefinition, variables []string) (bool, string) {
+	for _, node := range contract.Nodes() {
+		if node.Type() == "VariableDeclaration" {
+			vdNode, _ := node.(*ast.VariableDeclaration)
+			for _, variable := range variables {
+				if vdNode.Name == variable && vdNode.TypeDescriptions.TypeString == "address" {
+					return false, ""
+				}
+			}
+		}
+	}
+	var ok bool
+	var representOwnerName string
+	for _, node := range contract.Nodes() {
+		if node.Type() == "VariableDeclaration" {
+			vdNode, _ := node.(*ast.VariableDeclaration)
+			if vdNode.TypeDescriptions.TypeString == "bytes32" {
+				for _, variable := range variables {
+					if strings.Contains(strings.ToUpper(vdNode.Name), strings.ToUpper(variable)) {
+						ok = true
+						representOwnerName = variable
+						break
+					}
+				}
+			}
+		}
+	}
+	if ok {
+		return true, representOwnerName
+	}
+	return false, ""
+}
+
+func LookupSetRepresentOwnerName(contract *ast.ContractDefinition, representOwnerName string) bool {
+	for _, node := range contract.Nodes() {
+		if node.Type() == "FunctionDefinition" {
+			fdNode, _ := node.(*ast.FunctionDefinition)
+			if strings.Contains(strings.ToUpper(fdNode.Name), strings.ToUpper(representOwnerName)) && (strings.Contains(strings.ToUpper(fdNode.Name), "SET") || strings.Contains(strings.ToUpper(fdNode.Name), "TRANSFER")) {
+				parameters := fdNode.GetParameters()
+				if parameters.Type() == "ParameterList" {
+					plParameters, _ := parameters.(*ast.ParameterList)
+					if len(plParameters.GetParameters()) == 1 {
+						if parameter := plParameters.GetParameters()[0]; parameter.Type() == "VariableDeclaration" {
+							vdParameter, _ := parameter.(*ast.VariableDeclaration)
+							if vdParameter.TypeDescriptions.TypeString == "address" {
+								// Insert the code that records the modification of the contract permissions in this position of the function.
+								InsertRepresentOwnerNameInContract(contract, representOwnerName)
+								InsertTrackCodeInFunction(fdNode, representOwnerName, vdParameter.Name)
+								return true
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
+func LookupGetRepresentOwnerName(contract *ast.ContractDefinition, representOwnerName string) (bool, string) {
+	for _, node := range contract.Nodes() {
+		if node.Type() == "FunctionDefinition" {
+			fdNode, _ := node.(*ast.FunctionDefinition)
+			if strings.Contains(strings.ToUpper(fdNode.Name), strings.ToUpper(representOwnerName)) && strings.Contains(strings.ToUpper(fdNode.Name), "GET") {
+				parameters := fdNode.GetParameters()
+				if parameters.Type() == "ParameterList" {
+					plParameters, _ := parameters.(*ast.ParameterList)
+					if len(plParameters.GetParameters()) == 0 {
+						returnParameters := fdNode.GetReturnParameters()
+						if returnParameters.Type() == "ParameterList" {
+							plReturnParameters, _ := returnParameters.(*ast.ParameterList)
+							if len(plReturnParameters.GetParameters()) == 1 {
+								if returnParameter := plReturnParameters.GetParameters()[0]; returnParameter.Type() == "VariableDeclaration" {
+									vdReturnParameter, _ := returnParameter.(*ast.VariableDeclaration)
+									if vdReturnParameter.TypeDescriptions.TypeString == "address" {
+										return true, fdNode.Name
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return false, ""
+}
+
+func InsertCodeForAssert(representOwnerName string, contract *ast.ContractDefinition, getOwner string) {
+	expressionStatement := &ast.ExpressionStatement{
+		NodeType: "ExpressionStatement",
+		Src:      "xxx",
+	}
+	functionCall := &ast.FunctionCall{
+		Kind:     "functionCall",
+		NodeType: "FunctionCall",
+		Src:      "xxx",
+	}
+	functionCallExpression := &ast.Identifier{
+		ArgumentTypes: []struct {
+			TypeIdentifier string `json:"typeIdentifier"`
+			TypeString     string `json:"typeString"`
+		}{{TypeIdentifier: "t_bool", TypeString: "bool"}},
+		Name:     "assert",
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	functionCallArgument := &ast.BinaryOperation{
+		NodeType: "BinaryOperation",
+		Operator: "==",
+		Src:      "xxx",
+	}
+	binaryOperationRightExpression := &ast.FunctionCall{
+		Kind:     "functionCall",
+		NodeType: "FunctionCall",
+		Src:      "xxx",
+	}
+	binaryOperationRightExpressionFunctionCallExpression := &ast.Identifier{
+		Name:     getOwner,
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpression := &ast.IndexAccess{
+		NodeType: "IndexAccess",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpressionBaseExpression := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_mapping_%s", representOwnerName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	binaryOperationLeftExpressionIndexExpression := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_%s", representOwnerName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	expressionStatement.SetExpression(functionCall)
+	functionCall.SetExpression(functionCallExpression)
+	functionCallArgument.SetLeftExpression(binaryOperationLeftExpression)
+	functionCallArgument.SetRightExpression(binaryOperationRightExpression)
+	binaryOperationRightExpression.SetExpression(binaryOperationRightExpressionFunctionCallExpression)
+	binaryOperationLeftExpression.SetBaseExpression(binaryOperationLeftExpressionBaseExpression)
+	binaryOperationLeftExpression.SetIndexExpression(binaryOperationLeftExpressionIndexExpression)
+	functionCall.AppendArgument(functionCallArgument)
+
+	contract.TraverseDelegatecall(&ast.Option{ExpressionStatement: expressionStatement}, logging.MustNewLogger())
+}
+
+func InsertTrackCodeInFunction(fd *ast.FunctionDefinition, representOwnerName string, variableName string) {
+	trackVariable := &ast.ExpressionStatement{
+		NodeType: "ExpressionStatement",
+		Src:      "xxx",
+	}
+	trackVariableExpression := &ast.Assignment{
+		NodeType: "Assignment",
+		Operator: "=",
+		Src:      "xxx",
+	}
+	trackVariableExpressionAssignmentLeft := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_%s", representOwnerName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	trackVariableExpressionAssignmentRight := &ast.Literal{
+		Kind:     "string",
+		NodeType: "Literal",
+		Src:      "xxx",
+		Value:    fd.Signature(),
+	}
+
+	trackVariableExpression.SetLeft(trackVariableExpressionAssignmentLeft)
+	trackVariableExpression.SetRight(trackVariableExpressionAssignmentRight)
+	trackVariable.SetExpression(trackVariableExpression)
+
+	trackMapping := &ast.ExpressionStatement{
+		NodeType: "ExpressionStatement",
+		Src:      "xxx",
+	}
+	trackMappingAssignment := &ast.Assignment{
+		NodeType: "Assignment",
+		Operator: "=",
+		Src:      "xxx",
+	}
+	trackMappingAssignmentLeftIndexAccess := &ast.IndexAccess{
+		NodeType: "IndexAccess",
+		Src:      "xxx",
+	}
+	trackMappingAssignmentLeftIndexAccessBase := &ast.Identifier{
+		Name:     fmt.Sprintf("xxx_track_mapping_%s", representOwnerName),
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	trackMappingAssignmentLeftIndexAccessIndex := &ast.Literal{
+		Kind:     "string",
+		NodeType: "Literal",
+		Src:      "xxx",
+		Value:    fd.Signature(),
+	}
+	trackMappingAssignmentRightIdentifier := &ast.Identifier{
+		Name:     variableName,
+		NodeType: "Identifier",
+		Src:      "xxx",
+	}
+	trackMappingAssignmentLeftIndexAccess.SetBaseExpression(trackMappingAssignmentLeftIndexAccessBase)
+	trackMappingAssignmentLeftIndexAccess.SetIndexExpression(trackMappingAssignmentLeftIndexAccessIndex)
+	trackMappingAssignment.SetLeft(trackMappingAssignmentLeftIndexAccess)
+	trackMappingAssignment.SetRight(trackMappingAssignmentRightIdentifier)
+	trackMapping.SetExpression(trackMappingAssignment)
+
+	fd.AppendNode(trackVariable)
+	fd.AppendNode(trackMapping)
+}
+
+func InsertRepresentOwnerNameInContract(contract *ast.ContractDefinition, representOwnerName string) {
+	vd := &ast.VariableDeclaration{
+		Name:            fmt.Sprintf("xxx_track_%s", representOwnerName),
+		NodeType:        "VariableDeclaration",
+		Scope:           0,
+		Src:             "xxx",
+		StateVariable:   true,
+		StorageLocation: "default",
+		Visibility:      "internal",
+	}
+	etn := &ast.ElementaryTypeName{
+		ID:       0,
+		Name:     "bytes",
+		NodeType: "ElementaryTypeName",
+		Src:      "xxx",
+	}
+	vd.SetTypeName(etn)
+
+	trackMapVd := &ast.VariableDeclaration{
+		Name:            fmt.Sprintf("xxx_track_mapping_%s", representOwnerName),
+		NodeType:        "VariableDeclaration",
+		Src:             "xxx",
+		StateVariable:   true,
+		StorageLocation: "default",
+		Visibility:      "internal",
+	}
+	trackMap := &ast.Mapping{
+		NodeType: "Mapping",
+		Src:      "xxx",
+	}
+	trackMapKey := &ast.ElementaryTypeName{
+		Name:     "bytes",
+		NodeType: "ElementaryTypeName",
+		Src:      "xxx",
+	}
+	trackMapValue := &ast.ElementaryTypeName{
+		Name:     "address",
+		NodeType: "ElementaryTypeName",
+		Src:      "xxx",
+	}
+	trackMap.SetKeyType(trackMapKey)
+	trackMap.SetValueType(trackMapValue)
+	trackMapVd.SetTypeName(trackMap)
+
+	var isInserted bool = false
+
+	for _, node := range contract.Nodes() {
+		if node.Type() == "VariableDeclaration" {
+			if node.SourceCode(false, false, "", nil) == vd.SourceCode(false, false, "", nil) ||
+				node.SourceCode(false, false, "", nil) == trackMapVd.SourceCode(false, false, "", nil) {
+				isInserted = true
+				break
+			}
+		}
+	}
+
+	if !isInserted {
+		contract.AppendNode(vd)
+		contract.AppendNode(trackMapVd)
+	}
 }
 
 func InstrumentCodeForOwner(contract *ast.ContractDefinition, variables []string) string {
@@ -158,6 +434,7 @@ func InstrumentCodeForOwner(contract *ast.ContractDefinition, variables []string
 					if node_.Type() == "VariableDeclaration" {
 						if node_.SourceCode(false, false, "", nil) == protect1.SourceCode(false, false, "", nil) {
 							isExist = true
+							break
 						}
 					}
 				}
@@ -254,8 +531,8 @@ func VerifyVariableDeclarationOrder(callerContract, calleeContract *ast.Contract
 
 	for i := 0; i < len(callerContractVariables) && i < len(calleeContractVariables); i++ {
 		for _, variable := range variables {
-			if calleeContractVariables[i].variableName == variable && 
-			calleeContractVariables[i].variableType == callerContractVariables[i].variableType {
+			if calleeContractVariables[i].variableName == variable &&
+				calleeContractVariables[i].variableType == callerContractVariables[i].variableType {
 				same = true
 			}
 		}

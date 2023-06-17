@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,868.9,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersAllExtendedExternal(uint256[] calldata _userIds, uint256[] calldata _values)"	 [height=0.5,
+		pos="434.45,18",
+		width=12.068];
+}
+digraph "" {
+	graph [bb="0,0,868.9,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersAllExtendedExternal(uint256[] calldata _userIds, uint256[] calldata _values)"	 [height=0.5,
+		pos="434.45,18",
+		width=12.068];
+}
+digraph "" {
+	graph [bb="0,0,868.9,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersAllExtendedExternal(uint256[] calldata _userIds, uint256[] calldata _values)"	 [height=0.5,
+		pos="434.45,18",
+		width=12.068];
+}
+digraph "" {
+	graph [bb="0,0,868.9,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersAllExtendedExternal(uint256[] calldata _userIds, uint256[] calldata _values)"	 [height=0.5,
+		pos="434.45,18",
+		width=12.068];
+}
+digraph "" {
+	graph [bb="0,0,868.9,36"];
+	node [label="\N"];
+	"IUserRegistry.updateManyUsersAllExtendedExternal(uint256[] calldata _userIds, uint256[] calldata _values)"	 [height=0.5,
+		pos="434.45,18",
+		width=12.068];
+}

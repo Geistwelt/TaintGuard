@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,872.1,36"];
+	node [label="\N"];
+	"ITokenCore.defineTokenDelegate(uint256 _delegateId, address _delegate, uint256[] calldata _configurations)"	 [height=0.5,
+		pos="436.05,18",
+		width=12.112];
+}
+digraph "" {
+	graph [bb="0,0,872.1,36"];
+	node [label="\N"];
+	"ITokenCore.defineTokenDelegate(uint256 _delegateId, address _delegate, uint256[] calldata _configurations)"	 [height=0.5,
+		pos="436.05,18",
+		width=12.112];
+}
+digraph "" {
+	graph [bb="0,0,872.1,36"];
+	node [label="\N"];
+	"ITokenCore.defineTokenDelegate(uint256 _delegateId, address _delegate, uint256[] calldata _configurations)"	 [height=0.5,
+		pos="436.05,18",
+		width=12.112];
+}
+digraph "" {
+	graph [bb="0,0,872.1,36"];
+	node [label="\N"];
+	"ITokenCore.defineTokenDelegate(uint256 _delegateId, address _delegate, uint256[] calldata _configurations)"	 [height=0.5,
+		pos="436.05,18",
+		width=12.112];
+}
+digraph "" {
+	graph [bb="0,0,872.1,36"];
+	node [label="\N"];
+	"ITokenCore.defineTokenDelegate(uint256 _delegateId, address _delegate, uint256[] calldata _configurations)"	 [height=0.5,
+		pos="436.05,18",
+		width=12.112];
+}

@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,509.5,36"];
+	node [label="\N"];
+	"IOperableCore.revokeOperators(address[] memory _operators)"	 [height=0.5,
+		pos="254.75,18",
+		width=7.0764];
+}
+digraph "" {
+	graph [bb="0,0,509.5,36"];
+	node [label="\N"];
+	"IOperableCore.revokeOperators(address[] memory _operators)"	 [height=0.5,
+		pos="254.75,18",
+		width=7.0764];
+}
+digraph "" {
+	graph [bb="0,0,509.5,36"];
+	node [label="\N"];
+	"IOperableCore.revokeOperators(address[] memory _operators)"	 [height=0.5,
+		pos="254.75,18",
+		width=7.0764];
+}
+digraph "" {
+	graph [bb="0,0,509.5,36"];
+	node [label="\N"];
+	"IOperableCore.revokeOperators(address[] memory _operators)"	 [height=0.5,
+		pos="254.75,18",
+		width=7.0764];
+}
+digraph "" {
+	graph [bb="0,0,509.5,36"];
+	node [label="\N"];
+	"IOperableCore.revokeOperators(address[] memory _operators)"	 [height=0.5,
+		pos="254.75,18",
+		width=7.0764];
+}

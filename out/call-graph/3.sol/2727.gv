@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,364.17,36"];
+	node [label="\N"];
+	"ITokenDelegate.balanceOf(address _owner)"	 [height=0.5,
+		pos="182.08,18",
+		width=5.0579];
+}
+digraph "" {
+	graph [bb="0,0,364.17,36"];
+	node [label="\N"];
+	"ITokenDelegate.balanceOf(address _owner)"	 [height=0.5,
+		pos="182.08,18",
+		width=5.0579];
+}
+digraph "" {
+	graph [bb="0,0,364.17,36"];
+	node [label="\N"];
+	"ITokenDelegate.balanceOf(address _owner)"	 [height=0.5,
+		pos="182.08,18",
+		width=5.0579];
+}
+digraph "" {
+	graph [bb="0,0,364.17,36"];
+	node [label="\N"];
+	"ITokenDelegate.balanceOf(address _owner)"	 [height=0.5,
+		pos="182.08,18",
+		width=5.0579];
+}
+digraph "" {
+	graph [bb="0,0,364.17,36"];
+	node [label="\N"];
+	"ITokenDelegate.balanceOf(address _owner)"	 [height=0.5,
+		pos="182.08,18",
+		width=5.0579];
+}

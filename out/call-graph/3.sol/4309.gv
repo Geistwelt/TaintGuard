@@ -1,0 +1,35 @@
+digraph "" {
+	graph [bb="0,0,566.98,36"];
+	node [label="\N"];
+	"TokenProxy.emitTransfer(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="283.49,18",
+		width=7.8748];
+}
+digraph "" {
+	graph [bb="0,0,566.98,36"];
+	node [label="\N"];
+	"TokenProxy.emitTransfer(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="283.49,18",
+		width=7.8748];
+}
+digraph "" {
+	graph [bb="0,0,566.98,36"];
+	node [label="\N"];
+	"TokenProxy.emitTransfer(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="283.49,18",
+		width=7.8748];
+}
+digraph "" {
+	graph [bb="0,0,566.98,36"];
+	node [label="\N"];
+	"TokenProxy.emitTransfer(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="283.49,18",
+		width=7.8748];
+}
+digraph "" {
+	graph [bb="0,0,566.98,36"];
+	node [label="\N"];
+	"TokenProxy.emitTransfer(address _from, address _to, uint256 _value)"	 [height=0.5,
+		pos="283.49,18",
+		width=7.8748];
+}
